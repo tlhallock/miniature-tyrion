@@ -1,0 +1,69 @@
+
+
+  std::string name;
+  std::string value;
+  std::vector<std::string> arguments;
+  
+namespace
+{
+	std::vector<std::string> read(const std::string& line)
+	{
+		std::vector<std::string> returnValue;
+		std::stringstream stream;
+		
+		for (int i=0;i<line.length();i++)
+		{
+			char c = line.at(i);
+			if (c == ' ' || c == '\t' || c == '\n')
+			{
+				returnValue.push_back(stream.str());
+			}
+			else
+			{
+				stream << c;
+			}
+		}
+		
+		return returnValue;
+	}
+}
+
+Property::Property(std::istream& input)
+{
+	std::string line;
+	std::getline(input, line);
+	
+	
+	
+}
+Property::~Property()
+{
+	
+}
+
+const std::string& Property::get_value() const { return value; }
+const std::string& Property::get_arg(int index) const { return arguments.at(index); }
+bool Property::matches(const std::string& name_, const std::vector<std::string>& args)
+{
+	if (name != name_)
+	{
+		return false;	
+	}
+	
+	if (args.size() != arguments.size())
+	{
+		return false;
+	}
+	
+	for (int i=0;i<args.size();i++)
+	{
+		if (args.at(i) != arguments.at(i))
+		{
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+td::ostream& operator<<(std::ostream& output, const Property& value);

@@ -1,0 +1,43 @@
+{
+	"enables": {
+		"tech":
+		[
+			{
+				"name": "something",
+				"at": {
+					
+				}
+			}, {
+				"name": "something",
+				"at": {
+					
+				}
+			}
+		],
+		"units":
+		[
+			{
+				"name": "something",
+				"at": {
+					
+				}
+			}
+		]
+	},
+	
+	"multiplies":
+	[
+	
+	],
+	"adds":
+	[
+		{
+			"unit": "something",
+			"value": 5,
+			"args": [
+			
+			
+			]
+		}
+	]
+}

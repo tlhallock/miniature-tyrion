@@ -1,0 +1,49 @@
+{
+	"parent": "unit.json",
+	
+	"name": "building",
+	
+	{
+	"parent": null,
+	
+	"creatable": false,
+	    
+	"costs": {
+		"gold":   0,
+		"wood": 100,
+		"food":   0,
+		"stone":  0
+	},
+	
+	"damage": [
+		{ "against": "building", "value": 1 },
+		{ "against": "unit",     "value": 1 }
+	],
+	"resistance": [
+		{ "torwards": "unit",    "value": 1 }
+	],
+	
+	"speed": 0,
+	"los": 10,
+	"range": 0,
+	"width": 10,
+	"height": 10,
+	
+	"creates":
+	{
+		"units":
+		{
+		
+		},
+		
+		"technology":
+		{
+		
+		}
+	},
+	
+	"images": [
+		"building.jpg"
+	]
+	    
+}

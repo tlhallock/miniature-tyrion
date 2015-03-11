@@ -1,0 +1,24 @@
+{
+	"parent": "unit.json",
+	
+	"name": "swordsman",
+	    
+	"costs":
+	{
+		"gold": 100,
+		"wood": 100,
+		"food": 100,
+		"stone": 0
+	},
+	
+	"damages-unit":
+	{
+		"archer": 100,
+		"building": 100
+	},
+	
+	"damages-building":
+	{
+		"building": 100
+	}
+}
