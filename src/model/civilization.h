@@ -2,6 +2,8 @@
 #define CIVILIZATION_H
 
 #include <iostream>
+#include <map>
+#include <set>
 
 class Player;
 class Building;
@@ -9,7 +11,7 @@ class Building;
 class Civilization
 {
 private:
-    std::map<std::set<int>> buildings;
+    std::map<int, std::set<int>> buildings;
     Player *parent;
 
 public:

@@ -5,6 +5,9 @@
 #include "util/fs.h"
 #include "res/unit_descp.h"
 #include "res/civilization_descp.h"
+#include "res/technology.h"
+#include "model/game.h"
+#include "model/player.h"
 
 #include <functional>
 #include <list>
@@ -76,7 +79,7 @@ UnitDescription* find_root(UnitDescription* returnValue)
     }
     return returnValue;
 }
-UnitDescription** construct_unit_descriptions(IdentifierTable& table, OpenedPropertyFiles&& pfiles)
+std::vector<UnitDescription*> construct_unit_descriptions(IdentifierTable& table, OpenedPropertyFiles&& pfiles, UnitStructure& structure)
 {
     std::vector<std::string> property_file_names;
     collect_files_by_ext(pfiles.get_base(), property_file_names, ".json");
@@ -87,10 +90,12 @@ UnitDescription** construct_unit_descriptions(IdentifierTable& table, OpenedProp
         exit(-1);
     }
 
-    int nunits = table.get_units().size();
+    int nunits = property_file_names.size();
     int nres = table.get_resources().size();
 
-    UnitDescription** descriptions = new UnitDescription*[nunits];
+    structure.set_size(nunits);
+
+    std::vector<UnitDescription*> descriptions;
 
     /**
      * Perform initial read...
@@ -98,7 +103,7 @@ UnitDescription** construct_unit_descriptions(IdentifierTable& table, OpenedProp
     int index = 0;
     for (auto it = property_file_names.begin(); it != property_file_names.end(); ++it, index++)
     {
-        descriptions[index] = new UnitDescription{table, pfiles.get_property_file(*it), index, nunits, nres};
+        descriptions.push_back(new UnitDescription{table, pfiles.get_property_file(*it), index, nunits, nres});
         std::cout << "Found unit: " << descriptions[index]->get_name() << '\n';
     }
 
@@ -118,6 +123,7 @@ UnitDescription** construct_unit_descriptions(IdentifierTable& table, OpenedProp
 
 		int s = table.get_unit_id(parentFile->get_property("name").asString());
 		descriptions[index]->set_parent(descriptions[s]);
+        structure.set_parent(index, s);
 
 		if (index != descriptions[index]->get_id())
 		{
@@ -126,23 +132,58 @@ UnitDescription** construct_unit_descriptions(IdentifierTable& table, OpenedProp
 		}
 	}
 
+    structure.compile();
+
     /**
      * Link against other units.
      */
     bfs(find_root(descriptions[0]),
-            [descriptions, &pfiles, &property_file_names, nunits](UnitDescription* description)
+            [&descriptions, &pfiles, &property_file_names, nunits](UnitDescription* description)
         {
-            description->link_properties(descriptions, pfiles.get_property_file(property_file_names.at(description->get_id())), nunits);
+            description->link_properties(descriptions, pfiles.get_property_file(property_file_names.at(description->get_id())));
         });
 
     return descriptions;
 }
 
 /*******************************
+ * Technology creation
+ *******************************/
+
+std::vector<Technology> collect_technologies(OpenedPropertyFiles&& pfiles,
+                                                           IdentifierTable& table,
+                                                           const std::vector<UnitDescription*>& units)
+{
+    std::vector<std::string> property_file_names;
+    collect_files_by_ext(pfiles.get_base(), property_file_names, ".json");
+
+    std::vector<Technology> returnValue;
+    for (auto it = property_file_names.begin(); it != property_file_names.end(); ++it)
+    {
+        const PropertyFile& pfile = pfiles.get_property_file(*it);
+        if (pfile.should_ignore())
+        {
+            continue;
+        }
+
+        Technology tech{pfile, (int) returnValue.size()};
+        table.get_technology_id(tech.get_name());
+        returnValue.push_back(tech);
+
+        std::cout << "Found technology: " << tech.get_name() << '\n';
+    }
+    return returnValue;
+}
+
+
+/*******************************
  * Civilization creation
  *******************************/
 
-std::vector<CivilizationDescription> collect_civilizations(OpenedPropertyFiles&& pfiles)
+std::vector<CivilizationDescription> collect_civilizations(OpenedPropertyFiles&& pfiles,
+                                                           IdentifierTable& table,
+                                                           const std::vector<UnitDescription*>& units,
+                                                           const std::vector<Technology>& techs)
 {
     std::vector<std::string> property_file_names;
     collect_files_by_ext(pfiles.get_base(), property_file_names, ".json");
@@ -155,12 +196,15 @@ std::vector<CivilizationDescription> collect_civilizations(OpenedPropertyFiles&&
         {
             continue;
         }
-        returnValue.push_back(CivilizationDescription{pfile});
+
+        CivilizationDescription civ{pfile, units, techs};
+        civ.set_id(table.get_civilization_id(civ.get_name()));
+        returnValue.push_back(civ);
+
+        std::cout << "Found civilization: " << civ.get_name() << '\n';
     }
     return returnValue;
 }
-
-
 
 }
 
@@ -171,9 +215,11 @@ GameInfo::GameInfo(const std::string& root_directory) :
     table{},
     images{root_directory + "/data/images/"},
     resources{collect_resources(table, OpenedPropertyFiles{root_directory + "/data/resources/"})},
-    units{construct_unit_descriptions(table, OpenedPropertyFiles{root_directory + "/data/units/"})},
+    structure{},
+    units{construct_unit_descriptions(table, OpenedPropertyFiles{root_directory + "/data/units/"}, structure)},
     root {find_root(units[0])},
-    civs{collect_civilizations(OpenedPropertyFiles{root_directory + "/data/civilizations/"})},
+    techs {collect_technologies(OpenedPropertyFiles{root_directory + "data/tech/"}, table, units)},
+    civs{collect_civilizations(OpenedPropertyFiles{root_directory + "/data/civilizations/"}, table, units, techs)},
     nplayers{2},
     player_civs{new int[nplayers]}
 {
@@ -187,7 +233,6 @@ GameInfo::GameInfo(const std::string& root_directory) :
 GameInfo::~GameInfo()
 {
     delete root;
-    delete[] units;
     delete[] player_civs;
 }
 
@@ -196,15 +241,24 @@ Game* GameInfo::create_game(const std::vector<std::string>& civ_names)
 {
     Game *game = new Game;
 
-    for (auto it = civ_names.begin(); it != civ_names.end(); ++it)
+    for (int i=0;i<nplayers;i++)
     {
-        game->add_player(nullptr, new Player{nullptr});
+        game->add_player(nullptr, new Player{this, i});
     }
-
 
     return game;
 }
 
+
+int GameInfo::get_number_of_resources() const
+{
+    return resources.size();
+}
+
+Images* GameInfo::get_images()
+{
+    return &images;
+}
 
 
 /*

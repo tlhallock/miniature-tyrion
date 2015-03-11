@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <set>
+#include <vector>
 
 class IdentifierTable;
 class PropertyFile;
@@ -44,7 +45,7 @@ public:
             int nres);
     ~UnitDescription();
 
-    void link_properties(UnitDescription** descriptions, const PropertyFile& propertyFile, int nunits);
+    void link_properties(std::vector<UnitDescription*>& descriptions, const PropertyFile& propertyFile);
     void link_building();
 
     UnitDescription* clone();
@@ -59,6 +60,8 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const UnitDescription& u);
 
     const std::string& get_name() const;
+
+    int get_image_id() const;
 
 private:
     bool is_child_of(const std::string& unitName);

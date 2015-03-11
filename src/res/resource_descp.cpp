@@ -30,3 +30,8 @@ const std::string& ResourceDescription::get_name() const
     return name;
 }
 
+
+int ResourceDescription::get_image_id() const
+{
+    return image_id;
+}

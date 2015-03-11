@@ -5,15 +5,15 @@
 
 #include "util/timer.h"
 
-class Engine;
+class Game;
 
 class Display : public TimerTask
 {
  protected:
-  Engine* engine;
+    Game* game;
  public:
-   Display(Engine* engine_) : engine{engine_} {}
-  ~Display() {}
+   Display(Game* game);
+  ~Display();
 };
 
 

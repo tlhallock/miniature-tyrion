@@ -24,6 +24,12 @@ void initialize()
     Game* game = info->create_game(civ_names);
 
     generate_map(game->get_map());
+
+    CvDisplay *display = new CvDisplay{game, info->get_images()};
+
+    game->get_timer().add(display);
+
+
 //    fill_map();
 }
 
@@ -34,7 +40,6 @@ int main(int argc, char **argv)
 
     initialize();
 //  Engine *engine = new Engine();
-//  CvDisplay *display = new CvDisplay{engine};
 
 //  Timer *timer = new Timer{200};
 

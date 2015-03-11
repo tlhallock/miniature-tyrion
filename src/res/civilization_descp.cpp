@@ -1,15 +1,16 @@
 
 #include "res/civilization_descp.h"
-
+#include "res/property_file.h"
 #include "model/civilization.h"
 
 CivilizationDescription::CivilizationDescription(
         const PropertyFile& pfile,
-        int nunits_, UnitDescription** units_,
-        std::vector<Technology>& techs) :
-    nunits{nunits_},
-    ntechs{techs.size()},
+        const std::vector<UnitDescription*>& units_,
+        const std::vector<Technology>& techs) :
+    name{pfile.get_property("name").asString()},
+    nunits{(int) units_.size()},
     units{new bool[nunits]},
+    ntechs{(int) techs.size()},
     technologies{new bool[ntechs]}
 {
     for (int i=0;i<nunits;i++)
@@ -44,6 +45,26 @@ CivilizationDescription::CivilizationDescription(
     }
 }
 
+CivilizationDescription::CivilizationDescription(const CivilizationDescription& desc) :
+       name{desc.name},
+       id{desc.id},
+       nunits{desc.nunits},
+       units{new bool[nunits]},
+       ntechs{desc.ntechs},
+       technologies{new bool[ntechs]}
+{
+    for (int i=0;i<ntechs;i++)
+    {
+        technologies[i] = desc.technologies[i];
+    }
+    for (int i=0;i<nunits;i++)
+    {
+        units[i] = desc.units[i];
+    }
+}
+
+CivilizationDescription::CivilizationDescription(CivilizationDescription& desc) : CivilizationDescription{desc} {}
+
 CivilizationDescription::~CivilizationDescription()
 {
     delete[] units;
@@ -61,3 +82,16 @@ Civilization* CivilizationDescription::create()
 
     return returnValue;
 }
+
+
+
+const std::string& CivilizationDescription::get_name() const
+{
+    return name;
+}
+
+void CivilizationDescription::set_id(int id_)
+{
+    id = id_;
+}
+

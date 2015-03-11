@@ -7,18 +7,24 @@
 #include "gfx/display.h"
 #include "model/area.h"
 
+class Images;
+class Gfx;
+
 class CvDisplay : public Display
 {
- private:
-  int w, h;
-  cv::Mat image;
-  Area viewport;
+private:
+    int w, h;
+    cv::Mat image;
+    Area viewport;
+    Images* images;
+public:
+    CvDisplay(Game* game, Images* images);
+    ~CvDisplay();
 
- public:
- CvDisplay(Engine* engine);
-  ~CvDisplay();
+    void run();
 
-  void run();
+private:
+    void draw_gfx(Gfx* gfx);
 };
 
 

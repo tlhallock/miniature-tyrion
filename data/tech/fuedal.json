@@ -1,4 +1,7 @@
 {
+	"name":"feudal",
+	"parent": null,
+	"ignore": false,
 	"enables": {
 		"tech":
 		[

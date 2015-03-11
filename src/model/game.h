@@ -29,6 +29,8 @@ public:
     void add_player(Strategy* strategy, Player *player);
 
     Map& get_map();
+    Engine& get_engine();
+    Timer& get_timer();
 };
 
 

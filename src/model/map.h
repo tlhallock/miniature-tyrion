@@ -13,15 +13,18 @@ class Area;
 class Map
 {
 private:
-    std::vector<std::unique_ptr<Unit>> unit;
+    std::vector<std::unique_ptr<Unit>> units;
     std::vector<std::unique_ptr<Resource>> resources;
 
 public:
     Map();
     ~Map();
 
-    void place_unit(Building* building, const Area& area);
-    void place_building(Building* building, const Area& area);
+    void place_unit(Unit* building);
+    void place_resource(Resource* res);
+
+    const std::vector<std::unique_ptr<Unit>>& get_units() const;
+    const std::vector<std::unique_ptr<Resource>>& get_resources() const;
 };
 
 #endif // MAP_H

@@ -24,6 +24,10 @@ int IdentifierTable::get_civilization_id(const std::string& name)
 {
 	return get_id(civilization_ids, name);
 }
+int IdentifierTable::get_technology_id(const std::string& name)
+{
+    return get_id(technology_ids, name);
+}
 
 int IdentifierTable::get_id(std::map<std::string, int>& ids, const std::string& name)
 {
@@ -42,3 +46,4 @@ const std::map<std::string, int>& IdentifierTable::get_buildings() const        
 const std::map<std::string, int>& IdentifierTable::get_resources() const        { return resource_ids     ; }
 const std::map<std::string, int>& IdentifierTable::get_images() const           { return image_ids        ; }
 const std::map<std::string, int>& IdentifierTable::get_civilizations() const    { return civilization_ids ; }
+const std::map<std::string, int>& IdentifierTable::get_technologies() const     { return technology_ids   ; }

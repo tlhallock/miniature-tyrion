@@ -28,6 +28,8 @@ public:
     ~ResourceDescription();
 
     const std::string& get_name() const;
+
+    int get_image_id() const;
 };
 
 

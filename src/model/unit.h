@@ -7,15 +7,16 @@
 #include <vector>
 
 #include "model/area.h"
-
 #include "res/unit_descp.h"
+
+#include "gfx/gfx.h"
 
 class UnitListener;
 class Task;
 class Player;
 class UnitDescription;
 
-class Unit
+class Unit : public Gfx
 {
  private:
   Area area;
@@ -36,6 +37,10 @@ class Unit
   void set_task(Task* task);
 
   friend std::ostream& operator<<(std::ostream& out, const Unit& u);
+
+
+  int get_image_id() const;
+  const Area& get_location() const;
 };
 
 

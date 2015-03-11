@@ -15,7 +15,7 @@ CONFIG += debug
 
 TEMPLATE = app
 
-LIBS += -ljsoncpp -lopencv_core -lopencv_highgui -lboost_filesystem -lboost_log -lboost_system
+LIBS += -ljsoncpp -lopencv_core -lopencv_highgui -lopencv_imgproc -lboost_filesystem -lboost_log -lboost_system
 
 
 INCLUDEPATH += src /usr/include/jsoncpp/
@@ -27,9 +27,6 @@ OTHER_FILES +=
 
 
 OBJECTS_DIR=objects/
-
-
-
 SOURCES += \
         src/ai/player/ai_strategy.cpp \
         src/ai/player/network_strategy.cpp \
@@ -49,6 +46,8 @@ SOURCES += \
         src/ai/unit/unit_listener.cpp \
         src/gen/generator.cpp \
         src/gfx/cvdisplay.cpp \
+        src/gfx/display.cpp \
+        src/gfx/gfx.cpp \
         src/main/main.cpp \
         src/model/area.cpp \
         src/model/building.cpp \
@@ -67,6 +66,7 @@ SOURCES += \
         src/res/resource_descp.cpp \
         src/res/technology.cpp \
         src/res/unit_descp.cpp \
+        src/res/unit_structure.cpp \
         src/task/attack.cpp \
         src/task/build.cpp \
         src/task/collect.cpp \
@@ -97,6 +97,7 @@ HEADERS += \
         src/gen/generator.h \
         src/gfx/cvdisplay.h \
         src/gfx/display.h \
+        src/gfx/gfx.h \
         src/model/area.h \
         src/model/building.h \
         src/model/civilization.h \
@@ -115,6 +116,7 @@ HEADERS += \
         src/res/resource_descp.h \
         src/res/technology.h \
         src/res/unit_descp.h \
+        src/res/unit_structure.h \
         src/task/attack.h \
         src/task/build.h \
         src/task/collect.h \

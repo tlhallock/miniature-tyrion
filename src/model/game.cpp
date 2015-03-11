@@ -25,3 +25,13 @@ Map& Game::get_map()
 {
     return map;
 }
+
+Engine& Game::get_engine()
+{
+    return engine;
+}
+
+Timer& Game::get_timer()
+{
+    return timer;
+}

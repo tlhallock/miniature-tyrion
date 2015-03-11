@@ -2,9 +2,8 @@
 #include "res/unit_descp.h"
 #include "res/identifier_table.h"
 #include "res/resource_descp.h"
-
-
 #include "res/property_file.h"
+
 
 UnitDescription::UnitDescription(
         IdentifierTable& table,
@@ -100,13 +99,18 @@ bool UnitDescription::is_building()
     return is_child_of("building");
 }
 
-void UnitDescription::link_properties(UnitDescription** descriptions, const PropertyFile& propertyFile, int nunits)
+void UnitDescription::link_properties(std::vector<UnitDescription*>& descriptions, const PropertyFile& propertyFile)
 {
-    for (int i=0; i<nunits; i++)
+    int nunits = descriptions.size();
+
+    if (parent != nullptr)
     {
-        // By default it is inherited by the parent unit...
-        damage[i] = parent->damage[i];
-        resistance[i] = parent->resistance[i];
+        for (int i=0; i<nunits; i++)
+        {
+            // By default it is inherited by the parent unit...
+            damage[i] = parent->damage[i];
+            resistance[i] = parent->resistance[i];
+        }
     }
 
     {
@@ -165,6 +169,12 @@ UnitDescription *create()
 const std::string& UnitDescription::get_name() const
 {
     return name;
+}
+
+
+int UnitDescription::get_image_id() const
+{
+    return image_id;
 }
 
 

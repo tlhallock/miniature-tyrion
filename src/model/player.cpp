@@ -9,10 +9,12 @@
 #include "model/building.h"
 
 Player::Player(GameInfo* info, int index) :
-    civilization{desc->create()},
-    resources{new int[nres]}
+    resources{new int[info->get_number_of_resources()]}
 {
+
 }
+
+
 
 Player::~Player()
 {

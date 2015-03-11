@@ -1,10 +1,11 @@
 {
 	"name": "base",
 	"parent": null,
+	"ignore": false,
 	
 	
 	"techs": {
-			"fuedal": false
+			"feudal": false
 	},
 	"units": {
 			"unit": false,

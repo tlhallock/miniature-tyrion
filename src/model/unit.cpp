@@ -46,3 +46,13 @@ std::ostream& operator<<(std::ostream& out, const Unit& u)
     out << "location: " << u.area << '\n';
     return out;
 }
+
+int Unit::get_image_id() const
+{
+    return type->get_image_id();
+}
+
+const Area& Unit::get_location() const
+{
+    return area;
+}
