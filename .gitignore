@@ -26,3 +26,8 @@
 *.exe
 *.out
 *.app
+
+
+objects/
+LastIde
+LastIde.pro.user*
