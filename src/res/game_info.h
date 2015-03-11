@@ -6,7 +6,6 @@
 #include "res/identifier_table.h"
 #include "res/images.h"
 #include "res/resource_descp.h"
-#include "res/building_descp.h"
 #include "res/civilization_descp.h"
 
 class Game;
@@ -21,7 +20,6 @@ private:
     std::vector<ResourceDescription> resources;
     UnitDescription** units;
     UnitDescription* root;
-    std::vector<BuildingDescription> buildings;
     std::vector<CivilizationDescription> civs;
 
 public:

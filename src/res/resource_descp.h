@@ -19,13 +19,15 @@ private:
     double height;
     double rejuv_speed;
     double initial_cap;
-    double initial_player_value;
+    double player_init;
 
     int image_id;
 
 public:
     ResourceDescription(int id, IdentifierTable& table, PropertyFile& file);
     ~ResourceDescription();
+
+    const std::string& get_name() const;
 };
 
 

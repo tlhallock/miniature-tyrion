@@ -21,18 +21,19 @@ UnitDescription::UnitDescription(
     range             { propertyFile.get_property("range"   ).asDouble() },
     width             { propertyFile.get_property("width"   ).asDouble() },
     height            { propertyFile.get_property("height"  ).asDouble() },
-    image_id          { 0},//table.get_image_id(propertyFile.get_property("images")[0].asString()) },
+    image_id          { 0 },//table.get_image_id(propertyFile.get_property("images")[0].asString()) },
     creatable         { propertyFile.get_property("creatable").asBool()  },
 
 	damage{new double[nunits]},
 	resistance{new double[nunits]},
     cost{new double[nres]},
-    collection_speed{new double[nres]}
+    collection_speed{new double[nres]},
+    parent{nullptr}
 {
     for (auto it = table.get_resources().begin(); it != table.get_resources().end(); ++it)
     {
-        cost[it->second] = propertyFile.get_property("cost",       it->first).asDouble();
-        cost[it->second] = propertyFile.get_property("coll-speed", it->first).asDouble();
+        cost[it->second]             = propertyFile.get_property("costs",      it->first).asDouble();
+        collection_speed[it->second] = propertyFile.get_property("coll-speed", it->first).asDouble();
     }
 
     if (id != table.get_unit_id(name))
@@ -54,7 +55,7 @@ UnitDescription::~UnitDescription()
 
 void UnitDescription::link_building()
 {
-    if (!id_child_of("building"))
+    if (!is_building())
     {
         return;
     }
@@ -92,6 +93,11 @@ bool UnitDescription::is_child_of(const std::string& unitName)
         return false;
     }
     return parent->is_child_of(unitName);
+}
+
+bool UnitDescription::is_building()
+{
+    return is_child_of("building");
 }
 
 void UnitDescription::link_properties(UnitDescription** descriptions, const PropertyFile& propertyFile, int nunits)
@@ -154,6 +160,12 @@ UnitDescription *create()
     return nullptr;
 }
 
+
+
+const std::string& UnitDescription::get_name() const
+{
+    return name;
+}
 
 
 

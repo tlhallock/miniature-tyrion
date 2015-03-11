@@ -31,6 +31,8 @@ void initialize()
 int main(int argc, char **argv)
 {
     ensure_directory_exists("data");
+
+    initialize();
 //  Engine *engine = new Engine();
 //  CvDisplay *display = new CvDisplay{engine};
 

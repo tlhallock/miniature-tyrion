@@ -1,0 +1,12 @@
+{
+	"parent": null,
+	"ignore": true,
+	"name": "undefined-resource",
+	"num-collect": 3,
+	"width": 2,
+	"height": 2,
+	"rejuv": 0,
+	"quantity-init": 100,
+	"player-init": 1000,
+	"image": "res.jpg"
+}

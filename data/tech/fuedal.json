@@ -25,19 +25,28 @@
 		]
 	},
 	
-	"multiplies":
-	[
-	
-	],
-	"adds":
-	[
+	"multiplies": [
 		{
-			"unit": "something",
+			"unit": "aunit",
 			"value": 5,
-			"args": [
-			
-			
+			"affects": "capaicity"
+		}
+	],
+	"adds": [
+		{
+			"unit": "aunit",
+			"value": 5,
+			"affects": "damage",
+			"against": [
+				
 			]
+		}
+	],
+	
+	"set-image": [
+		{
+			"unit":"foobar",
+			"image":"foobar.jpg"
 		}
 	]
 }

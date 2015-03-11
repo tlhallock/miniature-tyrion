@@ -63,7 +63,7 @@ Json::Value PropertyFile::get_property(const std::vector<std::string>& propertie
 	Json::Value current = root;
 	for (auto it = properties.begin(); it != properties.end(); ++it)
 	{
-		std::cout << "Getting " << *it << " within " << filename << std::endl;
+//		std::cout << "Getting " << *it << " within " << filename << std::endl;
 		const Json::Value value = current.get(*it, DEFAULT_JSON_VALUE);
 //		std::cout << "has value " << value.asString() << std::endl;
 		

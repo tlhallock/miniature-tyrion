@@ -26,7 +26,7 @@ private:
     Area center;
 
 public:
-    Player(CivilizationDescription* desc, int nres);
+    Player(CivilizationDescription* desc, const std::vector<Resource>& resources);
     ~Player();
 
     void add_listener(PlayerListener* listener);

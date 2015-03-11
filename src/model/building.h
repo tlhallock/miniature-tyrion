@@ -4,22 +4,21 @@
 #include <iostream>
 #include <vector>
 
-class Player;
-class BuildingDescription;
+#include "model/unit.h"
+
 class Technology;
 class UnitDescription;
 
-class Building
+class Building : public Unit
 {
 private:
-    BuildingDescription* description;
     Player *parent;
 
     std::vector<UnitDescription*> units;
     std::vector<Technology> techs;
 
 public:
-    Building();
+    Building(UnitDescription* desc);
     ~Building();
 
     void create_unit(const std::string& name);

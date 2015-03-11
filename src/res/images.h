@@ -11,6 +11,7 @@ class Images
   std::vector<cv::Mat> originals;
   std::string base_directory;
 
+  cv::Mat default_image;
  public:
   Images(const std::string& base_directory);
   ~Images();

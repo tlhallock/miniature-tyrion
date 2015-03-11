@@ -30,7 +30,6 @@ OBJECTS_DIR=objects/
 
 
 
-
 SOURCES += \
         src/ai/player/ai_strategy.cpp \
         src/ai/player/network_strategy.cpp \
@@ -60,7 +59,6 @@ SOURCES += \
         src/model/player.cpp \
         src/model/resource.cpp \
         src/model/unit.cpp \
-        src/res/building_descp.cpp \
         src/res/civilization_descp.cpp \
         src/res/game_info.cpp \
         src/res/identifier_table.cpp \
@@ -109,7 +107,6 @@ HEADERS += \
         src/model/player.h \
         src/model/resource.h \
         src/model/unit.h \
-        src/res/building_descp.h \
         src/res/civilization_descp.h \
         src/res/game_info.h \
         src/res/identifier_table.h \
@@ -127,5 +124,4 @@ HEADERS += \
         src/task/task.h \
         src/util/fs.h \
         src/util/timer.h \
-
 

@@ -11,6 +11,12 @@
 		"food": 100,
 		"stone":  0
 	},
+	"coll-speed": {
+		"gold":   1,
+		"wood":   1,
+		"food":   1,
+		"stone":  1
+	},
 	
 	"damage": [
 		{ "against": "building", "value": 1 },

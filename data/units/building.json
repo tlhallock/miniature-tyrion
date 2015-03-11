@@ -3,9 +3,6 @@
 	
 	"name": "building",
 	
-	{
-	"parent": null,
-	
 	"creatable": false,
 	    
 	"costs": {
@@ -19,6 +16,7 @@
 		{ "against": "building", "value": 1 },
 		{ "against": "unit",     "value": 1 }
 	],
+	
 	"resistance": [
 		{ "torwards": "unit",    "value": 1 }
 	],

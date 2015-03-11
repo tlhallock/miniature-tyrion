@@ -3,7 +3,6 @@
 
 #include "res/property_file.h"
 #include "util/fs.h"
-#include "res/building_descp.h"
 #include "res/unit_descp.h"
 #include "res/civilization_descp.h"
 
@@ -49,7 +48,15 @@ std::vector<ResourceDescription> collect_resources(IdentifierTable& table, Opene
     for (auto it = property_files.begin(); it != property_files.end(); ++it)
     {
         PropertyFile pfile = pfiles.get_property_file(*it);
-        returnValue.push_back(ResourceDescription{index++, table, pfile});
+        if (pfile.get_property("ignore").asBool())
+        {
+            continue;
+        }
+        returnValue.push_back(ResourceDescription{index, table, pfile});
+
+        std::cout << "Found resource: " << returnValue.at(index).get_name() << '\n';
+
+        index++;
     }
 
     return returnValue;
@@ -76,8 +83,8 @@ UnitDescription** construct_unit_descriptions(IdentifierTable& table, OpenedProp
     
     if (property_file_names.size() == 0)
     {
-	std::cerr << "No units found!" << std::endl;
-	exit(-1);
+        std::cerr << "No units found!" << std::endl;
+        exit(-1);
     }
 
     int nunits = table.get_units().size();
@@ -92,13 +99,14 @@ UnitDescription** construct_unit_descriptions(IdentifierTable& table, OpenedProp
     for (auto it = property_file_names.begin(); it != property_file_names.end(); ++it, index++)
     {
         descriptions[index] = new UnitDescription{table, pfiles.get_property_file(*it), index, nunits, nres};
+        std::cout << "Found unit: " << descriptions[index]->get_name() << '\n';
     }
 
     /**
      * Link parents...
      */
 	index = 0;
-	int num_roots = 0;
+//	int num_roots = 0;
 	// set parents
 	for (auto it = property_file_names.begin(); it != property_file_names.end(); ++it, index++)
 	{
@@ -131,19 +139,6 @@ UnitDescription** construct_unit_descriptions(IdentifierTable& table, OpenedProp
 }
 
 /*******************************
- * Building creation
- *******************************/
-
-std::vector<BuildingDescription> collect_buildings(OpenedPropertyFiles&& pfiles)
-{
-    std::vector<std::string> property_file_names;
-    collect_files_by_ext(pfiles.get_base(), property_file_names, ".json");
-
-
-    return std::vector<BuildingDescription>{};
-}
-
-/*******************************
  * Civilization creation
  *******************************/
 
@@ -165,11 +160,10 @@ std::vector<CivilizationDescription> collect_civilizations(OpenedPropertyFiles&&
 
 GameInfo::GameInfo(const std::string& root_directory) :
     table{},
-    images{"/data/images/"},
+    images{root_directory + "/data/images/"},
     resources{collect_resources(table, OpenedPropertyFiles{root_directory + "/data/resources/"})},
     units{construct_unit_descriptions(table, OpenedPropertyFiles{root_directory + "/data/units/"})},
     root {find_root(units[0])},
-    buildings {collect_buildings(OpenedPropertyFiles{root_directory + "/data/buildings/"})},
     civs{collect_civilizations(OpenedPropertyFiles{root_directory + "/data/civilizations/"})}
 {
 
@@ -185,7 +179,15 @@ GameInfo::~GameInfo()
 
 Game* GameInfo::create_game(const std::vector<std::string>& civ_names)
 {
-    return nullptr;
+    Game *game = new Game;
+
+    for (auto it = civ_names.begin(); it != civ_names.end(); ++it)
+    {
+        game->add_player(nullptr, new Player{nullptr});
+    }
+
+
+    return game;
 }
 
 

@@ -1,0 +1,12 @@
+{
+	"parent": "resource.json",
+	"ignore": false,
+	"name": "food",
+	"num-collect": 3,
+	"width": 2,
+	"height": 2,
+	"rejuv": 0,
+	"quantity-init": 100,
+	"player-init": 1000,
+	"image": "food.jpg"
+}
