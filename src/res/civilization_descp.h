@@ -6,6 +6,9 @@
 
 #include "res/technology.h"
 
+namespace aoe
+{
+
 class Civilization;
 class UnitDescription;
 class PropertyFile;
@@ -39,6 +42,8 @@ public:
   const std::string& get_name() const;
   void set_id(int id);
 };
+
+}
 
 
 #endif

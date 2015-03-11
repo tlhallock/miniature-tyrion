@@ -5,6 +5,9 @@
 #include <vector>
 #include <set>
 
+namespace aoe
+{
+
 class UnitStructure
 {
 private:
@@ -22,5 +25,7 @@ public:
 
    friend std::ostream& operator<<(std::ostream& out, const UnitStructure& u);
 };
+
+}
 
 #endif // UNITSTRUCTURE_H

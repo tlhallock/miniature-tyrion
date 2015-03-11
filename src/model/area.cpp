@@ -4,6 +4,9 @@
 
 #include <cmath>
 
+namespace aoe
+{
+
 double Area::distance_to(const Area& other) const
 {
   double dx = x - other.x;
@@ -22,4 +25,6 @@ bool Area::contains(const Area& other) const
 std::ostream& operator<<(std::ostream& out, const Area& a)
 {
   return out << "[(" << a.x << "," << a.y <<")-(" << (a.x + a.w) << "," << (a.y + a.h) << ")]";
+}
+
 }

@@ -6,6 +6,9 @@
 #include "model/unit.h"
 #include "model/building.h"
 
+namespace aoe
+{
+
 PlayerListener::PlayerListener() {}
 PlayerListener::~PlayerListener() {}
 
@@ -18,3 +21,5 @@ void PlayerListener::building_built(Building* b) {}
 void PlayerListener::building_destroyed(Building* b) {}
 
 void PlayerListener::technology_researched(Technology* t) {}
+
+}

@@ -1,6 +1,9 @@
 
 #include "res/identifier_table.h"
-	
+
+namespace aoe
+{
+
 IdentifierTable::IdentifierTable() {}
 IdentifierTable::~IdentifierTable() {}
 	
@@ -47,3 +50,5 @@ const std::map<std::string, int>& IdentifierTable::get_resources() const        
 const std::map<std::string, int>& IdentifierTable::get_images() const           { return image_ids        ; }
 const std::map<std::string, int>& IdentifierTable::get_civilizations() const    { return civilization_ids ; }
 const std::map<std::string, int>& IdentifierTable::get_technologies() const     { return technology_ids   ; }
+
+}

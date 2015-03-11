@@ -7,6 +7,9 @@
 
 #include <algorithm>
 
+namespace aoe
+{
+
 
 Unit::Unit(UnitDescription* desc) : task{nullptr}, type{desc} {}
 
@@ -55,4 +58,6 @@ int Unit::get_image_id() const
 const Area& Unit::get_location() const
 {
     return area;
+}
+
 }

@@ -3,6 +3,9 @@
 
 #include "res/property_file.h"
 
+namespace aoe
+{
+
 Technology::Technology(const PropertyFile& filename, int id_) :
     name{filename.get_property("name").asString()},
     id{id_}
@@ -22,4 +25,6 @@ int Technology::get_id() const
 const std::string& Technology::get_name() const
 {
     return name;
+}
+
 }

@@ -5,6 +5,9 @@
 
 #include <iostream>
 
+namespace aoe
+{
+
 class IdentifierTable;
 class PropertyFile;
 
@@ -31,6 +34,8 @@ public:
 
     int get_image_id() const;
 };
+
+}
 
 
 #endif

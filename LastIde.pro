@@ -15,7 +15,7 @@ CONFIG += debug
 
 TEMPLATE = app
 
-LIBS += -ljsoncpp -lopencv_core -lopencv_highgui -lopencv_imgproc -lboost_filesystem -lboost_log -lboost_system
+LIBS += -ljsoncpp -lopencv_core -lopencv_highgui -lopencv_imgproc -lboost_filesystem -lboost_log -lboost_system -lX11
 
 
 INCLUDEPATH += src /usr/include/jsoncpp/

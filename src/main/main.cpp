@@ -11,9 +11,11 @@
 #include "model/game.h"
 #include "gen/generator.h"
 
+#include <X11/Xlib.h>
+
 void initialize()
 {
-    GameInfo *info = new GameInfo{"./"};
+    aoe::GameInfo *info = new aoe::GameInfo{"./"};
 
     // need to set strategies
 
@@ -21,11 +23,12 @@ void initialize()
     civ_names.push_back("Turks");
     civ_names.push_back("Britons");
 
-    Game* game = info->create_game(civ_names);
+    aoe::Game* game = info->create_game(civ_names);
+
 
     generate_map(game->get_map());
 
-    CvDisplay *display = new CvDisplay{game, info->get_images()};
+    aoe::CvDisplay *display = new aoe::CvDisplay{game, info->get_images()};
 
     game->get_timer().add(display);
 
@@ -36,7 +39,8 @@ void initialize()
 
 int main(int argc, char **argv)
 {
-    ensure_directory_exists("data");
+    XInitThreads();
+    aoe::ensure_directory_exists("data");
 
     initialize();
 //  Engine *engine = new Engine();
@@ -59,5 +63,6 @@ int main(int argc, char **argv)
 
   return 0;
 }
+
 
 

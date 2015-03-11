@@ -1,5 +1,8 @@
 #include "map.h"
 
+namespace aoe
+{
+
 Map::Map() {}
 Map::~Map() {}
 
@@ -19,4 +22,4 @@ const std::vector<std::unique_ptr<Resource>>& Map::get_resources() const { retur
 
 
 
-
+}

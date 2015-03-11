@@ -9,6 +9,9 @@
 #include "res/civilization_descp.h"
 #include "res/unit_structure.h"
 
+namespace aoe
+{
+
 class Game;
 class UnitDescription;
 
@@ -34,6 +37,8 @@ public:
     int get_number_of_resources() const;
     Images* get_images();
 };
+
+}
 
 
 #endif

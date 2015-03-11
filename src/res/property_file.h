@@ -7,6 +7,9 @@
 
 #include <json/json.h>
 
+namespace aoe
+{
+
 class PropertyFile;
 class OpenedPropertyFiles;
 
@@ -54,6 +57,8 @@ public:
         return root_directory;
     }
 };
+
+}
 
 
 

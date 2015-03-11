@@ -2,6 +2,9 @@
 
 #include "res/resource_descp.h"
 
+namespace aoe
+{
+
 Resource::Resource(ResourceDescription* type_, const Area& location_) :
     type{type_},
     location{location_}
@@ -19,4 +22,6 @@ int Resource::get_image_id() const
 const Area& Resource::get_location() const
 {
     return location;
+}
+
 }

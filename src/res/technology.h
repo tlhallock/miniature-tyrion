@@ -6,6 +6,9 @@
 #include <iostream>
 #include <set>
 
+namespace aoe
+{
+
 class PropertyFile;
 
 enum TechType
@@ -32,5 +35,7 @@ public:
     int get_id() const;
     const std::string& get_name() const;
 };
+
+}
 
 #endif

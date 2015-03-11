@@ -4,6 +4,9 @@
 #include "res/property_file.h"
 #include "res/identifier_table.h"
 
+namespace aoe
+{
+
 ResourceDescription::ResourceDescription(int id_, IdentifierTable& table, PropertyFile& file) :
     name          { file.get_property("name").asString()          },
     id            { id_                                           },
@@ -34,4 +37,6 @@ const std::string& ResourceDescription::get_name() const
 int ResourceDescription::get_image_id() const
 {
     return image_id;
+}
+
 }

@@ -3,6 +3,9 @@
 #ifndef DESTRUCTIBLE_H_
 #define DESTRUCTIBLE_H_
 
+namespace aoe
+{
+
 class Destructible
 {
  private:
@@ -16,6 +19,8 @@ class Destructible
 
 };
 
+
+}
 
 
 #endif

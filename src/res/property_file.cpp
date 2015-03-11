@@ -4,6 +4,9 @@
 
 #include <fstream>
 
+namespace aoe
+{
+
 Json::Value DEFAULT_JSON_VALUE;
 
 namespace
@@ -140,3 +143,5 @@ const PropertyFile& OpenedPropertyFiles::get_property_file(const std::string& fi
 	return opened.find(filename)->second;
 }
 
+
+}

@@ -4,6 +4,9 @@
 
 #include <iostream>
 
+namespace aoe
+{
+
 class Area
 {
  public:
@@ -26,5 +29,7 @@ class Area
     friend std::ostream& operator<<(std::ostream& out, const Area& a);
 };
 
+
+}
 
 #endif

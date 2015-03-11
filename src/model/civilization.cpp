@@ -5,9 +5,14 @@
 //{
 //}
 
+namespace aoe
+{
+
 
 Civilization::Civilization() {}
 
 Civilization::~Civilization()
 {
+}
+
 }

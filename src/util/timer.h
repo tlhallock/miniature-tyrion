@@ -2,10 +2,12 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
-
 #include <vector>
 #include <functional>
 #include <thread>
+
+namespace aoe
+{
 
 class TimerTask
 {
@@ -34,6 +36,7 @@ class Timer
  void end();
 };
 
+}
 
 #endif
 

@@ -4,6 +4,9 @@
 #include "res/unit_descp.h"
 
 
+namespace aoe
+{
+
 Building::Building(UnitDescription* desc) :
     Unit{desc}
 {
@@ -12,5 +15,7 @@ Building::Building(UnitDescription* desc) :
 
 Building::~Building()
 {
+
+}
 
 }

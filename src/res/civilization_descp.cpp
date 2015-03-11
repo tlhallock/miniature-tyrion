@@ -3,6 +3,9 @@
 #include "res/property_file.h"
 #include "model/civilization.h"
 
+namespace aoe
+{
+
 CivilizationDescription::CivilizationDescription(
         const PropertyFile& pfile,
         const std::vector<UnitDescription*>& units_,
@@ -95,3 +98,5 @@ void CivilizationDescription::set_id(int id_)
     id = id_;
 }
 
+
+}

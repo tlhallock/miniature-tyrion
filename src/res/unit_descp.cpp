@@ -4,6 +4,9 @@
 #include "res/resource_descp.h"
 #include "res/property_file.h"
 
+namespace aoe
+{
+
 
 UnitDescription::UnitDescription(
         IdentifierTable& table,
@@ -214,3 +217,5 @@ void UnitDescription::push(UnitDescriptions* descriptions)
         }
     }
 }*/
+
+}

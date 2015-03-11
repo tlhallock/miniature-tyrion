@@ -5,6 +5,9 @@
 #include <string>
 #include <map>
 
+namespace aoe
+{
+
 class IdentifierTable
 {
 private:
@@ -37,6 +40,8 @@ private:
 	int get_id(std::map<std::string, int>& ids, const std::string& name);
 };
 
+
+}
 
 
 #endif

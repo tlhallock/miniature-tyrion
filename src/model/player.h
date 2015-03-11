@@ -6,6 +6,9 @@
 
 #include "model/area.h"
 
+namespace aoe
+{
+
 class Civilization;
 class CivilizationDescription;
 class Unit;
@@ -36,5 +39,7 @@ public:
 
 
 };
+
+}
 
 #endif // PLAYER_H

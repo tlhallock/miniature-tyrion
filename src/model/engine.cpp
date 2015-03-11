@@ -6,6 +6,9 @@
 #include <algorithm>
 
 
+namespace aoe
+{
+
 Engine::Engine() {}
 Engine::~Engine() {}
 
@@ -57,4 +60,6 @@ void Engine::run()
 {
     animate_iteration();
     std::cout << *this << std::endl;
+}
+
 }

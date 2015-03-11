@@ -7,6 +7,9 @@
 #include <set>
 #include <vector>
 
+namespace aoe
+{
+
 class IdentifierTable;
 class PropertyFile;
 class UnitDescription;
@@ -68,6 +71,8 @@ private:
     bool is_building();
 };
 
+
+}
 
 
 #endif

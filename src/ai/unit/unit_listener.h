@@ -3,6 +3,9 @@
 #ifndef TASK_LISTENER_H_
 #define TASK_LISTENER_H_
 
+namespace aoe
+{
+
 class Unit;
 
 class UnitListener
@@ -23,6 +26,8 @@ class UnitListener
   virtual void enemy_in_rage(Unit *enemy);
 };
 
+
+}
 
 
 #endif

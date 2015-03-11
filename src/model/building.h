@@ -6,6 +6,9 @@
 
 #include "model/unit.h"
 
+namespace aoe
+{
+
 class Technology;
 class UnitDescription;
 
@@ -25,5 +28,7 @@ public:
     void research_technology(const std::string& name);
 
 };
+
+}
 
 #endif // BUILDING_H

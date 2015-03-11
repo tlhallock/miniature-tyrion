@@ -7,6 +7,9 @@
 
 #include <functional>
 
+namespace aoe
+{
+
 void recurse(const std::string& root, std::function<void(const std::string&)> f)
 {
     boost::filesystem::path targetDir(root);
@@ -66,4 +69,6 @@ void collect_files_by_ext(const std::string& root_directory, std::vector<std::st
 void ensure_directory_exists(const std::string& directory)
 {
 	boost::filesystem::create_directory(directory);
+}
+
 }

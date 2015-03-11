@@ -3,6 +3,9 @@
 #ifndef ATTACK_H_
 #define ATTACK_H_
 
+namespace aoe
+{
+
 class Attack : public Task
 {
 private:
@@ -16,6 +19,8 @@ public:
 
     void apply(std::vector<UnitListener*>& listeners);
 };
+
+}
 
 
 #endif

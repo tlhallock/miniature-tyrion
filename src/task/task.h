@@ -5,6 +5,9 @@
 
 #include <vector>
 
+namespace aoe
+{
+
 class Task
 {
  public:
@@ -14,5 +17,7 @@ class Task
   virtual void apply(std::vector<UnitListener*>& listeners) = 0;
 };
 
+
+}
 
 #endif

@@ -11,6 +11,9 @@
 
 #include <iostream>
 
+namespace aoe
+{
+
 #define DISPLAY_WIDTH  500
 #define DISPLAY_HEIGHT 500
 
@@ -56,7 +59,6 @@ void CvDisplay::run()
 
 
     std::cout << "Should be displayed now...\n";
-
 }
 
 
@@ -86,3 +88,5 @@ void CvDisplay::draw_gfx(Gfx* gfx)
     sub_image.copyTo(image(cv::Rect(cv::Point(xpx, ypx), scaledSize)));
 }
 
+
+}

@@ -1,5 +1,8 @@
 #include "res/unit_structure.h"
 
+namespace aoe
+{
+
 UnitStructure::UnitStructure() {}
 UnitStructure::~UnitStructure() {}
 
@@ -100,3 +103,5 @@ std::ostream& operator<<(std::ostream& out, const UnitStructure& u)
 }
 
 
+
+}

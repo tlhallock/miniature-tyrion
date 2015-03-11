@@ -2,6 +2,9 @@
 #ifndef FARM_STRATEGY_H_
 #define FARM_STRATEGY_H_
 
+namespace aoe
+{
+
 
 class FarmStrategy
 {
@@ -12,5 +15,7 @@ public:
     ~FarmStrategy();
 
 };
+
+}
 
 #endif

@@ -12,6 +12,9 @@
 #include <functional>
 #include <list>
 
+namespace aoe
+{
+
 namespace
 {
 /*******************************
@@ -277,3 +280,5 @@ void read_unit(UnitDescription** descs, std::vector<PropertyFile> pfiles, bool* 
 }
 */
 
+
+}

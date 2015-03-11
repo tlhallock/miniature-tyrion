@@ -9,6 +9,9 @@
 #include "model/engine.h"
 #include "util/timer.h"
 
+namespace aoe
+{
+
 class Player;
 class Strategy;
 
@@ -33,5 +36,6 @@ public:
     Timer& get_timer();
 };
 
+}
 
 #endif

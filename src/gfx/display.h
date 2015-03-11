@@ -5,6 +5,9 @@
 
 #include "util/timer.h"
 
+namespace aoe
+{
+
 class Game;
 
 class Display : public TimerTask
@@ -15,6 +18,8 @@ class Display : public TimerTask
    Display(Game* game);
   ~Display();
 };
+
+}
 
 
 

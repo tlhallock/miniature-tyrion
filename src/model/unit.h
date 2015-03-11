@@ -11,6 +11,9 @@
 
 #include "gfx/gfx.h"
 
+namespace aoe
+{
+
 class UnitListener;
 class Task;
 class Player;
@@ -42,6 +45,8 @@ class Unit : public Gfx
   int get_image_id() const;
   const Area& get_location() const;
 };
+
+}
 
 
 #endif

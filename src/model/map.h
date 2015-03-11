@@ -7,6 +7,9 @@
 #include "model/unit.h"
 #include "model/resource.h"
 
+namespace aoe
+{
+
 class Building;
 class Area;
 
@@ -26,5 +29,7 @@ public:
     const std::vector<std::unique_ptr<Unit>>& get_units() const;
     const std::vector<std::unique_ptr<Resource>>& get_resources() const;
 };
+
+}
 
 #endif // MAP_H

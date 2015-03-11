@@ -1,6 +1,9 @@
 #ifndef PLAYER_LISTENER_H
 #define PLAYER_LISTENER_H
 
+namespace aoe
+{
+
 class Unit;
 class Building;
 class Technology;
@@ -23,5 +26,7 @@ public:
     virtual void technology_researched(Technology* t);
 
 };
+
+}
 
 #endif // PLAYER_LISTENER_H

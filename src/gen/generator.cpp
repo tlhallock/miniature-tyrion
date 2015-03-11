@@ -2,6 +2,9 @@
 
 #include "model/map.h"
 
+namespace aoe
+{
+
 Generator::Generator()
 {
 }
@@ -10,5 +13,7 @@ Generator::Generator()
 
 void generate_map(Map& map)
 {
+
+}
 
 }

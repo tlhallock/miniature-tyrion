@@ -7,6 +7,9 @@
 #include "gfx/display.h"
 #include "model/area.h"
 
+namespace aoe
+{
+
 class Images;
 class Gfx;
 
@@ -27,6 +30,8 @@ private:
     void draw_gfx(Gfx* gfx);
 };
 
+
+}
 
 
 #endif

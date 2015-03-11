@@ -8,6 +8,9 @@
 
 #include "util/timer.h"
 
+namespace aoe
+{
+
 class Unit;
 
 class Engine : public TimerTask
@@ -30,6 +33,8 @@ class Engine : public TimerTask
 
   void run();
 };
+
+}
 
 
 #endif

@@ -4,6 +4,9 @@
 #include "gfx/gfx.h"
 #include "model/area.h"
 
+namespace aoe
+{
+
 class ResourceDescription;
 
 class Resource : public Gfx
@@ -18,5 +21,7 @@ public:
     int get_image_id() const;
     const Area& get_location() const;
 };
+
+}
 
 #endif // RESOURCE_H

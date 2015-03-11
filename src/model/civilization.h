@@ -5,6 +5,9 @@
 #include <map>
 #include <set>
 
+namespace aoe
+{
+
 class Player;
 class Building;
 
@@ -25,5 +28,7 @@ public:
 
     Building* create_building(int building_id);
 };
+
+}
 
 #endif // CIVILIZATION_H

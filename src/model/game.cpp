@@ -6,6 +6,9 @@
 
 #include "ai/player/strategy.h"
 
+namespace aoe
+{
+
 #define CLOCK_FREQ 200
 
 Game::Game() :
@@ -34,4 +37,6 @@ Engine& Game::get_engine()
 Timer& Game::get_timer()
 {
     return timer;
+}
+
 }

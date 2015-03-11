@@ -6,6 +6,9 @@
 
 #include "opencv2/core/core.hpp"
 
+namespace aoe
+{
+
 class Images
 {
   std::vector<cv::Mat> originals;
@@ -19,6 +22,8 @@ class Images
   void set(int image_id, const std::string& filename);
   const cv::Mat& get(int image_id) const;
 };
+
+}
 
 #endif
 
