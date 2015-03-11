@@ -27,6 +27,17 @@ OTHER_FILES +=
 
 
 OBJECTS_DIR=objects/
+
+
+
+
+
+
+
+
+
+
+
 SOURCES += \
         src/ai/player/ai_strategy.cpp \
         src/ai/player/network_strategy.cpp \
@@ -59,6 +70,7 @@ SOURCES += \
         src/model/resource.cpp \
         src/model/unit.cpp \
         src/res/civilization_descp.cpp \
+        src/res/game_info_construction.cpp \
         src/res/game_info.cpp \
         src/res/identifier_table.cpp \
         src/res/images.cpp \
