@@ -21,7 +21,8 @@ private:
     UnitDescription** units;
     UnitDescription* root;
     std::vector<CivilizationDescription> civs;
-
+    int nplayers;
+    int player_civs;
 public:
 	GameInfo(const std::string& root_directory);
 	~GameInfo();

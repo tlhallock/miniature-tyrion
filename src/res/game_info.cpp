@@ -147,8 +147,17 @@ std::vector<CivilizationDescription> collect_civilizations(OpenedPropertyFiles&&
     std::vector<std::string> property_file_names;
     collect_files_by_ext(pfiles.get_base(), property_file_names, ".json");
 
-
-    return std::vector<CivilizationDescription>{};
+    std::vector<CivilizationDescription> returnValue;
+    for (auto it = property_file_names.begin(); it != property_file_names.end(); ++it)
+    {
+        const PropertyFile& pfile = pfiles.get_property_file(*it);
+        if (pfile.should_ignore())
+        {
+            continue;
+        }
+        returnValue.push_back(CivilizationDescription{pfile});
+    }
+    return returnValue;
 }
 
 
@@ -164,9 +173,14 @@ GameInfo::GameInfo(const std::string& root_directory) :
     resources{collect_resources(table, OpenedPropertyFiles{root_directory + "/data/resources/"})},
     units{construct_unit_descriptions(table, OpenedPropertyFiles{root_directory + "/data/units/"})},
     root {find_root(units[0])},
-    civs{collect_civilizations(OpenedPropertyFiles{root_directory + "/data/civilizations/"})}
+    civs{collect_civilizations(OpenedPropertyFiles{root_directory + "/data/civilizations/"})},
+    nplayers{2},
+    player_civs{new int[nplayers]}
 {
-
+    for (int i=0;i<nplayers;i++)
+    {
+        player_civs[i] = rand() % nplayers;
+    }
 }
 
 
@@ -174,6 +188,7 @@ GameInfo::~GameInfo()
 {
     delete root;
     delete[] units;
+    delete[] player_civs;
 }
 
 

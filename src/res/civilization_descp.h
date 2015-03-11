@@ -7,10 +7,15 @@ class Civilization;
 class CivilizationDescription
 {
 private:
+    int nunits;
     bool *units;
+    int ntechs;
     bool *technologies;
 public:
-  CivilizationDescription(int nunits, int ntechs);
+  CivilizationDescription(
+          const PropertyFile& pfile,
+          int nunits_, UnitDescription** units_,
+          std::vector<Technology>& techs);
   ~CivilizationDescription();
 
   Civilization* create();

@@ -3,21 +3,25 @@
 
 #include <iostream>
 
-class CivilizationDescription;
 class Player;
 class Building;
 
 class Civilization
 {
 private:
-    CivilizationDescription* type;
+    std::map<std::set<int>> buildings;
     Player *parent;
 
 public:
-    Civilization(CivilizationDescription* desc);
+    Civilization();
     ~Civilization();
 
-    Building* create_building(const std::string& type);
+    void set_player(Player* parent);
+
+    void enable(int building);
+    void enable(int builing, int unit);
+
+    Building* create_building(int building_id);
 };
 
 #endif // CIVILIZATION_H

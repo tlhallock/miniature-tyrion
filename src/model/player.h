@@ -11,6 +11,7 @@ class CivilizationDescription;
 class Unit;
 class Building;
 class PlayerListener;
+class GameInfo;
 
 
 class Player
@@ -26,7 +27,7 @@ private:
     Area center;
 
 public:
-    Player(CivilizationDescription* desc, const std::vector<Resource>& resources);
+    Player(GameInfo* info, int index);
     ~Player();
 
     void add_listener(PlayerListener* listener);

@@ -1,9 +1,12 @@
 #include "civilization.h"
 
-Civilization::Civilization(CivilizationDescription* desc) :
-    type {desc}
-{
-}
+//Civilization::Civilization(Player* parent_) :
+//    parent {parent_}
+//{
+//}
+
+
+Civilization::Civilization() {}
 
 Civilization::~Civilization()
 {

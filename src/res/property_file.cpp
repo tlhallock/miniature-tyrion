@@ -110,6 +110,11 @@ const PropertyFile* PropertyFile::get_parent() const
 }
 
 
+bool PropertyFile::should_ignore() const
+{
+    return get_property("ignore").asBool();
+}
+
 
 
 

@@ -30,6 +30,7 @@ private:
   Json::Value get_property(const std::vector<std::string>& values) const;
   
   const PropertyFile* get_parent() const;
+  bool should_ignore() const;
 };
 
 

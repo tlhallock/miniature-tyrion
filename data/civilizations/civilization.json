@@ -3,10 +3,10 @@
 	"parent": null,
 	
 	
-	"tech": {
+	"techs": {
 			"fuedal": false
 	},
-	"unit": {
+	"units": {
 			"unit": false,
 			"swordsman": true
 	}
