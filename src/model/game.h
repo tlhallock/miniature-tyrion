@@ -9,6 +9,7 @@
 #include "model/engine.h"
 #include "util/timer.h"
 #include "ai/player/player_listener.h"
+#include "res/identifier_table.h"
 
 namespace aoe
 {
@@ -25,9 +26,10 @@ private:
     Map map;
     Engine engine;
     Timer timer;
+    IdentifierTable table;
 
 public:
-    Game();
+    Game(const IdentifierTable& table);
     ~Game();
   
     void add_player(Strategy* strategy, Player *player);
@@ -42,6 +44,9 @@ public:
     void unit_created(Unit* u);
     void unit_killed(Unit* u);
 
+    Player* get_player(int index);
+
+    IdentifierTable& get_table();
 
 };
 

@@ -26,11 +26,14 @@ aoe::Game* start_game(const std::string& root_dir)
     civ_names.push_back("Turks");
     civ_names.push_back("Britons");
 
-    aoe::Game* game = new aoe::Game;
+    aoe::Game* game = new aoe::Game{info.get_table()};
 
-    for (int i=0;i<2;i++)
+    int nplayers = 2;
+    for (int i=0;i<nplayers;i++)
     {
-        game->add_player(nullptr, new aoe::Player{info.create_civilization(0), info.clone_resources()});
+        game->add_player(nullptr, new aoe::Player{info.create_civilization(0),
+                                                  info.clone_resources(),
+                                                  game->get_map().get_civilization_center(i, nplayers)});
     }
 
     aoe::generate_map(game);

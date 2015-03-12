@@ -17,7 +17,6 @@ class Building;
 class PlayerListener;
 class GameInfo;
 
-
 class Player
 {
 private:
@@ -32,11 +31,14 @@ private:
     Area center;
 
 public:
-    Player(Civilization* civ, const std::vector<double>& res);
+    Player(Civilization* civ, const std::vector<double>& res, const Area& center);
     ~Player();
 
     void add_listener(PlayerListener* listener);
     void remove_listener(PlayerListener* listener);
+
+    Civilization* get_civilization();
+    const Area& get_location();
 
 };
 

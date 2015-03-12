@@ -11,10 +11,11 @@ namespace aoe
 
 #define CLOCK_FREQ 200
 
-Game::Game() :
+Game::Game(const IdentifierTable& table_) :
     map{},
     engine{},
-    timer{CLOCK_FREQ}
+    timer{CLOCK_FREQ},
+    table{table_}
 {
     timer.add(&engine);
 }
@@ -65,6 +66,16 @@ void Game::unit_killed(Unit* u)
     map.remove_unit(u);
 }
 
+Player* Game::get_player(int index)
+{
+       return players[index].get();
+}
+
+
+IdentifierTable& Game::get_table()
+{
+    return table;
+}
 
 
 }

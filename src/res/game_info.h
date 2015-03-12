@@ -36,6 +36,8 @@ public:
     Civilization* create_civilization(int index) const;
     std::vector<double> clone_resources() const;
 
+
+    IdentifierTable& get_table() { return table; }
 };
 
 }

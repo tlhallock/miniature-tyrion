@@ -8,19 +8,18 @@
 #include "res/images.h"
 #include "gfx/gfx.h"
 
+#include "main/settings.h"
+
 
 #include <iostream>
 
 namespace aoe
 {
 
-#define DISPLAY_WIDTH  500
-#define DISPLAY_HEIGHT 500
-
 CvDisplay::CvDisplay(Game* game, Images* images_) :
     Display{game},
-    w{DISPLAY_WIDTH},
-    h{DISPLAY_HEIGHT},
+    w{Settings::get_instance().DISPLAY_WIDTH},
+    h{Settings::get_instance().DISPLAY_HEIGHT},
     image{w, h, CV_8UC1},
     images{images_}
 {
@@ -35,7 +34,7 @@ CvDisplay::~CvDisplay()
 
 void CvDisplay::run()
 {
-    image = 0.0;
+    image = Settings::get_instance().BACKGROUND_COLOR;
     cv::imshow("Display", image);
 
     const Map& map = game->get_map();

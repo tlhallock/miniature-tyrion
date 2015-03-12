@@ -60,4 +60,11 @@ const Area& Unit::get_location() const
     return area;
 }
 
+
+void Unit::set_location(const Area& area_)
+{
+    area = area_;
+}
+
+
 }

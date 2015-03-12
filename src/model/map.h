@@ -32,6 +32,8 @@ public:
 
     const std::vector<std::unique_ptr<Unit>>& get_units() const;
     const std::vector<std::unique_ptr<Resource>>& get_resources() const;
+
+    const Area&& get_civilization_center(int index, int total);
 };
 
 }

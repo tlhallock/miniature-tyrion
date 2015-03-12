@@ -11,9 +11,10 @@
 namespace aoe
 {
 
-Player::Player(Civilization* civ, const std::vector<double>& res) :
+Player::Player(Civilization* civ, const std::vector<double>& res, const Area& center_) :
     civilization{civ},
-    resources{res}
+    resources{res},
+    center{center_}
 {
 
 }
@@ -40,6 +41,17 @@ void Player::remove_listener(PlayerListener* listener)
 }
 
 
+Civilization* Player::get_civilization()
+{
+    return civilization.get();
+}
+
+
+
+const Area& Player::get_location()
+{
+    return center;
+}
 
 }
 

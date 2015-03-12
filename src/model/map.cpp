@@ -1,14 +1,18 @@
 #include "map.h"
+#include <cmath>
 
-#define WIDTH 1000
-#define HEIGHT 1000
+#include "main/settings.h"
+
+# define PI           3.14159265358979323846
+
+
 
 namespace aoe
 {
 
 Map::Map() :
-    width{WIDTH},
-    height{HEIGHT} {}
+    width{Settings::get_instance().MAP_WIDTH},
+    height{Settings::get_instance().MAP_HEIGHT} {}
 Map::~Map() {}
 
 void Map::place_unit(Unit* unit)
@@ -29,6 +33,19 @@ void Map::remove_unit(Unit* unit)
 void Map::remove_resource(Resource* res)
 {
     // delete them somewhere
+}
+
+const Area&& Map::get_civilization_center(int index, int total)
+{
+    double cx = width / 2;
+    double cy = height / 2;
+
+    double angle = 2 * PI * index / total;
+
+    double percent_of_radius = Settings::get_instance().PERCENT_OF_RADIUS;
+
+    return Area{cx + percent_of_radius * cx * cos(angle),
+                cy + percent_of_radius * cy * sin(angle), 0, 0};
 }
 
 const std::vector<std::unique_ptr<Unit>>& Map::get_units() const { return units; }

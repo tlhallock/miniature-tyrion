@@ -2,6 +2,7 @@
 
 #include "res/game_info.h"
 #include "model/player.h"
+#include "model/unit.h"
 
 namespace aoe
 {
@@ -34,14 +35,18 @@ bool Civilization::is_enabled(int building) const
 }
 
 
-Unit* Civilization::create_building(int building_id) const
+Unit* Civilization::create_building(int building_id, const Area& area) const
 {
     if (!is_enabled(building_id))
     {
         return nullptr;
     }
 
-    return unit_values[building_id].create();
+    Unit* unit = unit_values[building_id].create();
+
+    unit->set_location(area);
+
+    return unit;
 }
 
 

@@ -88,6 +88,7 @@ SOURCES += \
         src/task/task.cpp \
         src/util/fs.cpp \
         src/util/timer.cpp \
+    src/main/settings.cpp
 
 HEADERS += \
         src/ai/player/ai_strategy.h \
@@ -138,4 +139,5 @@ HEADERS += \
         src/task/task.h \
         src/util/fs.h \
         src/util/timer.h \
+    src/main/settings.h
 
