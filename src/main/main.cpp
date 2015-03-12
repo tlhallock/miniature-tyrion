@@ -15,6 +15,8 @@
 
 #include <X11/Xlib.h>
 
+int main_2(int c, char **v);
+
 aoe::Game* start_game(const std::string& root_dir)
 {
     // The images are still used after this method...
@@ -50,13 +52,14 @@ aoe::Game* start_game(const std::string& root_dir)
 
 int main(int argc, char **argv)
 {
+    main_2(argc, argv);
     XInitThreads();
     aoe::ensure_directory_exists("data");
 
 
     aoe::Game* game = start_game("./");
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+    std::this_thread::sleep_for(std::chrono::milliseconds{10000});
 
     game->end();
 

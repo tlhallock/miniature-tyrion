@@ -15,10 +15,15 @@ CONFIG += debug
 
 TEMPLATE = app
 
-LIBS += -ljsoncpp -lopencv_core -lopencv_highgui -lopencv_imgproc -lboost_filesystem -lboost_log -lboost_system -lX11
+LIBS += -L/work/miniature-tyrion/opencv/prefix/lib \
+-ljsoncpp \
+-lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs \
+-lboost_filesystem  -lboost_system \
+-lX11 \
+-lGL -lGLU -lglut \
+-lboost_log
 
-
-INCLUDEPATH += src /usr/include/jsoncpp/
+INCLUDEPATH += src /usr/include/jsoncpp/ /work/miniature-tyrion/opencv/prefix/include/ /work/miniature-tyrion/opencv/opencv/build
 
 QMAKE_CXXFLAGS += -std=c++11 -Wunused-parameter
 
@@ -28,7 +33,7 @@ OTHER_FILES +=
 
 OBJECTS_DIR=objects/
 
-
+#-lglut -lglu
 
 
 
@@ -88,7 +93,10 @@ SOURCES += \
         src/task/task.cpp \
         src/util/fs.cpp \
         src/util/timer.cpp \
-    src/main/settings.cpp
+    src/main/settings.cpp \
+    src/gfx/gldisplay.cpp \
+    src/gfx/gl_test.cpp \
+    src/gfx/glapi.cpp
 
 HEADERS += \
         src/ai/player/ai_strategy.h \
@@ -139,5 +147,7 @@ HEADERS += \
         src/task/task.h \
         src/util/fs.h \
         src/util/timer.h \
-    src/main/settings.h
+    src/main/settings.h \
+    src/gfx/gldisplay.h \
+    src/gfx/glapi.h
 
