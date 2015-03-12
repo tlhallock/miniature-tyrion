@@ -7,13 +7,13 @@
 #include "res/images.h"
 #include "res/resource_descp.h"
 #include "res/civilization_descp.h"
+#include "res/unit_descp.h"
 #include "res/unit_structure.h"
 
 namespace aoe
 {
 
-class Game;
-class UnitDescription;
+class Civilization;
 
 class GameInfo
 {
@@ -23,19 +23,19 @@ private:
     Images images;
     std::vector<ResourceDescription> resources;
     UnitStructure structure;
-    std::vector<UnitDescription*> units;
-    UnitDescription* root;
+    std::vector<UnitDescription> units;
     std::vector<Technology> techs;
     std::vector<CivilizationDescription> civs;
-    int nplayers;
-    int *player_civs;
 public:
 	GameInfo(const std::string& root_directory);
 	~GameInfo();
 
-    Game* create_game(const std::vector<std::string>& civ_names);
     int get_number_of_resources() const;
     Images* get_images();
+
+    Civilization* create_civilization(int index) const;
+    std::vector<double> clone_resources() const;
+
 };
 
 }

@@ -18,13 +18,17 @@ class Map
 private:
     std::vector<std::unique_ptr<Unit>> units;
     std::vector<std::unique_ptr<Resource>> resources;
+    double width, height;
 
 public:
     Map();
     ~Map();
 
-    void place_unit(Unit* building);
+    void place_unit(Unit* units);
     void place_resource(Resource* res);
+
+    void remove_unit(Unit* units);
+    void remove_resource(Resource* units);
 
     const std::vector<std::unique_ptr<Unit>>& get_units() const;
     const std::vector<std::unique_ptr<Resource>>& get_resources() const;

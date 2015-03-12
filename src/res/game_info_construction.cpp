@@ -20,19 +20,20 @@ namespace game_info
 /*******************************
  * Utilities
  *******************************/
-void bfs(UnitDescription* root, std::function<void(UnitDescription* desc)> f)
+void bfs(const UnitStructure& tree, std::function<void(int idx)> f)
 {
-    std::list<UnitDescription*> horizon;
-    horizon.push_back(root);
+    std::list<int> horizon;
+    horizon.push_back(tree.get_root());
 
     while (horizon.size() > 0)
     {
-        UnitDescription* next = horizon.front();
+        int next = horizon.front();
         horizon.pop_front();
 
         f(next);
 
-        for (auto it = next->get_children().begin(); it != next->get_children().end(); ++it)
+        auto end = tree.get_children(next).end();
+        for (auto it = tree.get_children(next).begin(); it != end; ++it)
         {
             horizon.push_back(*it);
         }
@@ -73,16 +74,7 @@ std::vector<ResourceDescription> collect_resources(IdentifierTable& table, Opene
  * Unit creation
  *******************************/
 
-
-UnitDescription* find_root(UnitDescription* returnValue)
-{
-    while (returnValue->get_parent() != nullptr)
-    {
-        returnValue = returnValue->get_parent();
-    }
-    return returnValue;
-}
-std::vector<UnitDescription*> construct_unit_descriptions(IdentifierTable& table, OpenedPropertyFiles&& pfiles, UnitStructure& structure)
+std::vector<UnitDescription> construct_unit_descriptions(IdentifierTable& table, OpenedPropertyFiles&& pfiles, UnitStructure& structure)
 {
     std::vector<std::string> property_file_names;
     collect_files_by_ext(pfiles.get_base(), property_file_names, ".json");
@@ -98,7 +90,7 @@ std::vector<UnitDescription*> construct_unit_descriptions(IdentifierTable& table
 
     structure.set_size(nunits);
 
-    std::vector<UnitDescription*> descriptions;
+    std::vector<UnitDescription> descriptions;
 
     /**
      * Perform initial read...
@@ -106,8 +98,8 @@ std::vector<UnitDescription*> construct_unit_descriptions(IdentifierTable& table
     int index = 0;
     for (auto it = property_file_names.begin(); it != property_file_names.end(); ++it, index++)
     {
-        descriptions.push_back(new UnitDescription{table, pfiles.get_property_file(*it), index, nunits, nres});
-        std::cout << "Found unit: " << descriptions[index]->get_name() << '\n';
+        descriptions.push_back(UnitDescription{table, pfiles.get_property_file(*it), index, nunits, nres});
+        std::cout << "Found unit: " << descriptions[index].get_name() << '\n';
     }
 
     /**
@@ -125,10 +117,9 @@ std::vector<UnitDescription*> construct_unit_descriptions(IdentifierTable& table
         }
 
         int s = table.get_unit_id(parentFile->get_property("name").asString());
-        descriptions[index]->set_parent(descriptions[s]);
         structure.set_parent(index, s);
 
-        if (index != descriptions[index]->get_id())
+        if (index != descriptions[index].get_id())
         {
             std::cerr << "This test fails" << std::endl;
             exit(-1);
@@ -140,10 +131,13 @@ std::vector<UnitDescription*> construct_unit_descriptions(IdentifierTable& table
     /**
      * Link against other units.
      */
-    bfs(find_root(descriptions[0]),
-            [&descriptions, &pfiles, &property_file_names, nunits](UnitDescription* description)
+    bfs(structure, [&table, &descriptions, &pfiles, &property_file_names, &structure](int idx)
         {
-            description->link_properties(descriptions, pfiles.get_property_file(property_file_names.at(description->get_id())));
+            UnitDescription& description = descriptions[idx];
+            description.link_units(table,
+                                        descriptions,
+                                        pfiles.get_property_file(property_file_names.at(idx)),
+                                        structure);
         });
 
     return descriptions;
@@ -155,7 +149,7 @@ std::vector<UnitDescription*> construct_unit_descriptions(IdentifierTable& table
 
 std::vector<Technology> collect_technologies(OpenedPropertyFiles&& pfiles,
                                                            IdentifierTable& table,
-                                                           const std::vector<UnitDescription*>& units)
+                                                           const std::vector<UnitDescription>& units)
 {
     std::vector<std::string> property_file_names;
     collect_files_by_ext(pfiles.get_base(), property_file_names, ".json");
@@ -185,7 +179,7 @@ std::vector<Technology> collect_technologies(OpenedPropertyFiles&& pfiles,
 
 std::vector<CivilizationDescription> collect_civilizations(OpenedPropertyFiles&& pfiles,
                                                            IdentifierTable& table,
-                                                           const std::vector<UnitDescription*>& units,
+                                                           const std::vector<UnitDescription>& units,
                                                            const std::vector<Technology>& techs)
 {
     std::vector<std::string> property_file_names;
@@ -200,7 +194,7 @@ std::vector<CivilizationDescription> collect_civilizations(OpenedPropertyFiles&&
             continue;
         }
 
-        CivilizationDescription civ{pfile, units, techs};
+        CivilizationDescription civ{pfile, table};
         civ.set_id(table.get_civilization_id(civ.get_name()));
         returnValue.push_back(civ);
 

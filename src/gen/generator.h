@@ -4,15 +4,9 @@
 namespace aoe
 {
 
-class Map;
+class Game;
 
-class Generator
-{
-public:
-    Generator();
-};
-
-void generate_map(Map& map);
+void generate_map(Game* map);
 
 }
 

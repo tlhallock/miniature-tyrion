@@ -13,6 +13,8 @@ namespace aoe
 class IdentifierTable;
 class PropertyFile;
 class UnitDescription;
+class UnitStructure;
+class Unit;
 
 class UnitDescription
 {
@@ -30,15 +32,13 @@ private:
     int image_id;
     bool creatable;
 
-    double* damage;
-    double* resistance;
-    double* cost;
-    double* collection_speed;
+    std::vector<double> damage;
+    std::vector<double> resistance;
+    std::vector<double> cost;
+    std::vector<double> collection_speed;
 
-
-    UnitDescription* parent;
-    std::set<UnitDescription*> children;
-
+    std::set<int> creates_units;
+    std::set<int> creates_techs;
 public:
     UnitDescription(
             IdentifierTable& table,
@@ -48,17 +48,18 @@ public:
             int nres);
     ~UnitDescription();
 
-    void link_properties(std::vector<UnitDescription*>& descriptions, const PropertyFile& propertyFile);
-    void link_building();
+    void link_units(IdentifierTable& table,
+                                          std::vector<UnitDescription>& descriptions,
+                                          const PropertyFile& propertyFile,
+                                          const UnitStructure& tree);
+    void link_techs(IdentifierTable& table,
+                                          std::vector<UnitDescription>& descriptions,
+                                          const PropertyFile& propertyFile,
+                                          const UnitStructure& tree);
 
-    UnitDescription* clone();
-    UnitDescription *create();
+    Unit *create() const;
 
-    int get_id() const { return id; }
-    UnitDescription* get_parent();
-    void set_parent(UnitDescription*p);
-    const std::set<UnitDescription*>& get_children() const;
-
+    int get_id() const;
 
     friend std::ostream& operator<<(std::ostream& out, const UnitDescription& u);
 

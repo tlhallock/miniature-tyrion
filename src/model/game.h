@@ -8,6 +8,7 @@
 #include "model/map.h"
 #include "model/engine.h"
 #include "util/timer.h"
+#include "ai/player/player_listener.h"
 
 namespace aoe
 {
@@ -15,7 +16,7 @@ namespace aoe
 class Player;
 class Strategy;
 
-class Game
+class Game : PlayerListener
 {
 private:
     std::vector<std::unique_ptr<Player>> players;
@@ -34,6 +35,14 @@ public:
     Map& get_map();
     Engine& get_engine();
     Timer& get_timer();
+
+    void start();
+    void end();
+
+    void unit_created(Unit* u);
+    void unit_killed(Unit* u);
+
+
 };
 
 }

@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "model/area.h"
+#include "model/civilization.h"
 
 namespace aoe
 {
@@ -21,22 +22,21 @@ class Player
 {
 private:
     std::unique_ptr<Civilization> civilization;
+
     std::vector<Unit*> units;
     std::vector<Building*> buildings;
-    int *resources;
+    std::vector<double> resources;
 
     std::vector<PlayerListener*> listeners;
 
     Area center;
 
 public:
-    Player(GameInfo* info, int index);
+    Player(Civilization* civ, const std::vector<double>& res);
     ~Player();
 
     void add_listener(PlayerListener* listener);
     void remove_listener(PlayerListener* listener);
-
-
 
 };
 

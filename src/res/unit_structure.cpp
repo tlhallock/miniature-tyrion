@@ -3,17 +3,30 @@
 namespace aoe
 {
 
-UnitStructure::UnitStructure() {}
-UnitStructure::~UnitStructure() {}
+UnitStructure::UnitStructure() : parents{nullptr} {}
+UnitStructure::~UnitStructure() { delete[] parents; }
 
 void UnitStructure::set_size(int nunits)
 {
+    delete[] parents;
+    parents = new int[nunits];
+    for (int i=0;i<nunits;i++)
+    {
+        parents[i] = -1;
+        children[i].insert(i);
+    }
     children.resize(nunits);
 }
 
 void UnitStructure::set_parent(int child, int parent)
 {
+    parents[child] = parent;
     children[parent].insert(child);
+}
+
+int UnitStructure::get_parent(int child) const
+{
+    return parents[child];
 }
 
 const std::set<int>& UnitStructure::get_children(int parent) const
@@ -53,22 +66,6 @@ void UnitStructure::compile()
 {
     int nunits = (int) children.size();
 
-    int *parents = new int[nunits];
-    for (int i=0;i<nunits;i++)
-    {
-        parents[i] = -1;
-    }
-
-    for (int i=0;i<nunits;i++)
-    {
-        auto end = children[i].end();
-        for (auto it = children[i].begin(); it != end; ++it)
-        {
-            parents[*it] = i;
-        }
-        children[i].insert(i);
-    }
-
     for (int i=0;i<nunits;i++)
     {
         std::set<int> accum;
@@ -83,8 +80,6 @@ void UnitStructure::compile()
             current = p;
         }
     }
-
-    delete[] parents;
 }
 
 std::ostream& operator<<(std::ostream& out, const UnitStructure& u)
@@ -102,6 +97,15 @@ std::ostream& operator<<(std::ostream& out, const UnitStructure& u)
     return out;
 }
 
+int UnitStructure::get_root() const
+{
+    int current = 0;
+    while (parents[current] >= 0)
+    {
+        current = parents[current];
+    }
+    return current;
+}
 
 
 }

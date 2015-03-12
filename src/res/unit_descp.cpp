@@ -1,8 +1,12 @@
 
 #include "res/unit_descp.h"
+
 #include "res/identifier_table.h"
 #include "res/resource_descp.h"
 #include "res/property_file.h"
+#include "res/unit_structure.h"
+#include "model/unit.h"
+
 
 namespace aoe
 {
@@ -26,11 +30,10 @@ UnitDescription::UnitDescription(
     image_id          { 0 },//table.get_image_id(propertyFile.get_property("images")[0].asString()) },
     creatable         { propertyFile.get_property("creatable").asBool()  },
 
-	damage{new double[nunits]},
-	resistance{new double[nunits]},
-    cost{new double[nres]},
-    collection_speed{new double[nres]},
-    parent{nullptr}
+    damage{nunits},
+    resistance{nunits},
+    cost{nres},
+    collection_speed{nres}
 {
     for (auto it = table.get_resources().begin(); it != table.get_resources().end(); ++it)
     {
@@ -45,25 +48,147 @@ UnitDescription::UnitDescription(
     }
 }
 
-UnitDescription::~UnitDescription()
+UnitDescription::~UnitDescription() {}
+
+
+void UnitDescription::link_units(IdentifierTable& table,
+                                      std::vector<UnitDescription>& descriptions,
+                                      const PropertyFile& propertyFile,
+                                      const UnitStructure& tree)
 {
-    delete[] damage;
-    delete[] resistance;
-    delete[] cost;
-    delete[] collection_speed;
-}
+    int nunits = descriptions.size();
 
-
-
-void UnitDescription::link_building()
-{
-    if (!is_building())
+    int parentIdx = tree.get_parent(id);
+    if (parentIdx >= 0)
     {
-        return;
+        const UnitDescription& parent = descriptions[parentIdx];
+        for (int i=0; i<nunits; i++)
+        {
+            // By default values are inherited by the parent unit...
+            damage[i] = parent.damage[i];
+            resistance[i] = parent.resistance[i];
+            creates_units.insert(parent.creates_units.begin(), parent.creates_units.end());
+            creates_techs.insert(parent.creates_techs.begin(), parent.creates_techs.end());
+        }
     }
 
+    {
+        const Json::Value& damages = propertyFile.get_property("damage");
+        for (unsigned int i=0; i<damages.size(); i++)
+        {
+            const Json::Value& jsonChild = damages[i];
 
+            int ounit                = table.get_unit_id(jsonChild["against"].asString());
+            double damageV           = jsonChild["value"].asDouble();
+
+            for (auto it = tree.get_children(ounit).begin(); it != tree.get_children(ounit).end(); ++it)
+            {
+                damage[*it] = damageV;
+            }
+        }
+    }
+
+    {
+        const Json::Value& resistances = propertyFile.get_property("resistance");
+        for (unsigned int i=0; i<resistances.size(); i++)
+        {
+            const Json::Value& jsonChild = resistances[i];
+
+            int ounit                = table.get_unit_id(jsonChild["torwards"].asString());
+            double resistanceV       = jsonChild["value"].asDouble();
+
+            for (auto it = tree.get_children(ounit).begin(); it != tree.get_children(ounit).end(); ++it)
+            {
+                resistance[*it] = resistanceV;
+            }
+        }
+    }
+
+    const Json::Value& creates = propertyFile.get_property("creates");
+    {
+        const Json::Value& creates_units_child = creates["units"];
+        for (int i=0;i<creates_units_child.size();i++)
+        {
+            const std::string& unit = creates_units_child[i]["name"].asString();
+            bool possible           = creates_units_child[i]["value"].asBool();
+
+            if (possible)
+            {
+                creates_units.insert(table.get_unit_id(unit));
+            }
+            else
+            {
+                creates_units.erase(table.get_unit_id(unit));
+            }
+        }
+    }
 }
+
+void UnitDescription::link_techs(IdentifierTable& table,
+                                      std::vector<UnitDescription>& descriptions,
+                                      const PropertyFile& propertyFile,
+                                      const UnitStructure& tree)
+{
+    int nunits = descriptions.size();
+
+    int parentIdx = tree.get_parent(id);
+    if (parentIdx >= 0)
+    {
+        const UnitDescription& parent = descriptions[parentIdx];
+        for (int i=0; i<nunits; i++)
+        {
+            // By default values are inherited by the parent unit...
+            creates_techs.insert(parent.creates_techs.begin(), parent.creates_techs.end());
+        }
+    }
+
+    const Json::Value& creates = propertyFile.get_property("creates");
+    {
+        const Json::Value& creates_techs_child = creates["techs"];
+
+        for (int i=0;i<creates_techs_child.size();i++)
+        {
+            const std::string& tech = creates_techs_child[i]["name"].asString();
+            bool possible           = creates_techs_child[i]["value"].asBool();
+
+            if (possible)
+            {
+                creates_techs.insert(table.get_technology_id(tech));
+            }
+            else
+            {
+                creates_techs.erase(table.get_technology_id(tech));
+            }
+        }
+    }
+}
+
+
+int UnitDescription::get_id() const
+{
+    return id;
+}
+
+Unit *UnitDescription::create() const
+{
+    return new Unit{this};
+}
+
+const std::string& UnitDescription::get_name() const
+{
+    return name;
+}
+
+
+int UnitDescription::get_image_id() const
+{
+    return image_id;
+}
+
+
+
+/*
+
 
 void UnitDescription::set_parent(UnitDescription* parent)
 {
@@ -101,90 +226,6 @@ bool UnitDescription::is_building()
 {
     return is_child_of("building");
 }
-
-void UnitDescription::link_properties(std::vector<UnitDescription*>& descriptions, const PropertyFile& propertyFile)
-{
-    int nunits = descriptions.size();
-
-    if (parent != nullptr)
-    {
-        for (int i=0; i<nunits; i++)
-        {
-            // By default it is inherited by the parent unit...
-            damage[i] = parent->damage[i];
-            resistance[i] = parent->resistance[i];
-        }
-    }
-
-    {
-        const Json::Value& damages = propertyFile.get_property("damage");
-        for (unsigned int i=0; i<damages.size(); i++)
-        {
-            const Json::Value& jsonChild = damages[i];
-
-            const std::string& ounit = jsonChild["against"].asString();
-            double damageV           = jsonChild["value"].asDouble();
-            for (int j=0; j<nunits; j++)
-            {
-                UnitDescription* other = descriptions[j];
-                if (other->is_child_of(ounit))
-                {
-                    damage[other->id] = damageV;
-                }
-            }
-        }
-    }
-
-    {
-        const Json::Value& resistances = propertyFile.get_property("resistance");
-        for (unsigned int i=0; i<resistances.size(); i++)
-        {
-            const Json::Value& jsonChild = resistances[i];
-
-            const std::string& ounit = jsonChild["torwards"].asString();
-            double resistanceV       = jsonChild["value"].asDouble();
-            for (int j=0; j<nunits; j++)
-            {
-                UnitDescription* other = descriptions[j];
-                if (other->is_child_of(ounit))
-                {
-                    resistance[other->id] = resistanceV;
-                }
-            }
-        }
-    }
-}
-
-
-UnitDescription* clone()
-{
-    return nullptr;
-}
-
-
-UnitDescription *create()
-{
-    return nullptr;
-}
-
-
-
-const std::string& UnitDescription::get_name() const
-{
-    return name;
-}
-
-
-int UnitDescription::get_image_id() const
-{
-    return image_id;
-}
-
-
-
-/*
-
-
 
 UnitDescription* UnitDescription::get_most_precise_parent(std::set<std::string> possible_defs)
 {

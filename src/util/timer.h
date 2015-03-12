@@ -23,7 +23,7 @@ class Timer
  private:
   long repeat;
   std::vector<TimerTask*> functions;
-  std::thread t;
+  std::thread *t;
 
   bool done;
 
@@ -31,9 +31,13 @@ class Timer
  Timer(long period);
  ~Timer();
 
- void run_all();
  void add(TimerTask* task);
+
+ void start();
  void end();
+
+private:
+ void run_all();
 };
 
 }

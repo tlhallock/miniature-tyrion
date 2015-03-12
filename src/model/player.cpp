@@ -11,17 +11,36 @@
 namespace aoe
 {
 
-Player::Player(GameInfo* info, int index) :
-    resources{new int[info->get_number_of_resources()]}
+Player::Player(Civilization* civ, const std::vector<double>& res) :
+    civilization{civ},
+    resources{res}
 {
 
 }
 
+Player::~Player() {}
 
 
-Player::~Player()
+
+void Player::add_listener(PlayerListener* listener)
 {
-    delete[] resources;
+    listeners.push_back(listener);
 }
 
+void Player::remove_listener(PlayerListener* listener)
+{
+    for (auto it = listeners.begin(); it != listeners.end(); ++it)
+    {
+        if (*it == listener)
+        {
+            listeners.erase(it);
+            return;
+        }
+    }
 }
+
+
+
+}
+
+

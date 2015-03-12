@@ -2,7 +2,7 @@
 #define BUILDING_H
 
 #include <iostream>
-#include <vector>
+#include <set>
 
 #include "model/unit.h"
 
@@ -15,11 +15,6 @@ class UnitDescription;
 class Building : public Unit
 {
 private:
-    Player *parent;
-
-    std::vector<UnitDescription*> units;
-    std::vector<Technology> techs;
-
 public:
     Building(UnitDescription* desc);
     ~Building();

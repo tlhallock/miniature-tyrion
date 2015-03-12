@@ -10,13 +10,16 @@ namespace aoe
 
 Timer::Timer(long period) :
     repeat{period},
-    t{[&](){ this->run_all(); }},
+    t{nullptr},
     done{false} {}
 
 Timer::~Timer()
 {
-    done = true;
-    t.join();
+    if (t != nullptr)
+    {
+        std::cerr << "Uh oh... Not shut down properly!";
+        delete t;
+    }
 }
 
 void Timer::run_all()
@@ -42,15 +45,22 @@ void Timer::run_all()
         }
     }
 
-    for( auto it = functions.begin(); it != functions.end(); ++it)
+    for (auto it = functions.begin(); it != functions.end(); ++it)
     {
         delete *it;
     }
 }
 
+void Timer::start()
+{
+    t = new std::thread{[&](){ this->run_all(); }};
+}
+
 void Timer::end()
 {
     done = true;
+    t->join();
+    t = nullptr;
 }
 
 void Timer::add(TimerTask* task)

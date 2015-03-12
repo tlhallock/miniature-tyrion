@@ -1,17 +1,13 @@
 #include "generator.h"
 
-#include "model/map.h"
+#include "model/game.h"
 
 namespace aoe
 {
 
-Generator::Generator()
-{
-}
 
 
-
-void generate_map(Map& map)
+void generate_map(Game* game)
 {
 
 }

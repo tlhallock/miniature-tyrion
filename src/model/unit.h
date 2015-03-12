@@ -25,11 +25,10 @@ class Unit : public Gfx
   Area area;
   std::vector<UnitListener*> listeners;
   Task* task;
-  UnitDescription *type;
-  Player *parent;
+  const UnitDescription *type;
   
  public:
-  Unit(UnitDescription* desc);
+  Unit(const UnitDescription* desc);
   ~Unit();
 
   void take_turn();

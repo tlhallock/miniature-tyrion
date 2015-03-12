@@ -5,28 +5,29 @@
 #include <map>
 #include <set>
 
+#include "res/technology.h"
+#include "res/unit_descp.h"
+
 namespace aoe
 {
-
-class Player;
-class Building;
 
 class Civilization
 {
 private:
-    std::map<int, std::set<int>> buildings;
-    Player *parent;
+    std::string name;
+    std::set<int> buildings;
+    std::vector<UnitDescription> unit_values;
 
 public:
-    Civilization();
+    Civilization(const std::string& name, const std::vector<UnitDescription>& units);
     ~Civilization();
 
-    void set_player(Player* parent);
-
     void enable(int building);
-    void enable(int builing, int unit);
+    void disable(int building);
+    const std::set<int>& get_available_buildings() const;
+    bool is_enabled(int building) const;
 
-    Building* create_building(int building_id);
+    Unit* create_building(int building_id) const;
 };
 
 }

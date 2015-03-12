@@ -39,4 +39,8 @@ int ResourceDescription::get_image_id() const
     return image_id;
 }
 
+double ResourceDescription::get_initial_value() const { return initial_cap; }
+
+
+
 }

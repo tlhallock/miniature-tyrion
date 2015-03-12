@@ -11,7 +11,7 @@ namespace aoe
 {
 
 
-Unit::Unit(UnitDescription* desc) : task{nullptr}, type{desc} {}
+Unit::Unit(const UnitDescription* desc) : task{nullptr}, type{desc} {}
 
 Unit::~Unit() {}
 
