@@ -48,6 +48,8 @@ public:
 
     IdentifierTable& get_table();
 
+    friend std::ostream& operator<<(std::ostream& out, const Game& g);
+
 };
 
 }

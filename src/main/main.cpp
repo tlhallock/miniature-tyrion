@@ -52,8 +52,8 @@ aoe::Game* start_game(const std::string& root_dir)
 
 int main(int argc, char **argv)
 {
-    main_2(argc, argv);
     XInitThreads();
+    glutInit(&argc, argv);
     aoe::ensure_directory_exists("data");
 
 

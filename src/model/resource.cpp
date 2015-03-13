@@ -24,4 +24,11 @@ const Area& Resource::get_location() const
     return location;
 }
 
+
+std::ostream& operator<<(std::ostream& out, const Resource& g)
+{
+    return out << g.type->get_name() << " at " << g.location;
+}
+
+
 }

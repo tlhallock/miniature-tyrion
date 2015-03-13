@@ -20,6 +20,9 @@ public:
 
     int get_image_id() const;
     const Area& get_location() const;
+
+
+    friend std::ostream& operator<<(std::ostream& out, const Resource& g);
 };
 
 }

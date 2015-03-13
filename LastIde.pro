@@ -96,7 +96,9 @@ SOURCES += \
     src/main/settings.cpp \
     src/gfx/gldisplay.cpp \
     src/gfx/gl_test.cpp \
-    src/gfx/glapi.cpp
+    src/gfx/glapi.cpp \
+    src/gfx/gfxobject.cpp \
+    src/gfx/viewport_listener.cpp
 
 HEADERS += \
         src/ai/player/ai_strategy.h \
@@ -149,5 +151,7 @@ HEADERS += \
         src/util/timer.h \
     src/main/settings.h \
     src/gfx/gldisplay.h \
-    src/gfx/glapi.h
+    src/gfx/glapi.h \
+    src/gfx/gfxobject.h \
+    src/gfx/viewport_listener.h
 

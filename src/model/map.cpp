@@ -53,5 +53,22 @@ const std::vector<std::unique_ptr<Resource>>& Map::get_resources() const { retur
 
 
 
+std::ostream& operator<<(std::ostream& out, const Map& g)
+{
+    out << "Units:\n";
+    for (int i=0;i<g.units.size();i++)
+    {
+        out << '\t' << i << ": " << *g.units[i] << '\n';
+    }
+
+    out << "Resources:\n";
+    for (int i=0;i<g.resources.size();i++)
+    {
+        out << '\t' << i << ": " << *g.resources[i] << '\n';
+    }
+    return out;
+}
+
+
 
 }

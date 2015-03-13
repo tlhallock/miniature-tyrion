@@ -23,7 +23,7 @@ CvDisplay::CvDisplay(Game* game, Images* images_) :
     image{w, h, CV_8UC1},
     images{images_}
 {
-    cv::namedWindow("Display", cv::WINDOW_AUTOSIZE);
+    cv::namedWindow("Display", cv::AUTO_RESIZE);
 }
 
 CvDisplay::~CvDisplay()
@@ -86,6 +86,13 @@ void CvDisplay::draw_gfx(Gfx* gfx)
 
     sub_image.copyTo(image(cv::Rect(cv::Point(xpx, ypx), scaledSize)));
 }
+
+
+
+
+
+
+
 
 
 }

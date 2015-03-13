@@ -9,6 +9,27 @@
 namespace aoe
 {
 
+
+namespace
+{
+
+    class PrintTask : public TimerTask
+    {
+    private:
+        Game* game;
+
+    public:
+        PrintTask(Game* game_) :
+            game{game_} {}
+        ~PrintTask() {}
+
+        void run()
+        {
+            std::cout << *game << std::endl;
+        }
+    };
+}
+
 #define CLOCK_FREQ 200
 
 Game::Game(const IdentifierTable& table_) :
@@ -18,6 +39,7 @@ Game::Game(const IdentifierTable& table_) :
     table{table_}
 {
     timer.add(&engine);
+    timer.add(new PrintTask{this});
 }
 
 Game::~Game() {}
@@ -75,6 +97,14 @@ Player* Game::get_player(int index)
 IdentifierTable& Game::get_table()
 {
     return table;
+}
+
+
+std::ostream& operator<<(std::ostream& out, const Game& g)
+{
+    out << "Map:\n";
+    out << g.map;
+    return out;
 }
 
 

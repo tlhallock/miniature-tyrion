@@ -28,6 +28,7 @@ public:
 
 private:
     void draw_gfx(Gfx* gfx);
+
 };
 
 

@@ -46,8 +46,7 @@ void Unit::set_task(Task* atask)
 
 std::ostream& operator<<(std::ostream& out, const Unit& u)
 {
-    out << "location: " << u.area << '\n';
-    return out;
+    return  out << u.type->get_name() << " at " << u.area;
 }
 
 int Unit::get_image_id() const
