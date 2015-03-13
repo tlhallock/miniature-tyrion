@@ -18,7 +18,7 @@ class GfxObject
     cv::ogl::Buffer indices;
 
 public:
-    GfxObject(double w, double h,
+    GfxObject(const Location& pos,
               const std::string& object_file, const cv::Mat& img);
     ~GfxObject();
 

@@ -15,6 +15,7 @@ class PropertyFile;
 class UnitDescription;
 class UnitStructure;
 class Unit;
+class Location;
 
 class UnitDescription
 {
@@ -66,9 +67,11 @@ public:
     const std::string& get_name() const;
 
     int get_image_id() const;
-    bool isCreatable() const { return creatable; }
-    double get_width() const { return width; }
-    double get_height() const { return height; }
+
+    bool isCreatable() const;
+    Location get_size() const;
+    double get_width() const;
+    double get_height() const;
 
 private:
     bool is_child_of(const std::string& unitName);

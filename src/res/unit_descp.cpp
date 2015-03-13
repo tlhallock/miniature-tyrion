@@ -204,6 +204,12 @@ int UnitDescription::get_image_id() const
 
 
 
+bool UnitDescription::isCreatable() const { return creatable; }
+Location UnitDescription::get_size() const { return Location{width, height}; }
+double UnitDescription::get_width() const { return width; }
+double UnitDescription::get_height() const { return height; }
+
+
 /*
 
 

@@ -41,7 +41,6 @@ OBJECTS_DIR=objects/
 
 
 
-
 SOURCES += \
         src/ai/player/ai_strategy.cpp \
         src/ai/player/network_strategy.cpp \
@@ -66,7 +65,6 @@ SOURCES += \
         src/gfx/gfxobject.cpp \
         src/gfx/glapi.cpp \
         src/gfx/gldisplay.cpp \
-        src/gfx/gl_test.cpp \
         src/gfx/viewport_listener.cpp \
         src/main/main.cpp \
         src/main/settings.cpp \

@@ -58,17 +58,14 @@ void load_obj(const char* filename, std::vector<glm::vec4> &vertices, std::vecto
 namespace aoe
 {
 
-GfxObject::GfxObject(double w, double h,
-                     const std::string& object_file, const cv::Mat& img)
+GfxObject::GfxObject(const Location& pos, const std::string& object_file, const cv::Mat& img)
 {
-    w /= Settings::get_instance().MAP_WIDTH;
-    h /= Settings::get_instance().MAP_HEIGHT;
-
-    std::cout << "The width/height are " << Location{w, h};
+//    Location l = pos / Settings::get_instance().MODEL_TO_OPENGL_RATIO;
+//    Location l = pos;
+    Location l = pos / Settings::get_instance().MAP_SIZE;
 
     cv::Mat_<cv::Vec2f> vertex(1, 4);
-//    vertex << cv::Vec2f(0, h), cv::Vec2f(0, 0), cv::Vec2f(w, 0), cv::Vec2f(w, h);
-    vertex << cv::Vec2f(0, .5), cv::Vec2f(0, 0), cv::Vec2f(.5, 0), cv::Vec2f(.5, .5);
+    vertex << cv::Vec2f(0, l.x), cv::Vec2f(0, 0), cv::Vec2f(l.y, 0), cv::Vec2f(l.x, l.y);
 
     cv::Mat_<cv::Vec2f> texCoords(1, 4);
     texCoords << cv::Vec2f(0, 0), cv::Vec2f(0, 1), cv::Vec2f(1, 1), cv::Vec2f(1, 0);
@@ -111,10 +108,9 @@ GlDrawInstance::~GlDrawInstance() {}
 
 void GlDrawInstance::updatePosition()
 {
-//    std::cout << "Should be at " << original->get_location() << std::endl;
-//    std::cout << "Divided by " << Settings::get_instance().MAP_WIDTH << std::endl;
-//    std::cout << "Is " << (Location{original->get_location()} / Settings::get_instance().MAP_WIDTH) << std::endl;
-    pos = (Location{original->get_location()} / Settings::get_instance().MAP_WIDTH);
+    pos = (Location{original->get_location()} / Settings::get_instance().MAP_SIZE);
+//    pos = (Location{original->get_location()} / Settings::get_instance().MODEL_TO_OPENGL_RATIO);
+//    pos = original->get_location();
 }
 
 Unit* GlDrawInstance::getOriginal()
@@ -124,57 +120,13 @@ Unit* GlDrawInstance::getOriginal()
 void GlDrawInstance::draw()
 {
     updatePosition();
-    std::cout << "translating by " << pos << std::endl;
-//    glTranslated(pos.x, pos.y, 0);
+
+    glTranslated(pos.x, pos.y, 0);
     type->draw();
-//    glTranslated(-pos.x, -pos.y, 0);
+    glTranslated(-pos.x, -pos.y, 0);
 }
 
 
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    cv::Mat img = cv::imread(texture_file);
-//    if (img.empty())
-//    {
-//        std::cerr << "Can't open image " << texture_file << std::endl;
-//    }
-
-
-//void GlDrawInstance::setPosition(const Location location_)
-//{
-//    pos = location_;
-//}
-
-//double GlDrawInstance::get_x()
-//{
-//    return pos.x;
-//}
-//double GlDrawInstance::get_y()
-//{
-//    return pos.y;
-//}

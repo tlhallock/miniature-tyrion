@@ -65,7 +65,7 @@ bool LocationCmp::operator() (const Location& l1, const Location& l2)
 }
 
 
-Location Location::operator/(double d)
+Location Location::operator/(double d) const
 {
     return Location{x / d, y / d};
 }

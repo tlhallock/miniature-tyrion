@@ -36,9 +36,12 @@ private:
     std::map<int, GfxObject> drawTypes;
     std::vector<GlDrawInstance> drawables;
 
-    double current_range;
-
     Area area;
+    int w, h;
+
+    double camera_x;
+    double camera_y;
+    double camera_z;
 
 //    std::thread* render_thread;
 
@@ -51,8 +54,8 @@ public:
 
     void left();
     void right();
-    void forward();
-    void backward();
+    void up();
+    void down();
 
     void unit_entered(Unit* entered);
     void unit_exited(Unit* exit);
@@ -63,6 +66,7 @@ private:
 
     void load(GameInfo& civ);
     void draw();
+    void setCamera(double x, double y, double z);
 };
 
 }

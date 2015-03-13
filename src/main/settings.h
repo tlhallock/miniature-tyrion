@@ -11,11 +11,12 @@ class Settings
 {
 public:
 
-    int DISPLAY_WIDTH = 500;
-    int DISPLAY_HEIGHT = 500;
+    int DISPLAY_WIDTH = 640;
+    int DISPLAY_HEIGHT = 480;
 
-    double MAP_WIDTH = 20;
-    double MAP_HEIGHT = 20;
+    double MAP_SIZE = 100;
+    double MAP_WIDTH = MAP_SIZE;
+    double MAP_HEIGHT = MAP_SIZE;
     Area INITIAL_VIEWPORT{0, 0, MAP_WIDTH, MAP_HEIGHT};
 
     double BACKGROUND_COLOR = 0.0;
@@ -26,6 +27,12 @@ public:
     double INITIAL_HEIGHT = 3;
 
     long EGNINE_CLOCK_FREQ = 2000;
+
+    double ZOOM_AMOUNT = .5;
+
+    int KEY_WAIT_TIME = 20;
+
+    double MODEL_TO_OPENGL_RATIO = 1.0/20;
 private:
     Settings();
     ~Settings();

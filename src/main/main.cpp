@@ -18,11 +18,15 @@
 #include <X11/Xlib.h>
 #include <GL/glut.h>
 
+int main_2(int argc, char* argv[]);
 
 int main(int argc, char **argv)
 {
+//    main_2(argc, argv);
     XInitThreads();
     glutInit(&argc, argv);
+
+
     aoe::ensure_directory_exists("data");
 
     // The images are still used after this method...

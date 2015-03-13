@@ -19,7 +19,7 @@ public:
     Location(const Area& a);
 
     Location& operator=(const Area& a);
-    Location operator/(double d);
+    Location operator/(double d) const;
 
     void setX(double x);
     void setY(double y);
