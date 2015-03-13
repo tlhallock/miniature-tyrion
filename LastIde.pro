@@ -42,7 +42,6 @@ OBJECTS_DIR=objects/
 
 
 
-
 SOURCES += \
         src/ai/player/ai_strategy.cpp \
         src/ai/player/network_strategy.cpp \
@@ -64,7 +63,13 @@ SOURCES += \
         src/gfx/cvdisplay.cpp \
         src/gfx/display.cpp \
         src/gfx/gfx.cpp \
+        src/gfx/gfxobject.cpp \
+        src/gfx/glapi.cpp \
+        src/gfx/gldisplay.cpp \
+        src/gfx/gl_test.cpp \
+        src/gfx/viewport_listener.cpp \
         src/main/main.cpp \
+        src/main/settings.cpp \
         src/model/area.cpp \
         src/model/building.cpp \
         src/model/civilization.cpp \
@@ -93,12 +98,6 @@ SOURCES += \
         src/task/task.cpp \
         src/util/fs.cpp \
         src/util/timer.cpp \
-    src/main/settings.cpp \
-    src/gfx/gldisplay.cpp \
-    src/gfx/gl_test.cpp \
-    src/gfx/glapi.cpp \
-    src/gfx/gfxobject.cpp \
-    src/gfx/viewport_listener.cpp
 
 HEADERS += \
         src/ai/player/ai_strategy.h \
@@ -121,6 +120,11 @@ HEADERS += \
         src/gfx/cvdisplay.h \
         src/gfx/display.h \
         src/gfx/gfx.h \
+        src/gfx/gfxobject.h \
+        src/gfx/glapi.h \
+        src/gfx/gldisplay.h \
+        src/gfx/viewport_listener.h \
+        src/main/settings.h \
         src/model/area.h \
         src/model/building.h \
         src/model/civilization.h \
@@ -149,9 +153,4 @@ HEADERS += \
         src/task/task.h \
         src/util/fs.h \
         src/util/timer.h \
-    src/main/settings.h \
-    src/gfx/gldisplay.h \
-    src/gfx/glapi.h \
-    src/gfx/gfxobject.h \
-    src/gfx/viewport_listener.h
 

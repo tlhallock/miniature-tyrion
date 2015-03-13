@@ -2,6 +2,7 @@
 #ifndef CV_DISPLAY_H_
 #define CV_DISPLAY_H_
 
+#if 0
 #include "opencv2/core/core.hpp"
 
 #include "gfx/display.h"
@@ -33,6 +34,6 @@ private:
 
 
 }
-
+#endif
 
 #endif

@@ -54,6 +54,7 @@ Images* GameInfo::get_images()
 }
 
 
+
 Civilization* GameInfo::create_civilization(int index) const
 {
     // TODO: apply civilization technologies

@@ -7,6 +7,34 @@
 namespace aoe
 {
 
+class Area;
+
+class Location
+{
+public:
+    double x, y;
+
+    Location();
+    Location(double x, double y);
+    Location(const Area& a);
+
+    Location& operator=(const Area& a);
+
+    void setX(double x);
+    void setY(double y);
+
+    double getX();
+    double getY();
+
+    void set(double x, double y);
+    double distance_to(const Location& other) const;
+};
+
+struct LocationCmp
+{
+    bool operator() (const Location& l1, const Location& l2);
+};
+
 class Area
 {
  public:

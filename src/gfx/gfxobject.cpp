@@ -1,6 +1,24 @@
 #include "gfxobject.h"
 
-void load_obj(const char* filename, vector<glm::vec4> &vertices, vector<glm::vec3> &normals, vector<GLushort> &elements) {
+#include "model/unit.h"
+
+#include <iostream>
+#include "cvconfig.h"
+#include <opencv2/highgui.hpp>
+#include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+
+#include "opencv2/core/core.hpp"
+#include "opencv2/core/cuda.hpp"
+#include "opencv2/highgui/highgui.hpp"
+
+#include <vector>
+
+
+#if 0
+void load_obj(const char* filename, std::vector<glm::vec4> &vertices, std::vector<glm::vec3> &normals, std::vector<GLushort> &elements) {
   ifstream in(filename, ios::in);
   if (!in) { cerr << "Cannot open " << filename << endl; exit(1); }
 
@@ -32,15 +50,20 @@ void load_obj(const char* filename, vector<glm::vec4> &vertices, vector<glm::vec
     normals[ia] = normals[ib] = normals[ic] = normal;
   }
 }
+#endif
 
-GfxObject::GfxObject(int w, int h,
-                     const std::string& object, const std::string& texture_file)
+
+namespace aoe
 {
-    cv::Mat img = cv::imread(texture_file);
-    if (img.empty())
-    {
-        std::cerr << "Can't open image " << filename << std::endl;
-    }
+
+GfxObject::GfxObject(double w, double h,
+                     const std::string& object_file, const cv::Mat& img)
+{
+//    cv::Mat img = cv::imread(texture_file);
+//    if (img.empty())
+//    {
+//        std::cerr << "Can't open image " << texture_file << std::endl;
+//    }
 
     cv::Mat_<cv::Vec2f> vertex(1, 4);
     vertex << cv::Vec2f(0, h), cv::Vec2f(0, 0), cv::Vec2f(w, 0), cv::Vec2f(w, h);
@@ -75,33 +98,40 @@ void GfxObject::draw()
 
 
 
-GlDrawInstance::GlDrawObject(double w, double h, GlDrawType* type_) :
-    x{0},
-    y{0},
+GlDrawInstance::GlDrawInstance(Unit* original_, GfxObject* type_) :
+    original{original_},
+    pos{original_->get_location()},
     type{type_}
 {}
 
-~GlDrawObject() {}
+GlDrawInstance::~GlDrawInstance() {}
 
-void GlDrawInstance::setPosition(double x_, double y_)
+
+void GlDrawInstance::updatePosition()
 {
-    x = x_; y = y_;
+    pos = original->get_location();
 }
 
-double GlDrawInstance::get_x()
-{
-    return x;
-}
-double GlDrawInstance::get_y()
-{
-    return y;
-}
+//void GlDrawInstance::setPosition(const Location location_)
+//{
+//    pos = location_;
+//}
+
+//double GlDrawInstance::get_x()
+//{
+//    return pos.x;
+//}
+//double GlDrawInstance::get_y()
+//{
+//    return pos.y;
+//}
 
 void GlDrawInstance::draw()
 {
-    glTranslated(x, y, 0);
+    glTranslated(pos.x, pos.y, 0);
     type->draw();
-    glTranslated(-x, -y, 0);
+    glTranslated(-pos.x, -pos.y, 0);
 }
 
 
+}

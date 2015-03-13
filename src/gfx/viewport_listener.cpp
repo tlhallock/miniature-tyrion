@@ -1,6 +1,12 @@
-#include "viewport_listener.h"
+#include "gfx/viewport_listener.h"
+
+
+namespace aoe
+{
 
 ViewportListener::ViewportListener(Area* monitoring_) :
-    monitoring{mointoring_}
+    monitoring{monitoring_}
 {
+}
+
 }

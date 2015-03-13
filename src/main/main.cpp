@@ -14,8 +14,8 @@
 #include "model/player.h"
 
 #include <X11/Xlib.h>
+#include <GL/glut.h>
 
-int main_2(int c, char **v);
 
 aoe::Game* start_game(const std::string& root_dir)
 {
@@ -40,9 +40,9 @@ aoe::Game* start_game(const std::string& root_dir)
 
     aoe::generate_map(game);
 
-    aoe::CvDisplay *display = new aoe::CvDisplay{game, info.get_images()};
+//    aoe::CvDisplay *display = new aoe::CvDisplay{game, info.get_images()};
 
-    game->get_timer().add(display);
+//    game->get_timer().add(display);
 
     game->start();
 

@@ -38,6 +38,8 @@ public:
 
 
     IdentifierTable& get_table() { return table; }
+
+    const std::vector<UnitDescription>& get_units() const { return units; }
 };
 
 }

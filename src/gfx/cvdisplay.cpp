@@ -1,4 +1,4 @@
-
+#if 0
 #include "gfx/cvdisplay.h"
 
 #include <opencv2/highgui/highgui.hpp>
@@ -96,3 +96,4 @@ void CvDisplay::draw_gfx(Gfx* gfx)
 
 
 }
+#endif

@@ -48,6 +48,22 @@ const Area&& Map::get_civilization_center(int index, int total)
                 cy + percent_of_radius * cy * sin(angle), 0, 0};
 }
 
+
+void Map::add_listener(ViewportListener* res)
+{
+    listeners.insert(res);
+}
+
+void Map::remove_listener(ViewportListener* units)
+{
+    auto it = listeners.find(units);
+    if (it == listeners.end())
+    {
+        return;
+    }
+    listeners.erase(units);
+}
+
 const std::vector<std::unique_ptr<Unit>>& Map::get_units() const { return units; }
 const std::vector<std::unique_ptr<Resource>>& Map::get_resources() const { return resources; }
 

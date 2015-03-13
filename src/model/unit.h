@@ -32,6 +32,7 @@ class Unit : public Gfx
   ~Unit();
 
   void take_turn();
+  const UnitDescription* get_type() { return type; }
 
   void add_listener(UnitListener* listener);
   void remove_listener(UnitListener* listener);

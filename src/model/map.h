@@ -7,9 +7,12 @@
 #include "model/unit.h"
 #include "model/resource.h"
 
+#include <set>
+
 namespace aoe
 {
 
+class ViewportListener;
 class Building;
 class Area;
 
@@ -20,15 +23,19 @@ private:
     std::vector<std::unique_ptr<Resource>> resources;
     double width, height;
 
+    std::set<ViewportListener*> listeners;
 public:
     Map();
     ~Map();
 
     void place_unit(Unit* units);
-    void place_resource(Resource* res);
-
     void remove_unit(Unit* units);
+
+    void place_resource(Resource* res);
     void remove_resource(Resource* units);
+
+    void add_listener(ViewportListener* res);
+    void remove_listener(ViewportListener* units);
 
     const std::vector<std::unique_ptr<Unit>>& get_units() const;
     const std::vector<std::unique_ptr<Resource>>& get_resources() const;

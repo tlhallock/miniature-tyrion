@@ -66,6 +66,9 @@ public:
     const std::string& get_name() const;
 
     int get_image_id() const;
+    bool isCreatable() const { return creatable; }
+    double get_width() const { return width; }
+    double get_height() const { return height; }
 
 private:
     bool is_child_of(const std::string& unitName);

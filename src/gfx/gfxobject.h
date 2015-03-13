@@ -1,6 +1,16 @@
 #ifndef GFXOBJECT_H
 #define GFXOBJECT_H
 
+#include "opencv2/core/opengl.hpp"
+
+#include "model/area.h"
+
+namespace aoe
+{
+
+class Unit;
+class GlDrawInstanceCmp;
+
 class GfxObject
 {
     cv::ogl::Arrays arr;
@@ -8,8 +18,8 @@ class GfxObject
     cv::ogl::Buffer indices;
 
 public:
-    GfxObject(int w, int h,
-              const std::string& object, const std::string& texture_file);
+    GfxObject(double w, double h,
+              const std::string& object_file, const cv::Mat& img);
     ~GfxObject();
 
     void draw();
@@ -18,22 +28,52 @@ public:
 
 class GlDrawInstance
 {
+    friend class GlDrawInstanceCmp;
+
 private:
-    double x, y;
-    GlDrawObject type;
+    Unit* original;
+    Location pos;
+    GfxObject* type;
 
 public:
-    GlDrawObject(double w, double h, GlDrawType* type_);
-    ~GlDrawObject();
+    GlDrawInstance(Unit* original, GfxObject* type_);
+    ~GlDrawInstance();
 
-    void setPosition(double x_, double y_);
+    void updatePosition();
+//    void setPosition(const Location& loc);
 
     void draw();
 
-    // To be removed...
-    double get_x();
-    double get_y();
+    Unit* getOriginal()
+    {
+        return original;
+    }
+
+//    // To be removed...
+//    double get_x();
+//    double get_y();
 };
+
+struct GlDrawInstanceCmp
+{
+    bool operator() (const GlDrawInstance& l1, const GlDrawInstance& l2)
+    {
+        if (l1.pos.x == l2.pos.x)
+        {
+            return l1.pos.y < l2.pos.y;
+        }
+        else if (l1.pos.y == l2.pos.y)
+        {
+            return l1.original < l2.original;
+        }
+        else
+        {
+            return l1.pos.x < l2.pos.x;
+        }
+    }
+};
+
+}
 
 
 #endif // GFXOBJECT_H
