@@ -35,7 +35,10 @@ void bfs(const UnitStructure& tree, std::function<void(int idx)> f)
         auto end = tree.get_children(next).end();
         for (auto it = tree.get_children(next).begin(); it != end; ++it)
         {
-            horizon.push_back(*it);
+            if (*it != next)
+            {
+                horizon.push_back(*it);
+            }
         }
     }
 }

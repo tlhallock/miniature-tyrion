@@ -59,8 +59,18 @@ const Area& Unit::get_location() const
     return area;
 }
 
+void Unit::set_size(double width, double height)
+{
+    area.set_size(width, height);
+}
+
 
 void Unit::set_location(const Area& area_)
+{
+    area = area_;
+}
+
+void Unit::set_location(const Location& area_)
 {
     area = area_;
 }

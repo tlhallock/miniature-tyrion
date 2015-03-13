@@ -40,6 +40,8 @@ class Unit : public Gfx
   void set_task(Task* task);
 
   void set_location(const Area& area);
+  void set_location(const Location& area);
+  void set_size(double width, double height);
 
   friend std::ostream& operator<<(std::ostream& out, const Unit& u);
 

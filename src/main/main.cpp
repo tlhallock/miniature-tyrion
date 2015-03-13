@@ -13,14 +13,20 @@
 
 #include "model/player.h"
 
+#include "gfx/gldisplay.h"
+
 #include <X11/Xlib.h>
 #include <GL/glut.h>
 
 
-aoe::Game* start_game(const std::string& root_dir)
+int main(int argc, char **argv)
 {
+    XInitThreads();
+    glutInit(&argc, argv);
+    aoe::ensure_directory_exists("data");
+
     // The images are still used after this method...
-    aoe::GameInfo& info = *new aoe::GameInfo{root_dir};
+    aoe::GameInfo& info = *new aoe::GameInfo{"."};
 
     // need to set strategies
 
@@ -40,28 +46,17 @@ aoe::Game* start_game(const std::string& root_dir)
 
     aoe::generate_map(game);
 
-//    aoe::CvDisplay *display = new aoe::CvDisplay{game, info.get_images()};
-
-//    game->get_timer().add(display);
-
     game->start();
 
-    return game;
-}
+    aoe::GlDisplay* display = new aoe::GlDisplay(info, "OpenGL");
 
+    display->renderLoop(game);
 
-int main(int argc, char **argv)
-{
-    XInitThreads();
-    glutInit(&argc, argv);
-    aoe::ensure_directory_exists("data");
-
-
-    aoe::Game* game = start_game("./");
-
-    std::this_thread::sleep_for(std::chrono::milliseconds{10000});
+    delete display;
 
     game->end();
+
+    delete game;
 
     std::cout << "All done.\n";
 

@@ -65,6 +65,17 @@ bool LocationCmp::operator() (const Location& l1, const Location& l2)
 }
 
 
+Location Location::operator/(double d)
+{
+    return Location{x / d, y / d};
+}
+
+std::ostream& operator<<(std::ostream& out, const Location& a)
+{
+    return out << "[" << a.x << "," << a.y << "]";
+}
+
+
 
 double Area::distance_to(const Area& other) const
 {
@@ -80,6 +91,19 @@ bool Area::contains(const Area& other) const
        x + w > other.x && y + h > other.y;
 }
 
+void Area::set_size(double width, double height)
+{
+    w = width;
+    h = height;
+}
+
+
+Area& Area::operator=(const Location& loc)
+{
+    x = loc.x;
+    y = loc.y;
+    return *this;
+}
 
 std::ostream& operator<<(std::ostream& out, const Area& a)
 {

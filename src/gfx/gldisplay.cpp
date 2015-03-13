@@ -17,31 +17,104 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "main/settings.h"
 
-
 namespace aoe
 {
 
-
-GlDisplay::GlDisplay() :
-    ViewportListener{&area}
+unsigned long current_time()
 {
-    cv::namedWindow("OpenGL", cv::WINDOW_OPENGL);
-    cv::resizeWindow("OpenGL",
+    return std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+}
+
+struct last_event {
+    int x, y, event;
+    unsigned long time = current_time();
+};
+
+void onMouse( int event, int x, int y, int state, void* ptr)
+{
+    GlDisplay* display = static_cast<GlDisplay*>(ptr);
+    if (state != 4)
+    {
+        return;
+    }
+
+    unsigned long millis = current_time();
+
+    static last_event previous;
+
+    if (y > previous.y)
+    {
+        display->zoom_out();
+    }
+    else
+    {
+        display->zoom_in();
+    }
+
+    previous.x = x;
+    previous.y = y;
+    previous.event = event;
+    previous.time = millis;
+}
+
+void draw_func(void* userdata)
+{
+    (static_cast<GlDisplay*>(userdata))->draw();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GlDisplay::GlDisplay(GameInfo& info, const std::string& name_) :
+    ViewportListener{&area},
+    name{name_},
+    current_range{Settings::get_instance().INITIAL_HEIGHT}
+{
+    cv::namedWindow(name, cv::WINDOW_OPENGL);
+    cv::resizeWindow(name,
                      Settings::get_instance().DISPLAY_WIDTH,
                      Settings::get_instance().DISPLAY_HEIGHT);
+
+    load(info);
+
+    cv::setOpenGlDrawCallback(name, draw_func, this);
+    cv::setMouseCallback(name, onMouse, this);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, area.w / area.h, 0.1, 100.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(0, 0, current_range, 0, 0, 0, 0, 1, 0);
 }
 
 
 GlDisplay::~GlDisplay()
 {
-    cv::setOpenGlDrawCallback("OpenGL", 0, 0);
-    cv::destroyWindow("OpenGL");
-}
-
-
-void GlDisplay::depict(Game* game, Images* images)
-{
-    game->get_map().add_listener(this);
+    cv::setOpenGlDrawCallback(name, 0, 0);
+    cv::destroyWindow(name);
 }
 
 
@@ -102,101 +175,62 @@ void GlDisplay::draw()
     }
 }
 
-extern "C"
+void GlDisplay::renderLoop(Game* game)
 {
-
-
-void mouseMotion(int x, int y)
-{
-    std::cout << "called" << std::endl;
-}
-
-
-void mouseEvent(int button, int state, int x, int y)
-{
-    std::cout << "called" << std::endl;
-    // Wheel reports as button 3(scroll up) and button 4(scroll down)
-    if ((button == 3) || (button == 4)) // It's a wheel event
-    {
-        // Each wheel event reports like a button click, GLUT_DOWN then GLUT_UP
-        if (state == GLUT_UP) return; // Disregard redundant GLUT_UP events
-        printf("Scroll %s At %d %d\n", (button == 3) ? "Up" : "Down", x, y);
-    } else {  // normal button event
-        printf("Button %s At %d %d\n", (state == GLUT_DOWN) ? "Down" : "Up", x, y);
-    }
-}
-
-void draw_func(void* userdata)
-{
-    (static_cast<GlDisplay*>(userdata))->draw();
-}
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void GlDisplay::createDisplay(Game* game, Images* images)
-{
-    GlDisplay glDisplay;
-    glDisplay.depict(game, images);
-
-
-    glutMouseFunc(mouseEvent);
-    glutMotionFunc(mouseMotion);
-
-//    glDisplay.drawables.push_back(new GlDrawObject{1, 1, img});
-//    glDisplay.drawables.push_back(new GlDrawObject{1, 1, img});
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0, glDisplay.area.w / glDisplay.area.h, 0.1, 100.0);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    gluLookAt(0, 0, 3, 0, 0, 0, 0, 1, 0);
-
-    cv::setOpenGlDrawCallback("OpenGL", draw_func, &glDisplay);
-
+    game->get_map().add_listener(this);
     for (;;)
     {
-        cv::updateWindow("OpenGL");
-        int key = cv::waitKey(1);
+        cv::updateWindow(name);
+        int key = cv::waitKey(1000);
         if ((key & 0xff) == 27)
             break;
     }
-
-    game->get_map().remove_listener(&glDisplay);
+    game->get_map().remove_listener(this);
 }
+
+
+
+
+
+
+
+
+void GlDisplay::zoom_in()
+{
+    std::cout << "in" << std::endl;
+
+    //gluLookAt(0, 0, current_range, 0, 0, 0, 0, 1, 0);
+}
+
+void GlDisplay::zoom_out()
+{
+    std::cout << "out" << std::endl;
+
+    //gluLookAt(0, 0, current_range, 0, 0, 0, 0, 1, 0);
+}
+
+
+void GlDisplay::left()
+{
+    std::cout << "left" << std::endl;
+}
+
+void GlDisplay::right()
+{
+    std::cout << "right" << std::endl;
+}
+
+void GlDisplay::forward()
+{
+    std::cout << "forward" << std::endl;
+}
+
+void GlDisplay::backward()
+{
+    std::cout << "back" << std::endl;
+}
+
+
 
 
 

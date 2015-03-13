@@ -1,0 +1,42 @@
+{
+	"parent": "building.json",
+	
+	"name": "town center",
+	
+	"creatable": true,
+	    
+	"costs": {
+		"gold": 100,
+		"wood": 100,
+		"food": 100,
+		"stone": 10
+	},
+	
+	"damage": [
+		{ "against": "building", "value": 10 },
+		{ "against": "unit",     "value": 10 }
+	],
+	
+	"resistance": [
+		{ "torwards": "unit",    "value": 10 }
+	],
+	
+	
+	"creates":
+	{
+		"units":
+		{
+		
+		},
+		
+		"technology":
+		{
+		
+		}
+	},
+	
+	"images": [
+		"building.jpg"
+	]
+	    
+}

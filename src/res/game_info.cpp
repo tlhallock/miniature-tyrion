@@ -35,7 +35,7 @@ GameInfo::GameInfo(const std::string& root_directory) :
     resources{game_info::collect_resources(table, OpenedPropertyFiles{root_directory + "/data/resources/"})},
     structure{},
     units{game_info::construct_unit_descriptions(table, OpenedPropertyFiles{root_directory + "/data/units/"}, structure)},
-    techs {game_info::collect_technologies(OpenedPropertyFiles{root_directory + "data/tech/"}, table, units)},
+    techs {game_info::collect_technologies(OpenedPropertyFiles{root_directory + "/data/tech/"}, table, units)},
     civs{game_info::collect_civilizations(OpenedPropertyFiles{root_directory + "/data/civilizations/"}, table, units, techs)}
 {
 }

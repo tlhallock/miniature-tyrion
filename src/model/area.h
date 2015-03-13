@@ -19,6 +19,7 @@ public:
     Location(const Area& a);
 
     Location& operator=(const Area& a);
+    Location operator/(double d);
 
     void setX(double x);
     void setY(double y);
@@ -28,6 +29,8 @@ public:
 
     void set(double x, double y);
     double distance_to(const Location& other) const;
+
+    friend std::ostream& operator<<(std::ostream& out, const Location& a);
 };
 
 struct LocationCmp
@@ -48,11 +51,12 @@ class Area
  Area(double mx, double my, double mw, double mh) :
     x{mx}, y{my},
     w{mw}, h{mh} {}
-      
+
+    Area& operator=(const Location& loc);
 
     double distance_to(const Area& other) const;
     bool   contains(const Area& other) const;
-
+    void   set_size(double width, double height);
 
     friend std::ostream& operator<<(std::ostream& out, const Area& a);
 };

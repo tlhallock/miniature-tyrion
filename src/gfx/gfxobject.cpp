@@ -14,6 +14,8 @@
 #include "opencv2/core/cuda.hpp"
 #include "opencv2/highgui/highgui.hpp"
 
+#include "main/settings.h"
+
 #include <vector>
 
 
@@ -59,14 +61,14 @@ namespace aoe
 GfxObject::GfxObject(double w, double h,
                      const std::string& object_file, const cv::Mat& img)
 {
-//    cv::Mat img = cv::imread(texture_file);
-//    if (img.empty())
-//    {
-//        std::cerr << "Can't open image " << texture_file << std::endl;
-//    }
+    w /= Settings::get_instance().MAP_WIDTH;
+    h /= Settings::get_instance().MAP_HEIGHT;
+
+    std::cout << "The width/height are " << Location{w, h};
 
     cv::Mat_<cv::Vec2f> vertex(1, 4);
-    vertex << cv::Vec2f(0, h), cv::Vec2f(0, 0), cv::Vec2f(w, 0), cv::Vec2f(w, h);
+//    vertex << cv::Vec2f(0, h), cv::Vec2f(0, 0), cv::Vec2f(w, 0), cv::Vec2f(w, h);
+    vertex << cv::Vec2f(0, .5), cv::Vec2f(0, 0), cv::Vec2f(.5, 0), cv::Vec2f(.5, .5);
 
     cv::Mat_<cv::Vec2f> texCoords(1, 4);
     texCoords << cv::Vec2f(0, 0), cv::Vec2f(0, 1), cv::Vec2f(1, 1), cv::Vec2f(1, 0);
@@ -109,8 +111,59 @@ GlDrawInstance::~GlDrawInstance() {}
 
 void GlDrawInstance::updatePosition()
 {
-    pos = original->get_location();
+//    std::cout << "Should be at " << original->get_location() << std::endl;
+//    std::cout << "Divided by " << Settings::get_instance().MAP_WIDTH << std::endl;
+//    std::cout << "Is " << (Location{original->get_location()} / Settings::get_instance().MAP_WIDTH) << std::endl;
+    pos = (Location{original->get_location()} / Settings::get_instance().MAP_WIDTH);
 }
+
+Unit* GlDrawInstance::getOriginal()
+{
+    return original;
+}
+void GlDrawInstance::draw()
+{
+    updatePosition();
+    std::cout << "translating by " << pos << std::endl;
+//    glTranslated(pos.x, pos.y, 0);
+    type->draw();
+//    glTranslated(-pos.x, -pos.y, 0);
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    cv::Mat img = cv::imread(texture_file);
+//    if (img.empty())
+//    {
+//        std::cerr << "Can't open image " << texture_file << std::endl;
+//    }
+
 
 //void GlDrawInstance::setPosition(const Location location_)
 //{
@@ -125,13 +178,3 @@ void GlDrawInstance::updatePosition()
 //{
 //    return pos.y;
 //}
-
-void GlDrawInstance::draw()
-{
-    glTranslated(pos.x, pos.y, 0);
-    type->draw();
-    glTranslated(-pos.x, -pos.y, 0);
-}
-
-
-}

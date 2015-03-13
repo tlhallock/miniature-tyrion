@@ -10,6 +10,7 @@ void UnitStructure::set_size(int nunits)
 {
     delete[] parents;
     parents = new int[nunits];
+    children.resize(nunits);
     for (int i=0;i<nunits;i++)
     {
         parents[i] = -1;

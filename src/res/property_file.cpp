@@ -50,7 +50,17 @@ void read_json(const std::string& filename, Json::Value& root)
 //	std::cout << root;
 }
 
+
+void debug(const Json::Value& value)
+{
+    Json::StyledWriter writer;
+    std::cout << writer.write(value) << std::endl;
 }
+
+
+}
+
+
 PropertyFile::PropertyFile(OpenedPropertyFiles* pfiles, const std::string& filename_) :
 	filename{filename_},
 	opened{pfiles}
@@ -61,8 +71,12 @@ PropertyFile::PropertyFile(OpenedPropertyFiles* pfiles, const std::string& filen
 }
 PropertyFile::~PropertyFile() {}
 
-Json::Value PropertyFile::get_property(const std::vector<std::string>& properties) const
+Json::Value PropertyFile::get_property(const std::vector<std::string>& properties, bool mustExist) const
 {
+//    std::cout << "About to copy: " << std::endl;
+//    debug(root);
+
+
 	Json::Value current = root;
 	for (auto it = properties.begin(); it != properties.end(); ++it)
 	{
@@ -73,13 +87,20 @@ Json::Value PropertyFile::get_property(const std::vector<std::string>& propertie
 		if (value == DEFAULT_JSON_VALUE)
 		{
 			const PropertyFile *parent = get_parent();
-			if (parent == nullptr)
+            if (parent == nullptr)
 			{
-				std::cerr << "Property " << *it << " not defined in " << filename << std::endl;
-				exit(-1);
+                if (mustExist)
+                {
+                    std::cerr << "Property " << *it << " not defined in " << filename << std::endl;
+                    exit(-1);
+                }
+                else
+                {
+                    return DEFAULT_JSON_VALUE;
+                }
 			}
 			
-			return parent->get_property(properties);
+            return parent->get_property(properties, mustExist);
 		}
         	current = value;
 	}
@@ -87,19 +108,19 @@ Json::Value PropertyFile::get_property(const std::vector<std::string>& propertie
     return current;
 }
 
-Json::Value PropertyFile::get_property(const std::string& name) const
+Json::Value PropertyFile::get_property(const std::string& name, bool mustExist) const
 {
 	std::vector<std::string> names;
 	names.push_back(name);
-	return get_property(names);
+    return get_property(names, mustExist);
 }
 
-Json::Value PropertyFile::get_property(const std::string& name, const std::string& name2) const
+Json::Value PropertyFile::get_property(const std::string& name, const std::string& name2, bool mustExist) const
 {
 	std::vector<std::string> names;
 	names.push_back(name);
 	names.push_back(name2);
-	return get_property(names);
+    return get_property(names, mustExist);
 }
 
 const PropertyFile* PropertyFile::get_parent() const

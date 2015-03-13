@@ -39,19 +39,11 @@ public:
     GlDrawInstance(Unit* original, GfxObject* type_);
     ~GlDrawInstance();
 
-    void updatePosition();
-//    void setPosition(const Location& loc);
-
     void draw();
+    Unit* getOriginal();
 
-    Unit* getOriginal()
-    {
-        return original;
-    }
-
-//    // To be removed...
-//    double get_x();
-//    double get_y();
+private:
+    void updatePosition();
 };
 
 struct GlDrawInstanceCmp

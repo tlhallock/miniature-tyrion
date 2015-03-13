@@ -1,7 +1,8 @@
 
 #include "util/timer.h"
 
-#include <opencv2/highgui/highgui.hpp>
+
+
 
 #include <iostream>
 
@@ -29,8 +30,10 @@ void Timer::run_all()
     for(;;)
     {
         std::cout << "In timer loop with size = " << functions.size() << " for timer = " << this << std::endl;
-        cv::waitKey(repeat);
-        //      std::this_thread::sleep_for(std::chrono::milliseconds(repeat));
+
+
+        std::this_thread::sleep_for(std::chrono::milliseconds{repeat});
+        //cv::waitKey(repeat);
 
         if (done)
         {
@@ -65,7 +68,7 @@ void Timer::end()
 
 void Timer::add(TimerTask* task)
 {
-    std::cout << "Should be adding something to " << this << std::endl;
+    std::cout << "Should be adding something to timer " << this << std::endl;
     functions.push_back(task);
 }
 

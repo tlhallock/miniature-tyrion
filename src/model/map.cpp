@@ -2,6 +2,7 @@
 #include <cmath>
 
 #include "main/settings.h"
+#include "gfx/viewport_listener.h"
 
 # define PI           3.14159265358979323846
 
@@ -35,7 +36,7 @@ void Map::remove_resource(Resource* res)
     // delete them somewhere
 }
 
-const Area&& Map::get_civilization_center(int index, int total)
+Area Map::get_civilization_center(int index, int total)
 {
     double cx = width / 2;
     double cy = height / 2;
@@ -51,6 +52,10 @@ const Area&& Map::get_civilization_center(int index, int total)
 
 void Map::add_listener(ViewportListener* res)
 {
+    for (auto it = units.begin(); it != units.end(); ++it)
+    {
+        res->unit_entered(it->get());
+    }
     listeners.insert(res);
 }
 
@@ -61,7 +66,7 @@ void Map::remove_listener(ViewportListener* units)
     {
         return;
     }
-    listeners.erase(units);
+    listeners.erase(it);
 }
 
 const std::vector<std::unique_ptr<Unit>>& Map::get_units() const { return units; }

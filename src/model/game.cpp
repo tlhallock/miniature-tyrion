@@ -3,6 +3,7 @@
 
 #include "model/map.h"
 #include "model/player.h"
+#include "main/settings.h"
 
 #include "ai/player/strategy.h"
 
@@ -30,12 +31,10 @@ namespace
     };
 }
 
-#define CLOCK_FREQ 200
-
 Game::Game(const IdentifierTable& table_) :
     map{},
     engine{},
-    timer{CLOCK_FREQ},
+    timer{Settings::get_instance().EGNINE_CLOCK_FREQ},
     table{table_}
 {
     timer.add(&engine);

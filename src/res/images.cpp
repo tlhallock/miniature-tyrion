@@ -23,6 +23,10 @@ void Images::set(int image_id, const std::string& filename)
 
 const cv::Mat& Images::get(int image_id) const
 {
+    if (image_id >= originals.size() || image_id < 0)
+    {
+        return default_image;
+    }
     return originals.at(image_id);
 }
 

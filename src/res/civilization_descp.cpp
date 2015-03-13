@@ -8,7 +8,8 @@ namespace aoe
 
 CivilizationDescription::CivilizationDescription(
         const PropertyFile& pfile,
-        IdentifierTable& table)
+        IdentifierTable& table) :
+    name {pfile.get_property("name").asString()}
 {
 
 }

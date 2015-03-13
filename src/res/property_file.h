@@ -28,9 +28,9 @@ private:
   PropertyFile(OpenedPropertyFiles* pfiles, const std::string& filename);
   ~PropertyFile();
   
-  Json::Value get_property(const std::string& name) const;
-  Json::Value get_property(const std::string& name1, const std::string& name2) const;
-  Json::Value get_property(const std::vector<std::string>& values) const;
+  Json::Value get_property(const std::string& name, bool mustExist = true) const;
+  Json::Value get_property(const std::string& name1, const std::string& name2, bool mustExist = true) const;
+  Json::Value get_property(const std::vector<std::string>& values, bool mustExist = true) const;
   
   const PropertyFile* get_parent() const;
   bool should_ignore() const;

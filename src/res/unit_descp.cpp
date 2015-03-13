@@ -28,17 +28,30 @@ UnitDescription::UnitDescription(
     width             { propertyFile.get_property("width"   ).asDouble() },
     height            { propertyFile.get_property("height"  ).asDouble() },
     image_id          { 0 },//table.get_image_id(propertyFile.get_property("images")[0].asString()) },
-    creatable         { propertyFile.get_property("creatable").asBool()  },
-
-    damage{nunits},
-    resistance{nunits},
-    cost{nres},
-    collection_speed{nres}
+    creatable         { propertyFile.get_property("creatable").asBool()  }
 {
+    damage.resize(nunits);
+    resistance.resize(nunits);
+    cost.resize(nres);
+    collection_speed.resize(nres);
+
+
     for (auto it = table.get_resources().begin(); it != table.get_resources().end(); ++it)
     {
-        cost[it->second]             = propertyFile.get_property("costs",      it->first).asDouble();
-        collection_speed[it->second] = propertyFile.get_property("coll-speed", it->first).asDouble();
+        Json::Value value = propertyFile.get_property("costs", it->first);
+        if (value == DEFAULT_JSON_VALUE)
+        {
+            std::cerr << "Unit " << name << " does not have field costs for " << it->first << std::endl;
+            exit(-1);
+        }
+        cost[it->second] = value.asDouble();
+        value = propertyFile.get_property("coll-speed", it->first);
+        if (value == DEFAULT_JSON_VALUE)
+        {
+            std::cerr << "Unit " << name << " does not have coll-speed for " << it->first << std::endl;
+            exit(-1);
+        }
+        collection_speed[it->second] = value.asDouble();
     }
 
     if (id != table.get_unit_id(name))
@@ -104,7 +117,9 @@ void UnitDescription::link_units(IdentifierTable& table,
         }
     }
 
-    const Json::Value& creates = propertyFile.get_property("creates");
+
+    const Json::Value& creates = propertyFile.get_property("creates", false);
+    if (creates != DEFAULT_JSON_VALUE)
     {
         const Json::Value& creates_units_child = creates["units"];
         for (int i=0;i<creates_units_child.size();i++)
@@ -142,10 +157,10 @@ void UnitDescription::link_techs(IdentifierTable& table,
         }
     }
 
-    const Json::Value& creates = propertyFile.get_property("creates");
+    const Json::Value& creates = propertyFile.get_property("creates", false);
+    if (creates != DEFAULT_JSON_VALUE)
     {
         const Json::Value& creates_techs_child = creates["techs"];
-
         for (int i=0;i<creates_techs_child.size();i++)
         {
             const std::string& tech = creates_techs_child[i]["name"].asString();
@@ -171,7 +186,9 @@ int UnitDescription::get_id() const
 
 Unit *UnitDescription::create() const
 {
-    return new Unit{this};
+    Unit* returnValue = new Unit{this};
+    returnValue->set_size(get_width(), get_height());
+    return returnValue;
 }
 
 const std::string& UnitDescription::get_name() const
