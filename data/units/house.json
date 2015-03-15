@@ -1,0 +1,33 @@
+{
+	"parent": "building.json",
+	
+	"name": "house",
+	
+	"creatable": true,
+	    
+	"costs": {
+		"gold":   0,
+		"wood": 100,
+		"food":   0,
+		"stone":  0
+	},
+	
+	"damage": [
+		{ "against": "building", "value": 0 },
+		{ "against": "unit",     "value": 0 }
+	],
+	
+	"resistance": [
+		{ "torwards": "unit",    "value": 1 }
+	],
+	
+	"los": 5,
+	"range": 0,
+	"width": 5,
+	"height": 5,
+	
+	"images": [
+		"house.png"
+	]
+	    
+}

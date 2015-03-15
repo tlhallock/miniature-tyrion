@@ -6,6 +6,7 @@
 
 #include "res/property_file.h"
 #include "res/game_info.h"
+#include "ai/player/ai_strategy.h"
 
 #include "util/fs.h"
 #include "model/game.h"
@@ -26,7 +27,6 @@ int main(int argc, char **argv)
     XInitThreads();
     glutInit(&argc, argv);
 
-
     aoe::ensure_directory_exists("data");
 
     // The images are still used after this method...
@@ -43,12 +43,13 @@ int main(int argc, char **argv)
     int nplayers = 2;
     for (int i=0;i<nplayers;i++)
     {
-        game->add_player(nullptr, new aoe::Player{info.create_civilization(0),
+
+        game->add_player(new aoe::AiStrategy{&game->get_engine()}, new aoe::Player{info.create_civilization(0),
                                                   info.clone_resources(),
                                                   game->get_map().get_civilization_center(i, nplayers)});
     }
 
-    aoe::generate_map(game);
+    aoe::generate_map(&info, game);
 
     game->start();
 

@@ -4,19 +4,21 @@
 #ifndef ENGINE_H_
 #define ENGINE_H_
 
-#include <vector>
+#include <map>
+#include <iostream>
 
 #include "util/timer.h"
 
 namespace aoe
 {
 
+class Task;
 class Unit;
 
 class Engine : public TimerTask
 {
  private:
-  std::vector<Unit*> active_units;
+  std::map<Unit*, Task*> active_units;
 
  public:
   Engine();
@@ -24,10 +26,9 @@ class Engine : public TimerTask
 
   void animate_iteration();
 
-  void add_unit(Unit* Unit);
-  void remove_unit(Unit* Unit);
+  void set_task(Unit* unit, Task* Unit);
 
-  bool contains(Unit* Unit);
+//  bool contains(Task* Unit);
 
   friend std::ostream& operator<<(std::ostream& out, const Engine& e);
 

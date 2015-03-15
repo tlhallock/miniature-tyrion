@@ -130,7 +130,7 @@ const PropertyFile* PropertyFile::get_parent() const
 	{
 		return nullptr;
 	}
-	return &opened->get_property_file(opened->get_base() + pProperty.asString());
+    return &opened->get_property_file(pProperty.asString());
 }
 
 
@@ -151,18 +151,30 @@ bool PropertyFile::should_ignore() const
 OpenedPropertyFiles::OpenedPropertyFiles(const std::string& root_directory_) : root_directory{root_directory_} { ensure_directory_exists(root_directory_); }
 OpenedPropertyFiles::~OpenedPropertyFiles() {}
 
-const PropertyFile& OpenedPropertyFiles::get_property_file(const std::string& filename)
+const PropertyFile& OpenedPropertyFiles::get_property_file(const std::string& filename, bool relative)
 {
-	auto it = opened.find(filename);
+    std::string rp;
+    if (relative)
+    {
+        rp = realpath(root_directory + "/" + filename);
+    }
+    else
+    {
+        rp = realpath(filename);
+    }
+
+    auto it = opened.find(rp);
 	if (it != opened.end())
 	{
 		return it->second;
 	}
 
-	PropertyFile pfile{this, filename};
+    PropertyFile pfile{this, rp};
 
-	return opened.find(filename)->second;
+    return opened.find(rp)->second;
 }
+
+
 
 
 }

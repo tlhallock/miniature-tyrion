@@ -3,7 +3,6 @@
 
 #include "ai/unit/unit_listener.h"
 
-#include "task/task.h"
 
 #include <algorithm>
 
@@ -11,18 +10,9 @@ namespace aoe
 {
 
 
-Unit::Unit(const UnitDescription* desc) : task{nullptr}, type{desc} {}
+Unit::Unit(const UnitDescription* desc) : type{desc} {}
 
 Unit::~Unit() {}
-
-
-void Unit::take_turn()
-{
-    if (task != nullptr)
-    {
-        task->apply(listeners);
-    }
-}
 
 
 void Unit::add_listener(UnitListener* listener)
@@ -37,11 +27,6 @@ void Unit::remove_listener(UnitListener* listener)
     {
         listeners.erase(it);
     }
-}
-
-void Unit::set_task(Task* atask)
-{
-    task = atask;
 }
 
 std::ostream& operator<<(std::ostream& out, const Unit& u)
@@ -75,5 +60,10 @@ void Unit::set_location(const Location& area_)
     area = area_;
 }
 
+
+double Unit::get_speed() const
+{
+    return type->get_speed();
+}
 
 }

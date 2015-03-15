@@ -3,6 +3,7 @@
 #define IMAGES_H_
 
 #include <vector>
+#include <map>
 
 #include "opencv2/core/core.hpp"
 
@@ -13,14 +14,17 @@ class Images
 {
   std::vector<cv::Mat> originals;
   std::string base_directory;
+  std::map<std::string, int> path_to_image;
 
   cv::Mat default_image;
  public:
   Images(const std::string& base_directory);
   ~Images();
 
-  void set(int image_id, const std::string& filename);
+  int get_id_for(const std::string& filename, bool relative=true);
   const cv::Mat& get(int image_id) const;
+
+  cv::Mat get_background();
 };
 
 }

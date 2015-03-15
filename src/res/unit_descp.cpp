@@ -6,6 +6,7 @@
 #include "res/property_file.h"
 #include "res/unit_structure.h"
 #include "model/unit.h"
+#include "res/images.h"
 
 
 namespace aoe
@@ -17,7 +18,8 @@ UnitDescription::UnitDescription(
         const PropertyFile& propertyFile,
         int id_,
         int nunits,
-        int nres) :
+        int nres,
+        Images& images) :
     name              { propertyFile.get_property("name").asString()     },
 	id{id_},
 
@@ -27,7 +29,7 @@ UnitDescription::UnitDescription(
     range             { propertyFile.get_property("range"   ).asDouble() },
     width             { propertyFile.get_property("width"   ).asDouble() },
     height            { propertyFile.get_property("height"  ).asDouble() },
-    image_id          { 0 },//table.get_image_id(propertyFile.get_property("images")[0].asString()) },
+    image_id          { images.get_id_for(propertyFile.get_property("images")[0].asString()) },
     creatable         { propertyFile.get_property("creatable").asBool()  }
 {
     damage.resize(nunits);
@@ -208,6 +210,7 @@ bool UnitDescription::isCreatable() const { return creatable; }
 Location UnitDescription::get_size() const { return Location{width, height}; }
 double UnitDescription::get_width() const { return width; }
 double UnitDescription::get_height() const { return height; }
+double UnitDescription::get_speed() const { return speed; }
 
 
 /*

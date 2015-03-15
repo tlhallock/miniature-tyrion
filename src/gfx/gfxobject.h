@@ -5,6 +5,11 @@
 
 #include "model/area.h"
 
+
+
+#define DEBUG_OPENGL 0
+
+
 namespace aoe
 {
 
@@ -17,8 +22,16 @@ class GfxObject
     cv::ogl::Texture2D tex;
     cv::ogl::Buffer indices;
 
+#if DEBUG_OPENGL
 public:
-    GfxObject(const Location& pos,
+    Location size;
+private:
+#endif
+
+
+
+public:
+    GfxObject(const Size& pos,
               const std::string& object_file, const cv::Mat& img);
     ~GfxObject();
 
@@ -36,7 +49,8 @@ private:
     GfxObject* type;
 
 public:
-    GlDrawInstance(Unit* original, GfxObject* type_);
+    GlDrawInstance(Unit* original, GfxObject* type);
+    GlDrawInstance(GfxObject* type);
     ~GlDrawInstance();
 
     void draw();

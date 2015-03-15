@@ -5,8 +5,9 @@ namespace aoe
 {
 
 class Game;
+class GameInfo;
 
-void generate_map(Game* map);
+void generate_map(GameInfo* info, Game* game);
 
 }
 

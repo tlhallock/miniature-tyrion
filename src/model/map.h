@@ -37,10 +37,12 @@ public:
     void add_listener(ViewportListener* res);
     void remove_listener(ViewportListener* units);
 
+    bool is_obstructed(const Area& area) const;
+
     const std::vector<std::unique_ptr<Unit>>& get_units() const;
     const std::vector<std::unique_ptr<Resource>>& get_resources() const;
 
-    Area get_civilization_center(int index, int total);
+    Location get_civilization_center(int index, int total);
 
     friend std::ostream& operator<<(std::ostream& out, const Map& g);
 };

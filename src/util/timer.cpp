@@ -29,7 +29,7 @@ void Timer::run_all()
 
     for(;;)
     {
-        std::cout << "In timer loop with size = " << functions.size() << " for timer = " << this << std::endl;
+//        std::cout << "In timer loop with size = " << functions.size() << " for timer = " << this << std::endl;
 
 
         std::this_thread::sleep_for(std::chrono::milliseconds{repeat});

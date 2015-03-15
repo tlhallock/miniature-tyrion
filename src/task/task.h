@@ -14,7 +14,9 @@ class Task
   Task() {}
   virtual ~Task() {}
 
-  virtual void apply(std::vector<UnitListener*>& listeners) = 0;
+  virtual void apply() = 0;
+
+  virtual std::string get_description() const { return "descriptionless task"; }
 };
 
 

@@ -26,7 +26,7 @@ namespace
 
         void run()
         {
-            std::cout << *game << std::endl;
+//            std::cout << *game << std::endl;
         }
     };
 }
@@ -49,6 +49,7 @@ void Game::add_player(Strategy* strategy, Player *player)
      players.push_back(std::unique_ptr<Player>{player});
      strategies.push_back(std::unique_ptr<Strategy>{strategy});
 
+     player->add_listener(strategy);
      player->add_listener(this);
 }
 

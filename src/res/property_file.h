@@ -50,7 +50,8 @@ public:
     OpenedPropertyFiles(const std::string& root_directory);
     ~OpenedPropertyFiles();
 	
-    const PropertyFile& get_property_file(const std::string& filename);
+    const PropertyFile& get_property_file(const std::string& filename, bool relative=true);
+//    const PropertyFile& get_property_file(const std::string& filename, bool relative=true);
 
     const std::string& get_base() const
     {

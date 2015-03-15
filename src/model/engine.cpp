@@ -1,7 +1,7 @@
 
 #include "model/engine.h"
 
-#include "model/unit.h"
+#include "task/task.h"
 
 #include <algorithm>
 
@@ -17,30 +17,35 @@ void Engine::animate_iteration()
 {
     for (auto it=active_units.begin(); it!=active_units.end(); ++it)
     {
-        (*it)->take_turn();
+        it->second->apply();
     }
 }
 
-bool Engine::contains(Unit* unit)
-{
-    return std::find(active_units.begin(), active_units.end(), unit) != active_units.end();
-}
+//bool Engine::contains(Task* unit)
+//{
+//    return std::find(active_units.begin(), active_units.end(), unit) != active_units.end();
+//}
 
-void Engine::add_unit(Unit* unit)
+void Engine::set_task(Unit* unit, Task* task)
 {
-    auto it = std::find(active_units.begin(), active_units.end(), unit);
-    if (it != active_units.end())
+    auto it = active_units.find(unit);
+    if (it == active_units.end())
     {
-        active_units.push_back(unit);
+        if (task != nullptr)
+        {
+            active_units.insert(std::pair<Unit*,Task*>{unit, task});
+        }
     }
-}
-
-void Engine::remove_unit(Unit* unit)
-{
-    auto it = std::find(active_units.begin(), active_units.end(), unit);
-    if (it != active_units.end())
+    else
     {
-        active_units.erase(it);
+        if (task == nullptr)
+        {
+            active_units.erase(it);
+        }
+        else
+        {
+            it->second = task;
+        }
     }
 }
 
@@ -48,9 +53,10 @@ std::ostream& operator<<(std::ostream& out, const Engine& e)
 {
     int size = e.active_units.size();
     out << "Size: " << size << '\n';
-    for (int i=0;i<size;i++)
+    int i=0;
+    for (auto it = e.active_units.begin(); it != e.active_units.end(); ++it, i++)
     {
-        out << '\t' << i << ": " << *(e.active_units[i]);
+        out << '\t' << i << ": " /*<< *(it->first) */ << " <-> "<< it->second->get_description() << '\n';
     }
     return out;
 }
@@ -59,7 +65,6 @@ std::ostream& operator<<(std::ostream& out, const Engine& e)
 void Engine::run()
 {
     animate_iteration();
-    std::cout << *this << std::endl;
 }
 
 }

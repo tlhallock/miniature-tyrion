@@ -1,0 +1,8 @@
+{
+	"parent" : null,
+	"units" :
+	[
+		{ "type" : "town center", "num" : 1 },
+		{ "type" : "villager",    "num" : 3 }
+	]
+}

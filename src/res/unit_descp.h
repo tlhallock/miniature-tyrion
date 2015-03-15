@@ -16,6 +16,7 @@ class UnitDescription;
 class UnitStructure;
 class Unit;
 class Location;
+class Images;
 
 class UnitDescription
 {
@@ -46,7 +47,8 @@ public:
             const PropertyFile& propertyFile,
             int id_,
             int nunits,
-            int nres);
+            int nres,
+            Images& images);
     ~UnitDescription();
 
     void link_units(IdentifierTable& table,
@@ -72,6 +74,8 @@ public:
     Location get_size() const;
     double get_width() const;
     double get_height() const;
+
+    double get_speed() const;
 
 private:
     bool is_child_of(const std::string& unitName);

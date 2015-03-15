@@ -62,27 +62,6 @@ void draw_func(void* userdata)
     (static_cast<GlDisplay*>(userdata))->draw();
 }
 
-void handle_key(int key, GlDisplay* display)
-{
-    std::cout << key << std::endl;
-
-    switch (key)
-    {
-    case 97: // left
-        display->left(); return;
-    case 115: // down
-        display->down(); return;
-    case 100: // right
-        display->right(); return;
-    case 119: // up
-        display->up(); return;
-
-
-
-    default:
-        return;
-    }
-}
 
 
 
@@ -116,7 +95,7 @@ GlDisplay::GlDisplay(GameInfo& info, const std::string& name_) :
     camera_y{0},
     camera_z{Settings::get_instance().INITIAL_HEIGHT}
 {
-    cv::namedWindow(name, cv::WINDOW_OPENGL);
+    cv::namedWindow(name, cv::WINDOW_OPENGL | cv::WINDOW_NORMAL);
     cv::resizeWindow(name, w, h);
 
     load(info);
@@ -126,6 +105,11 @@ GlDisplay::GlDisplay(GameInfo& info, const std::string& name_) :
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(45.0, w / (double) h, 0.1, 100.0);
+
+    map = std::unique_ptr<GfxObject>{new GfxObject{
+            Location{Settings::get_instance().MAP_WIDTH, Settings::get_instance().MAP_HEIGHT},
+            "not used", info.get_images()->get_background()}};
+    mapInstance = std::unique_ptr<GlDrawInstance>{new GlDrawInstance{map.get()}};
 
     cv::setOpenGlDrawCallback(name, draw_func, this);
     cv::setMouseCallback(name, onMouse, this);
@@ -145,7 +129,7 @@ void GlDisplay::unit_entered(Unit* entered)
     auto it = drawTypes.find(id);
     if (it == drawTypes.end())
     {
-        std::cerr << "Unkown unit: " << id << std::endl;
+        std::cerr << "Unkown unit id: " << id << std::endl;
         exit(-1);
     }
 
@@ -165,6 +149,26 @@ void GlDisplay::unit_exited(Unit* exit)
     }
 }
 
+void GlDisplay::handle_key(int key)
+{
+    std::cout << key << std::endl;
+
+    switch (key)
+    {
+    case 97: // left
+        left(); return;
+    case 115: // down
+        down(); return;
+    case 100: // right
+        right(); return;
+    case 119: // up
+        up(); return;
+
+
+    default:
+        return;
+    }
+}
 
 void GlDisplay::load(GameInfo& info)
 {
@@ -174,6 +178,8 @@ void GlDisplay::load(GameInfo& info)
         {
             continue;
         }
+
+//        int image_id = info.get_images()->get_id_for()
 
         // The image needs to actually be dynamic...
         drawTypes.insert(std::pair<int, GfxObject>{
@@ -193,6 +199,11 @@ void GlDisplay::draw()
     gluLookAt(0, 0, camera_z, 0, 0, 0, 0, 1, 0);
     glTranslated(camera_x, camera_y, 0);
 
+    if (mapInstance)
+    {
+        mapInstance->draw();
+    }
+
     for (int i=0;i<(int)drawables.size();i++)
     {
         drawables[i].draw();
@@ -204,6 +215,7 @@ void GlDisplay::renderLoop(Game* game)
     game->get_map().add_listener(this);
     for (;;)
     {
+        std::cout << camera_z << std::endl;
         cv::updateWindow(name);
         int key = cv::waitKey(Settings::get_instance().KEY_WAIT_TIME);
         if ((key & 0xff) == 27)
@@ -212,7 +224,8 @@ void GlDisplay::renderLoop(Game* game)
         {
             continue;
         }
-        handle_key(key, this);
+
+        handle_key(key);
     }
     game->get_map().remove_listener(this);
 }
@@ -227,7 +240,12 @@ void GlDisplay::setCamera(double x, double y, double z)
 
 void GlDisplay::zoom_in()
 {
-    camera_z -= Settings::get_instance().ZOOM_AMOUNT;
+    double amount = Settings::get_instance().ZOOM_AMOUNT;
+    if (amount > (camera_z - .1) / 2)
+    {
+        amount = (camera_z - .1) / 2;
+    }
+    camera_z -= amount;
     if (camera_z < 0)
     {
         camera_z = 0;
@@ -236,33 +254,29 @@ void GlDisplay::zoom_in()
 
 void GlDisplay::zoom_out()
 {
-    camera_z += Settings::get_instance().ZOOM_AMOUNT;
+    double amount = Settings::get_instance().ZOOM_AMOUNT;
+    camera_z += amount;
 }
 
 
 void GlDisplay::left()
 {
-    camera_x -= Settings::get_instance().ZOOM_AMOUNT;
-    std::cout << "left" << std::endl;
+    camera_x += Settings::get_instance().ZOOM_AMOUNT;
 }
 
 void GlDisplay::right()
 {
-    camera_x += Settings::get_instance().ZOOM_AMOUNT;
-    std::cout << "right" << std::endl;
+    camera_x -= Settings::get_instance().ZOOM_AMOUNT;
 }
 
 void GlDisplay::up()
 {
     camera_y -= Settings::get_instance().ZOOM_AMOUNT;
-    std::cout << "forward" << std::endl;
 }
-
 
 void GlDisplay::down()
 {
     camera_y += Settings::get_instance().ZOOM_AMOUNT;
-    std::cout << "back" << std::endl;
 }
 
 

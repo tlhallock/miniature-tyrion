@@ -7,7 +7,7 @@ namespace aoe
 {
 
 
-Strategy::Strategy(Player* player)
+Strategy::Strategy()
 {
 }
 

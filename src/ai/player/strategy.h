@@ -1,18 +1,17 @@
 #ifndef STRATEGY_H
 #define STRATEGY_H
 
+#include "ai/player/player_listener.h"
+
 namespace aoe
 {
 
-class Player;
 
-class Strategy
+class Strategy : public PlayerListener
 {
 private:
-    Player *player;
-
 public:
-    Strategy(Player* player);
+    Strategy();
     ~Strategy();
 };
 

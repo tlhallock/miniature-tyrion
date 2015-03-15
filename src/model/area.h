@@ -18,6 +18,8 @@ public:
     Location(double x, double y);
     Location(const Area& a);
 
+    virtual ~Location() {}
+
     Location& operator=(const Area& a);
     Location operator/(double d) const;
 
@@ -32,6 +34,18 @@ public:
 
     friend std::ostream& operator<<(std::ostream& out, const Location& a);
 };
+
+typedef Location Size;
+
+#if 0
+class Size : public Location
+{
+public:
+    Size() : Location{} {}
+    Size(double x, double y) : Location{x, y} {}
+    Size(const Area& a) : Location{a} {}
+};
+#endif
 
 struct LocationCmp
 {
@@ -57,6 +71,8 @@ class Area
     double distance_to(const Area& other) const;
     bool   contains(const Area& other) const;
     void   set_size(double width, double height);
+
+    bool overlaps(const Area& other) const;
 
     friend std::ostream& operator<<(std::ostream& out, const Area& a);
 };

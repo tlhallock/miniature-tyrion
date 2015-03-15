@@ -29,7 +29,7 @@ public:
     const std::set<int>& get_available_buildings() const;
     bool is_enabled(int building) const;
 
-    Unit* create_building(int building_id, const Location& area, bool override=false) const;
+    Unit* create_building(int building_id, const Location& area) const;
 };
 
 }

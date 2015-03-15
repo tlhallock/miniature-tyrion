@@ -32,8 +32,8 @@ double Location::getY()
 
 void Location::set(double x_, double y_)
 {
-    x_ = x;
-    y_ = y;
+    x = x_;
+    y = y_;
 }
 
 double Location::distance_to(const Location& other) const
@@ -109,5 +109,34 @@ std::ostream& operator<<(std::ostream& out, const Area& a)
 {
   return out << "[(" << a.x << "," << a.y <<")-(" << (a.x + a.w) << "," << (a.y + a.h) << ")]";
 }
+
+
+bool Area::overlaps(const Area& r) const
+{
+    double tw = this->w;
+    double th = this->h;
+    double rw = r.w;
+    double rh = r.h;
+    if (rw < 0 || rh < 0 || tw < 0 || th < 0)
+    {
+        return false;
+    }
+    double tx = this->x;
+    double ty = this->y;
+    double rx = r.x;
+    double ry = r.y;
+    rw += rx;
+    rh += ry;
+    tw += tx;
+    th += ty;
+
+    return ((rw < rx || rw > tx) &&
+            (rh < ry || rh > ty) &&
+            (tw < tx || tw > rx) &&
+            (th < ty || th > ry));
+}
+
+
+
 
 }

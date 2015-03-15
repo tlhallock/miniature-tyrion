@@ -55,6 +55,7 @@ SOURCES += \
         src/ai/unit/harass_strategy.cpp \
         src/ai/unit/hide_strategy.cpp \
         src/ai/unit/monitor_strategy.cpp \
+        src/ai/unit/random_movement_strategy.cpp \
         src/ai/unit/route_strategy.cpp \
         src/ai/unit/scout_strategy.cpp \
         src/ai/unit/unit_listener.cpp \
@@ -111,6 +112,7 @@ HEADERS += \
         src/ai/unit/harass_strategy.h \
         src/ai/unit/hide_strategy.h \
         src/ai/unit/monitor_strategy.h \
+        src/ai/unit/random_movement_strategy.h \
         src/ai/unit/route_strategy.h \
         src/ai/unit/scout_strategy.h \
         src/ai/unit/unit_listener.h \
@@ -151,4 +153,5 @@ HEADERS += \
         src/task/task.h \
         src/util/fs.h \
         src/util/timer.h \
+
 

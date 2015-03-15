@@ -19,6 +19,8 @@
 #include <vector>
 
 
+
+
 #if 0
 void load_obj(const char* filename, std::vector<glm::vec4> &vertices, std::vector<glm::vec3> &normals, std::vector<GLushort> &elements) {
   ifstream in(filename, ios::in);
@@ -58,11 +60,28 @@ void load_obj(const char* filename, std::vector<glm::vec4> &vertices, std::vecto
 namespace aoe
 {
 
-GfxObject::GfxObject(const Location& pos, const std::string& object_file, const cv::Mat& img)
+// 0,0 -> -1,-1
+// MAP_WIDTH, MAP_HEIGHT -> 1, 1
+Location map_loc_model_to_gl(const Location&& modelspace)
 {
-//    Location l = pos / Settings::get_instance().MODEL_TO_OPENGL_RATIO;
-//    Location l = pos;
-    Location l = pos / Settings::get_instance().MAP_SIZE;
+    return Location{2 * (modelspace.x / Settings::get_instance().MAP_WIDTH) - 1, 2 * (modelspace.y / Settings::get_instance().MAP_WIDTH) - 1};
+}
+Size map_size_model_to_gl(const Size& modelspace)
+{
+    return Size{2 * modelspace.x / Settings::get_instance().MAP_WIDTH, 2 * modelspace.y / Settings::get_instance().MAP_WIDTH};
+}
+
+GfxObject::GfxObject(const Size& pos, const std::string& object_file, const cv::Mat& img)
+{
+    if (!img.data)
+    {
+        std::cerr << "Unable to create texture from image." << std::endl;
+        exit(-1);
+    }
+
+    std::cout << "Original location: " << pos << std::endl;
+    Size l = map_size_model_to_gl(pos);
+    std::cout << "Mapped location: " << l << std::endl;
 
     cv::Mat_<cv::Vec2f> vertex(1, 4);
     vertex << cv::Vec2f(0, l.x), cv::Vec2f(0, 0), cv::Vec2f(l.y, 0), cv::Vec2f(l.x, l.y);
@@ -77,6 +96,11 @@ GfxObject::GfxObject(const Location& pos, const std::string& object_file, const 
     arr.setTexCoordArray(texCoords);
     indices.copyFrom(indicesm);
     tex.copyFrom(img);
+
+
+#if DEBUG_OPENGL
+    size = l;
+#endif
 }
 
 GfxObject::~GfxObject()
@@ -99,7 +123,13 @@ void GfxObject::draw()
 
 GlDrawInstance::GlDrawInstance(Unit* original_, GfxObject* type_) :
     original{original_},
-    pos{original_->get_location()},
+    pos{map_loc_model_to_gl(Location{original_->get_location()})},
+    type{type_}
+{}
+
+GlDrawInstance::GlDrawInstance(GfxObject* type_) :
+    original{nullptr},
+    pos{map_loc_model_to_gl(Location{0, 0})},
     type{type_}
 {}
 
@@ -108,9 +138,10 @@ GlDrawInstance::~GlDrawInstance() {}
 
 void GlDrawInstance::updatePosition()
 {
-    pos = (Location{original->get_location()} / Settings::get_instance().MAP_SIZE);
-//    pos = (Location{original->get_location()} / Settings::get_instance().MODEL_TO_OPENGL_RATIO);
-//    pos = original->get_location();
+    if (original != nullptr)
+    {
+        pos = map_loc_model_to_gl(original->get_location());
+    }
 }
 
 Unit* GlDrawInstance::getOriginal()
@@ -119,12 +150,19 @@ Unit* GlDrawInstance::getOriginal()
 }
 void GlDrawInstance::draw()
 {
+#if DEBUG_OPENGL
+    std::cout << "Rendering object at " << pos << "with size " << type->size << '\n';
+#endif
     updatePosition();
 
     glTranslated(pos.x, pos.y, 0);
     type->draw();
     glTranslated(-pos.x, -pos.y, 0);
 }
+
+
+
+
 
 
 }

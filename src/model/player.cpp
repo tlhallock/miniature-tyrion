@@ -1,6 +1,7 @@
 #include "player.h"
 
 
+#include "ai/player/player_listener.h"
 #include "model/civilization.h"
 #include "res/civilization_descp.h"
 #include "res/game_info.h"
@@ -11,7 +12,7 @@
 namespace aoe
 {
 
-Player::Player(Civilization* civ, const std::vector<double>& res, const Area& center_) :
+Player::Player(Civilization* civ, const std::vector<double>& res, const Location& center_) :
     civilization{civ},
     resources{res},
     center{center_}
@@ -48,9 +49,20 @@ Civilization* Player::get_civilization()
 
 
 
-const Area& Player::get_location()
+const Location& Player::get_location()
 {
     return center;
+}
+
+
+void Player::unit_added(Unit* unit)
+{
+    units.push_back(unit);
+
+    for (auto it = listeners.begin(); it != listeners.end(); ++it)
+    {
+        (*it)->unit_created(unit);
+    }
 }
 
 }

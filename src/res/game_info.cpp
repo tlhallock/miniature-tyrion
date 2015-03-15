@@ -17,26 +17,28 @@ namespace aoe
 
 namespace game_info
 {
-    std::vector<ResourceDescription> collect_resources(IdentifierTable& table, OpenedPropertyFiles&& pfiles);
-    std::vector<UnitDescription> construct_unit_descriptions(IdentifierTable& table, OpenedPropertyFiles&& pfiles, UnitStructure& structure);
+    std::vector<ResourceDescription> collect_resources(IdentifierTable& table, OpenedPropertyFiles&& pfiles, Images& images);
+    std::vector<UnitDescription> construct_unit_descriptions(IdentifierTable& table, OpenedPropertyFiles&& pfiles, UnitStructure& structure, Images& images);
     std::vector<Technology> collect_technologies(OpenedPropertyFiles&& pfiles,
                                                            IdentifierTable& table,
-                                                           const std::vector<UnitDescription>& units);
+                                                           const std::vector<UnitDescription>& units,
+                                                           Images& images);
     std::vector<CivilizationDescription> collect_civilizations(OpenedPropertyFiles&& pfiles,
                                                            IdentifierTable& table,
                                                            const std::vector<UnitDescription>& units,
-                                                           const std::vector<Technology>& techs);
+                                                           const std::vector<Technology>& techs,
+                                                           Images& images);
 }
 
 
 GameInfo::GameInfo(const std::string& root_directory) :
     table{},
     images{root_directory + "/data/images/"},
-    resources{game_info::collect_resources(table, OpenedPropertyFiles{root_directory + "/data/resources/"})},
+    resources{game_info::collect_resources(table, OpenedPropertyFiles{root_directory + "/data/resources/"}, images)},
     structure{},
-    units{game_info::construct_unit_descriptions(table, OpenedPropertyFiles{root_directory + "/data/units/"}, structure)},
-    techs {game_info::collect_technologies(OpenedPropertyFiles{root_directory + "/data/tech/"}, table, units)},
-    civs{game_info::collect_civilizations(OpenedPropertyFiles{root_directory + "/data/civilizations/"}, table, units, techs)}
+    units{game_info::construct_unit_descriptions(table, OpenedPropertyFiles{root_directory + "/data/units/"}, structure, images)},
+    techs {game_info::collect_technologies(OpenedPropertyFiles{root_directory + "/data/tech/"}, table, units, images)},
+    civs{game_info::collect_civilizations(OpenedPropertyFiles{root_directory + "/data/civilizations/"}, table, units, techs, images)}
 {
 }
 

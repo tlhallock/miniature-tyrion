@@ -14,6 +14,8 @@ void collect_files_by_ext(const std::string& root_directory, std::vector<std::st
 
 void ensure_directory_exists(const std::string& directory);
 
+std::string realpath(const std::string& path);
+
 }
 
 #endif

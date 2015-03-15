@@ -14,7 +14,6 @@ class UnitListener
   UnitListener();
   virtual ~UnitListener();
 
-
   virtual void movable_arrived();
 
   virtual void collector_full();

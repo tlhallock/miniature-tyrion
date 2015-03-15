@@ -3,11 +3,12 @@
 
 #include "res/property_file.h"
 #include "res/identifier_table.h"
+#include "res/images.h"
 
 namespace aoe
 {
 
-ResourceDescription::ResourceDescription(int id_, IdentifierTable& table, PropertyFile& file) :
+ResourceDescription::ResourceDescription(int id_, IdentifierTable& table, PropertyFile& file, Images& images) :
     name          { file.get_property("name").asString()          },
     id            { id_                                           },
     num_villagers { file.get_property("num-collect").asInt()      },
@@ -16,7 +17,7 @@ ResourceDescription::ResourceDescription(int id_, IdentifierTable& table, Proper
     rejuv_speed   { file.get_property("rejuv").asDouble()         },
     initial_cap   { file.get_property("quantity-init").asDouble() },
     player_init   { file.get_property("player-init").asDouble()   },
-    image_id      { table.get_image_id(file.get_property("image").asString()) }
+    image_id      { images.get_id_for(file.get_property("image").asString()) }
 {
     if (table.get_resource_id(name) != id_)
     {

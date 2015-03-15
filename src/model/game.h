@@ -44,6 +44,7 @@ public:
     void unit_created(Unit* u);
     void unit_killed(Unit* u);
 
+    int get_num_players() { return players.size(); }
     Player* get_player(int index);
 
     IdentifierTable& get_table();

@@ -36,6 +36,9 @@ private:
     std::map<int, GfxObject> drawTypes;
     std::vector<GlDrawInstance> drawables;
 
+    std::unique_ptr<GfxObject> map;
+    std::unique_ptr<GlDrawInstance> mapInstance;
+
     Area area;
     int w, h;
 
@@ -49,14 +52,6 @@ public:
     GlDisplay(GameInfo& info, const std::string& name);
     virtual ~GlDisplay();
 
-    void zoom_in();
-    void zoom_out();
-
-    void left();
-    void right();
-    void up();
-    void down();
-
     void unit_entered(Unit* entered);
     void unit_exited(Unit* exit);
 
@@ -67,6 +62,16 @@ private:
     void load(GameInfo& civ);
     void draw();
     void setCamera(double x, double y, double z);
+
+    void zoom_in();
+    void zoom_out();
+
+    void left();
+    void right();
+    void up();
+    void down();
+
+    void handle_key(int key);
 };
 
 }

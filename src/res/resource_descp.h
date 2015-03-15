@@ -8,6 +8,7 @@
 namespace aoe
 {
 
+class Images;
 class IdentifierTable;
 class PropertyFile;
 
@@ -27,7 +28,7 @@ private:
     int image_id;
 
 public:
-    ResourceDescription(int id, IdentifierTable& table, PropertyFile& file);
+    ResourceDescription(int id, IdentifierTable& table, PropertyFile& file, Images& images);
     ~ResourceDescription();
 
     const std::string& get_name() const;

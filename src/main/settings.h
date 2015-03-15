@@ -10,11 +10,10 @@ namespace aoe
 class Settings
 {
 public:
+    int DISPLAY_WIDTH = 640 * 2;
+    int DISPLAY_HEIGHT = 480 * 2;
 
-    int DISPLAY_WIDTH = 640;
-    int DISPLAY_HEIGHT = 480;
-
-    double MAP_SIZE = 100;
+    double MAP_SIZE = 1000;
     double MAP_WIDTH = MAP_SIZE;
     double MAP_HEIGHT = MAP_SIZE;
     Area INITIAL_VIEWPORT{0, 0, MAP_WIDTH, MAP_HEIGHT};
@@ -26,13 +25,16 @@ public:
 
     double INITIAL_HEIGHT = 3;
 
-    long EGNINE_CLOCK_FREQ = 2000;
+    long EGNINE_CLOCK_FREQ = 20;
 
-    double ZOOM_AMOUNT = .5;
+    double ZOOM_AMOUNT = .1;
 
     int KEY_WAIT_TIME = 20;
 
     double MODEL_TO_OPENGL_RATIO = 1.0/20;
+
+    std::string MAP_BACKGROUND{"background.jpg"};
+
 private:
     Settings();
     ~Settings();

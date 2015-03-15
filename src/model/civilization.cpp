@@ -35,9 +35,9 @@ bool Civilization::is_enabled(int building) const
 }
 
 
-Unit* Civilization::create_building(int building_id, const Location& area, bool override) const
+Unit* Civilization::create_building(int building_id, const Location& area) const
 {
-    if (!override && !is_enabled(building_id))
+    if (!is_enabled(building_id))
     {
         return nullptr;
     }

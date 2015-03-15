@@ -1,0 +1,34 @@
+{
+	"parent": "unit.json",
+	
+	"name": "villager",
+	
+	"creatable": true,
+	    
+	"coll-speed": {
+		"gold":   1,
+		"wood":   1,
+		"food":   1,
+		"stone":  1
+	},
+	
+	"damage": [
+		{ "against": "building", "value": 1 },
+		{ "against": "unit",     "value": 1 }
+	],
+	"resistance": [
+		{ "torwards": "unit",    "value": 1 }
+	],
+	
+	"speed": 0.1,
+	"capacity": 0,
+	"los": 5,
+	"range": 0,
+	"width": 1,
+	"height": 1,
+	
+	"images": [
+		"villager.jpg"
+	]
+}
+   

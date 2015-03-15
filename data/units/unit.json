@@ -12,10 +12,10 @@
 		"stone":  0
 	},
 	"coll-speed": {
-		"gold":   1,
-		"wood":   1,
-		"food":   1,
-		"stone":  1
+		"gold":   0,
+		"wood":   0,
+		"food":   0,
+		"stone":  0
 	},
 	
 	"damage": [
@@ -34,7 +34,7 @@
 	"height": 1,
 	
 	"images": [
-		"woman.jpg"
+		"villager.jpg"
 	]
 }
    

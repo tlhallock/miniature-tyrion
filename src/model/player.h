@@ -28,17 +28,19 @@ private:
 
     std::vector<PlayerListener*> listeners;
 
-    Area center;
+    Location center;
 
 public:
-    Player(Civilization* civ, const std::vector<double>& res, const Area& center);
+    Player(Civilization* civ, const std::vector<double>& res, const Location& center);
     ~Player();
 
     void add_listener(PlayerListener* listener);
     void remove_listener(PlayerListener* listener);
 
     Civilization* get_civilization();
-    const Area& get_location();
+    const Location& get_location();
+
+    void unit_added(Unit* unit);
 
 };
 

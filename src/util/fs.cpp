@@ -71,4 +71,11 @@ void ensure_directory_exists(const std::string& directory)
 	boost::filesystem::create_directory(directory);
 }
 
+std::string realpath(const std::string& path)
+{
+    return boost::filesystem::canonical(path).string();
+}
+
+
+
 }
