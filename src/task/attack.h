@@ -3,21 +3,24 @@
 #ifndef ATTACK_H_
 #define ATTACK_H_
 
+#include "task/task.h"
+
 namespace aoe
 {
 
 class Attack : public Task
 {
-private:
-    Unit* unit;
+    Unit* target;
 
 public:
     Attack(Unit* unit);
     ~Attack();
 
-    void set_unit(Unit* unit);
+    void set_target(Unit* target);
 
-    void apply(std::vector<UnitListener*>& listeners);
+    void apply();
+
+    std::string getDescription() const;
 };
 
 }

@@ -3,6 +3,8 @@
 #ifndef TASK_LISTENER_H_
 #define TASK_LISTENER_H_
 
+#include "ai/unit/unit_event.h"
+
 namespace aoe
 {
 
@@ -14,15 +16,20 @@ class UnitListener
   UnitListener();
   virtual ~UnitListener();
 
-  virtual void movable_arrived();
+  void handleUnitEvent(UnitEvent event);
 
-  virtual void collector_full();
-  virtual void collector_empty();
+  virtual void movableObstructed();
+  virtual void movableArrived();
 
-  virtual void destructible_died();
-  virtual void attacker_killed();
+  virtual void collectorFull();
+  virtual void collectorEmpty();
 
-  virtual void enemy_in_rage(Unit *enemy);
+  virtual void destructibleDied();
+
+  virtual void targetOutOfRange();
+  virtual void targetKilled();
+
+  virtual void enemyInRange(Unit *enemy);
 };
 
 

@@ -102,7 +102,7 @@ std::vector<UnitDescription> construct_unit_descriptions(IdentifierTable& table,
     for (auto it = property_file_names.begin(); it != property_file_names.end(); ++it, index++)
     {
         descriptions.push_back(UnitDescription{table, pfiles.get_property_file(*it, false), index, nunits, nres, images});
-        std::cout << "Found unit: " << descriptions[index].get_name() << '\n';
+        std::cout << "Found unit: " << descriptions[index].getName() << '\n';
     }
 
     /**
@@ -122,7 +122,7 @@ std::vector<UnitDescription> construct_unit_descriptions(IdentifierTable& table,
         int s = table.get_unit_id(parentFile->get_property("name").asString());
         structure.set_parent(index, s);
 
-        if (index != descriptions[index].get_id())
+        if (index != descriptions[index].getId())
         {
             std::cerr << "This test fails" << std::endl;
             exit(-1);

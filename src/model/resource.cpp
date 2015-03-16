@@ -15,21 +15,18 @@ Resource::~Resource()
 {
 }
 
-int Resource::get_image_id() const
+int Resource::getImageId() const
 {
-    return type->get_image_id();
+    return type->getImageId();
 }
 Area& Resource::getArea()
 {
     return location;
 }
-
 const Area& Resource::getArea() const
 {
     return location;
 }
-
-
 std::ostream& operator<<(std::ostream& out, const Resource& g)
 {
     return out << g.type->get_name() << " at " << g.location;

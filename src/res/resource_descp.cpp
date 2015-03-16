@@ -35,7 +35,7 @@ const std::string& ResourceDescription::get_name() const
 }
 
 
-int ResourceDescription::get_image_id() const
+int ResourceDescription::getImageId() const
 {
     return image_id;
 }

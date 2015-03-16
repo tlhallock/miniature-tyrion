@@ -10,17 +10,17 @@ namespace aoe
 {
 
 
-Unit::Unit(const UnitDescription* desc) : type{desc} {}
+Unit::Unit(const UnitDescription* desc) : type{desc}, health{1} {}
 
 Unit::~Unit() {}
 
 
-void Unit::add_listener(UnitListener* listener)
+void Unit::addListener(UnitListener* listener)
 {
     listeners.push_back(listener);
 }
 
-void Unit::remove_listener(UnitListener* listener)
+void Unit::removeListener(UnitListener* listener)
 {
     auto it = std::find(listeners.begin(), listeners.end(), listener);
     if (it != listeners.end())
@@ -31,12 +31,12 @@ void Unit::remove_listener(UnitListener* listener)
 
 std::ostream& operator<<(std::ostream& out, const Unit& u)
 {
-    return  out << u.type->get_name() << " at " << u.area;
+    return  out << u.type->getName() << " at " << u.area;
 }
 
-int Unit::get_image_id() const
+int Unit::getImageId() const
 {
-    return type->get_image_id();
+    return type->getImageId();
 }
 
 
@@ -50,10 +50,20 @@ const Area& Unit::getArea() const
     return area;
 }
 
-
-double Unit::get_speed() const
+void Unit::broadcastEvent(UnitEvent event)
 {
-    return type->get_speed();
+    auto end = listeners.end();
+    for (auto it = listeners.begin(); it != end; ++it)
+    {
+        (*it)->handleUnitEvent(event);
+    }
 }
+
+
+void Unit::setHealthPercent(double h) { health = h; }
+double Unit::getHealthPercent() const { return health; }
+
+
+const UnitDescription* Unit::getType() { return type; }
 
 }

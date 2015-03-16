@@ -63,18 +63,22 @@ public:
 
     Unit *create() const;
 
-    int get_id() const;
+    int getId() const;
 
     friend std::ostream& operator<<(std::ostream& out, const UnitDescription& u);
 
-    const std::string& get_name() const;
+    const std::string& getName() const;
 
-    int get_image_id() const;
+    int getImageId() const;
 
     bool isCreatable() const;
     Size getSize() const;
 
-    double get_speed() const;
+    double getSpeed() const;
+    double getRange() const;
+    double getDamage(int id) const;
+    double getResistance(int id) const;
+    double getHealth() const;
 
 private:
     bool is_child_of(const std::string& unitName);

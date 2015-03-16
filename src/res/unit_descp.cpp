@@ -182,7 +182,7 @@ void UnitDescription::link_techs(IdentifierTable& table,
 }
 
 
-int UnitDescription::get_id() const
+int UnitDescription::getId() const
 {
     return id;
 }
@@ -194,13 +194,13 @@ Unit *UnitDescription::create() const
     return returnValue;
 }
 
-const std::string& UnitDescription::get_name() const
+const std::string& UnitDescription::getName() const
 {
     return name;
 }
 
 
-int UnitDescription::get_image_id() const
+int UnitDescription::getImageId() const
 {
     return image_id;
 }
@@ -211,8 +211,12 @@ bool UnitDescription::isCreatable() const { return creatable; }
 Size UnitDescription::getSize() const { return Size{width, height}; }
 //double UnitDescription::get_width() const { return width; }
 //double UnitDescription::get_height() const { return height; }
-double UnitDescription::get_speed() const { return speed; }
 
+double UnitDescription::getSpeed() const { return speed; }
+double UnitDescription::getRange() const { return range; }
+double UnitDescription::getDamage(int id) const { return damage[id]; }
+double UnitDescription::getResistance(int id) const { return resistance[id]; }
+double UnitDescription::getHealth() const { return health; }
 
 /*
 

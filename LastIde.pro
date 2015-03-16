@@ -38,6 +38,10 @@ OBJECTS_DIR=objects/
 
 
 
+
+
+
+
 SOURCES += \
         src/ai/player/ai_strategy.cpp \
         src/ai/player/network_strategy.cpp \
@@ -114,6 +118,7 @@ HEADERS += \
         src/ai/unit/random_movement_strategy.h \
         src/ai/unit/route_strategy.h \
         src/ai/unit/scout_strategy.h \
+        src/ai/unit/unit_event.h \
         src/ai/unit/unit_listener.h \
         src/gen/generator.h \
         src/gfx/cvdisplay.h \
@@ -154,3 +159,4 @@ HEADERS += \
         src/task/task.h \
         src/util/fs.h \
         src/util/timer.h \
+

@@ -4,19 +4,26 @@
 #define TASK_H_
 
 #include <vector>
+#include <string>
 
 namespace aoe
 {
 
+class Unit;
+
 class Task
 {
+protected:
+    Unit* unit;
  public:
-  Task() {}
-  virtual ~Task() {}
+  Task(Unit* unit);
+  virtual ~Task();
 
   virtual void apply() = 0;
 
-  virtual std::string get_description() const { return "descriptionless task"; }
+  virtual std::string getDescription() const;
+
+  Unit* getUnit();
 };
 
 

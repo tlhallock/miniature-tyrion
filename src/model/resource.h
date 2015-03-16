@@ -18,7 +18,7 @@ public:
     Resource(ResourceDescription* type, const Area& location);
     ~Resource();
 
-    int get_image_id() const;
+    int getImageId() const;
     Area& getArea();
     const Area& getArea() const;
 

@@ -24,15 +24,17 @@ class Engine : public TimerTask
   Engine();
   ~Engine();
 
-  void animate_iteration();
 
-  void set_task(Unit* unit, Task* Unit);
-
-//  bool contains(Task* Unit);
+  void addTask(Task* Unit);
+  void idle(Unit* unit);
 
   friend std::ostream& operator<<(std::ostream& out, const Engine& e);
 
   void run();
+
+
+private:
+  void animateIteration();
 };
 
 }

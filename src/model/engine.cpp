@@ -13,7 +13,7 @@ Engine::Engine() {}
 Engine::~Engine() {}
 
 
-void Engine::animate_iteration()
+void Engine::animateIteration()
 {
     for (auto it=active_units.begin(); it!=active_units.end(); ++it)
     {
@@ -26,15 +26,17 @@ void Engine::animate_iteration()
 //    return std::find(active_units.begin(), active_units.end(), unit) != active_units.end();
 //}
 
-void Engine::set_task(Unit* unit, Task* task)
+void Engine::addTask(Task* task)
 {
+    if (task == nullptr)
+    {
+        return;
+    }
+    Unit* unit = task->getUnit();
     auto it = active_units.find(unit);
     if (it == active_units.end())
     {
-        if (task != nullptr)
-        {
-            active_units.insert(std::pair<Unit*,Task*>{unit, task});
-        }
+         active_units.insert(std::pair<Unit*,Task*>{unit, task});
     }
     else
     {
@@ -56,7 +58,7 @@ std::ostream& operator<<(std::ostream& out, const Engine& e)
     int i=0;
     for (auto it = e.active_units.begin(); it != e.active_units.end(); ++it, i++)
     {
-        out << '\t' << i << ": " /*<< *(it->first) */ << " <-> "<< it->second->get_description() << '\n';
+        out << '\t' << i << ": " /*<< *(it->first) */ << " <-> "<< it->second->getDescription() << '\n';
     }
     return out;
 }
@@ -64,7 +66,18 @@ std::ostream& operator<<(std::ostream& out, const Engine& e)
 
 void Engine::run()
 {
-    animate_iteration();
+    animateIteration();
+}
+
+void Engine::idle(Unit *unit)
+{
+    auto it = active_units.find(unit);
+    if (it == active_units.end())
+    {
+        return;
+    }
+
+    active_units.erase(it);
 }
 
 }

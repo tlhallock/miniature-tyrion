@@ -125,7 +125,7 @@ GlDisplay::~GlDisplay()
 
 void GlDisplay::unit_entered(Unit* entered)
 {
-    int id = entered->get_type()->get_id();
+    int id = entered->getType()->getId();
     auto it = drawTypes.find(id);
     if (it == drawTypes.end())
     {
@@ -183,11 +183,11 @@ void GlDisplay::load(GameInfo& info)
 
         // The image needs to actually be dynamic...
         drawTypes.insert(std::pair<int, GfxObject>{
-                             it->get_id(),
+                             it->getId(),
                              GfxObject{
                                        it->getSize(),
                                        "not used",
-                                       info.get_images()->get(it->get_image_id())}});
+                                       info.get_images()->get(it->getImageId())}});
     }
 }
 
@@ -195,7 +195,6 @@ void GlDisplay::draw()
 {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-//    gluLookAt(camera_x, camera_y, camera_z, 0, 0, 0, 0, 1, 0);
     gluLookAt(0, 0, camera_z, 0, 0, 0, 0, 1, 0);
     glTranslated(camera_x, camera_y, 0);
 
@@ -215,7 +214,6 @@ void GlDisplay::renderLoop(Game* game)
     game->get_map().add_listener(this);
     for (;;)
     {
-        std::cout << camera_z << std::endl;
         cv::updateWindow(name);
         int key = cv::waitKey(Settings::get_instance().KEY_WAIT_TIME);
         if ((key & 0xff) == 27)
@@ -278,14 +276,6 @@ void GlDisplay::down()
 {
     camera_y += Settings::get_instance().ZOOM_AMOUNT;
 }
-
-
-
-
-
-
-
-
 
 
 }

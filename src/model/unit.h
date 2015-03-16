@@ -8,6 +8,7 @@
 
 #include "model/spc/area.h"
 #include "res/unit_descp.h"
+#include "ai/unit/unit_event.h"
 
 #include "gfx/gfx.h"
 
@@ -24,26 +25,28 @@ class Unit : public Gfx
   Area area;
   std::vector<UnitListener*> listeners;
   const UnitDescription *type;
+  double health;
   
  public:
   Unit(const UnitDescription* desc);
   ~Unit();
 
-  const UnitDescription* get_type() { return type; }
+  const UnitDescription* getType();
 
-  void add_listener(UnitListener* listener);
-  void remove_listener(UnitListener* listener);
-  std::vector<UnitListener*>& get_listeners() { return listeners; }
+  void addListener(UnitListener* listener);
+  void removeListener(UnitListener* listener);
+  void broadcastEvent(UnitEvent event);
 
   void setArea(const Area& area);
   Area& getArea();
   const Area& getArea() const;
 
-  double get_speed() const;
-
   friend std::ostream& operator<<(std::ostream& out, const Unit& u);
 
-  int get_image_id() const;
+  void setHealthPercent(double h);
+  double getHealthPercent() const;
+
+  int getImageId() const;
 };
 
 }

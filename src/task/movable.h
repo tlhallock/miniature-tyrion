@@ -17,18 +17,17 @@ class Unit;
 class Move : public Task
 {
 private:
-    Unit* unit;
-    Location dest;
+    Location* dest;
 
 public:
     Move(Unit* unit);
     ~Move();
 
-    void set_destination(const Location& dest);
+    void setDestination(Location* dest);
 
     void apply();
 
-    std::string get_description() const { return "moving torwards " /* + dest.x + "," + dest.y*/; }
+    std::string getDescription() const;
 };
 
 

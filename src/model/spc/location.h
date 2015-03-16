@@ -30,7 +30,7 @@ public:
     double getY() const;
 
     void setLocation(double x, double y);
-    double distance_to(const Location& other) const;
+    double distanceTo(const Location& other) const;
 
     friend std::ostream& operator<<(std::ostream& out, const Location& a);
 };

@@ -19,12 +19,13 @@ private:
     Engine* engine;
     Unit* unit;
     Area bounds;
+    Area nextDest;
     std::unique_ptr<Task> previous;
 public:
     RandomMovementStrategy(Engine* engine, Unit* unit, const Area& bounds);
     ~RandomMovementStrategy();
 
-    void movable_arrived();
+    void movableArrived();
 };
 
 

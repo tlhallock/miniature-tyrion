@@ -14,7 +14,7 @@ AiStrategy::AiStrategy(Engine* engine_) :
 
 void AiStrategy::unit_created(Unit* u)
 {
-    const std::string& name = u->get_type()->get_name();
+    const std::string& name = u->getType()->getName();
     if (name == "villager")
     {
         new RandomMovementStrategy{engine, u, Area{0, 0, Settings::get_instance().MAP_WIDTH, Settings::get_instance().MAP_HEIGHT}};

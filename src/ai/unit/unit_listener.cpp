@@ -10,14 +10,31 @@ UnitListener::UnitListener() {}
 UnitListener::~UnitListener() {}
 
 
-void UnitListener::movable_arrived() {}
+void UnitListener::handleUnitEvent(UnitEvent event)
+{
+  switch (event)
+  {
+    case UnitEvent::movableObstructed: movableObstructed();   return;
+    case UnitEvent::movableArrived:    movableArrived();      return;
+    case UnitEvent::collectorFull:     collectorFull();       return;
+    case UnitEvent::collectorEmpty:    collectorEmpty();      return;
+    case UnitEvent::destructibleDied:  destructibleDied();    return;
+    case UnitEvent::targetOutOfRange:  targetOutOfRange();    return;
+    case UnitEvent::targetKilled:      targetKilled();        return;
+    case UnitEvent::enemyInRange:      enemyInRange(nullptr); return;
+  default:
+      std::cerr << "Unkown message type: " << event << std::endl;
+      exit(-1);
+  }
+}
 
-void UnitListener::collector_full() {}
-void UnitListener::collector_empty() {}
-
-void UnitListener::destructible_died() {}
-void UnitListener::attacker_killed() {}
-
-void UnitListener::enemy_in_rage(Unit *enemy) {}
+void UnitListener::movableObstructed() {}
+void UnitListener::movableArrived() {}
+void UnitListener::collectorFull() {}
+void UnitListener::collectorEmpty() {}
+void UnitListener::destructibleDied() {}
+void UnitListener::targetOutOfRange() {}
+void UnitListener::targetKilled() {}
+void UnitListener::enemyInRange(Unit *enemy) {}
 
 }

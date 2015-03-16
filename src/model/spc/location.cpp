@@ -37,7 +37,7 @@ void Location::setLocation(double x_, double y_)
     y = y_;
 }
 
-double Location::distance_to(const Location& other) const
+double Location::distanceTo(const Location& other) const
 {
     double dx = x - other.x;
     double dy = y - other.y;
