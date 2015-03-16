@@ -6,7 +6,7 @@
 
 #include <vector>
 
-#include "model/area.h"
+#include "model/spc/area.h"
 #include "res/unit_descp.h"
 
 #include "gfx/gfx.h"
@@ -35,18 +35,15 @@ class Unit : public Gfx
   void remove_listener(UnitListener* listener);
   std::vector<UnitListener*>& get_listeners() { return listeners; }
 
-  void set_location(const Area& area);
-  void set_location(const Location& area);
-  void set_size(double width, double height);
-  Size get_size() { return Size{area.w, area.h}; }
+  void setArea(const Area& area);
+  Area& getArea();
+  const Area& getArea() const;
 
   double get_speed() const;
 
   friend std::ostream& operator<<(std::ostream& out, const Unit& u);
 
-
   int get_image_id() const;
-  const Area& get_location() const;
 };
 
 }

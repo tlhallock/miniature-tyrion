@@ -44,7 +44,7 @@ Unit* Civilization::create_building(int building_id, const Location& area) const
 
     Unit* unit = unit_values[building_id].create();
 
-    unit->set_location(area);
+    unit->getArea() = area;
 
     return unit;
 }

@@ -13,7 +13,8 @@ public:
     ~Gfx();
 
     virtual int get_image_id() const = 0;
-    virtual const Area& get_location() const = 0;
+    virtual const Area& getArea() const = 0;
+    virtual Area& getArea() = 0;
 };
 
 }

@@ -2,7 +2,7 @@
 #define RANDOM_MOVEMENT_STRATEGY_H
 
 #include "ai/unit/unit_listener.h"
-#include "model/area.h"
+#include "model/spc/area.h"
 #include "task/task.h"
 
 #include <memory>

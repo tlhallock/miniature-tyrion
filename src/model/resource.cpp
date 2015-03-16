@@ -19,7 +19,12 @@ int Resource::get_image_id() const
 {
     return type->get_image_id();
 }
-const Area& Resource::get_location() const
+Area& Resource::getArea()
+{
+    return location;
+}
+
+const Area& Resource::getArea() const
 {
     return location;
 }

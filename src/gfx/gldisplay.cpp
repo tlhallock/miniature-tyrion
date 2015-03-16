@@ -107,7 +107,7 @@ GlDisplay::GlDisplay(GameInfo& info, const std::string& name_) :
     gluPerspective(45.0, w / (double) h, 0.1, 100.0);
 
     map = std::unique_ptr<GfxObject>{new GfxObject{
-            Location{Settings::get_instance().MAP_WIDTH, Settings::get_instance().MAP_HEIGHT},
+            Size{Settings::get_instance().MAP_WIDTH, Settings::get_instance().MAP_HEIGHT},
             "not used", info.get_images()->get_background()}};
     mapInstance = std::unique_ptr<GlDrawInstance>{new GlDrawInstance{map.get()}};
 
@@ -185,7 +185,7 @@ void GlDisplay::load(GameInfo& info)
         drawTypes.insert(std::pair<int, GfxObject>{
                              it->get_id(),
                              GfxObject{
-                                       it->get_size(),
+                                       it->getSize(),
                                        "not used",
                                        info.get_images()->get(it->get_image_id())}});
     }

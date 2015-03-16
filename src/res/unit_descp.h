@@ -17,6 +17,7 @@ class UnitStructure;
 class Unit;
 class Location;
 class Images;
+class Size;
 
 class UnitDescription
 {
@@ -71,9 +72,7 @@ public:
     int get_image_id() const;
 
     bool isCreatable() const;
-    Location get_size() const;
-    double get_width() const;
-    double get_height() const;
+    Size getSize() const;
 
     double get_speed() const;
 

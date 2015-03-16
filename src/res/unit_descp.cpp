@@ -7,6 +7,7 @@
 #include "res/unit_structure.h"
 #include "model/unit.h"
 #include "res/images.h"
+#include "model/spc/size.h"
 
 
 namespace aoe
@@ -189,7 +190,7 @@ int UnitDescription::get_id() const
 Unit *UnitDescription::create() const
 {
     Unit* returnValue = new Unit{this};
-    returnValue->set_size(get_width(), get_height());
+    returnValue->getArea() = getSize();
     return returnValue;
 }
 
@@ -207,9 +208,9 @@ int UnitDescription::get_image_id() const
 
 
 bool UnitDescription::isCreatable() const { return creatable; }
-Location UnitDescription::get_size() const { return Location{width, height}; }
-double UnitDescription::get_width() const { return width; }
-double UnitDescription::get_height() const { return height; }
+Size UnitDescription::getSize() const { return Size{width, height}; }
+//double UnitDescription::get_width() const { return width; }
+//double UnitDescription::get_height() const { return height; }
 double UnitDescription::get_speed() const { return speed; }
 
 

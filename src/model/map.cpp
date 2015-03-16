@@ -96,21 +96,21 @@ std::ostream& operator<<(std::ostream& out, const Map& g)
 
 bool Map::is_obstructed(const Area& area) const
 {
-    if (area.x < 0 || area.x + area.w > width || area.y < 0 || area.y + area.h > height)
+    if (area.x < 0 || area.x + area.width > width || area.y < 0 || area.y + area.height > height)
     {
         return true;
     }
 
     for (auto it = units.begin(); it != units.end(); ++it)
     {
-        if ((*it)->get_location().overlaps(area))
+        if ((*it)->getArea().overlaps(area))
         {
             return true;
         }
     }
     for (auto it = resources.begin(); it != resources.end(); ++it)
     {
-        if ((*it)->get_location().overlaps(area))
+        if ((*it)->getArea().overlaps(area))
         {
             return true;
         }

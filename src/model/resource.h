@@ -2,7 +2,7 @@
 #define RESOURCE_H
 
 #include "gfx/gfx.h"
-#include "model/area.h"
+#include "model/spc/area.h"
 
 namespace aoe
 {
@@ -19,7 +19,8 @@ public:
     ~Resource();
 
     int get_image_id() const;
-    const Area& get_location() const;
+    Area& getArea();
+    const Area& getArea() const;
 
 
     friend std::ostream& operator<<(std::ostream& out, const Resource& g);

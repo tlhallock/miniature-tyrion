@@ -3,7 +3,9 @@
 
 #include "opencv2/core/opengl.hpp"
 
-#include "model/area.h"
+#include "gfx/gfx.h"
+
+#include "model/spc/location.h"
 
 
 
@@ -13,6 +15,8 @@
 namespace aoe
 {
 
+class Size;
+class Location;
 class Unit;
 class GlDrawInstanceCmp;
 
@@ -44,17 +48,17 @@ class GlDrawInstance
     friend class GlDrawInstanceCmp;
 
 private:
-    Unit* original;
+    Gfx* original;
     Location pos;
     GfxObject* type;
 
 public:
-    GlDrawInstance(Unit* original, GfxObject* type);
+    GlDrawInstance(Gfx* original, GfxObject* type);
     GlDrawInstance(GfxObject* type);
     ~GlDrawInstance();
 
     void draw();
-    Unit* getOriginal();
+    Gfx* getOriginal();
 
 private:
     void updatePosition();

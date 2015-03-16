@@ -38,9 +38,6 @@ OBJECTS_DIR=objects/
 
 
 
-
-
-
 SOURCES += \
         src/ai/player/ai_strategy.cpp \
         src/ai/player/network_strategy.cpp \
@@ -69,7 +66,6 @@ SOURCES += \
         src/gfx/viewport_listener.cpp \
         src/main/main.cpp \
         src/main/settings.cpp \
-        src/model/area.cpp \
         src/model/building.cpp \
         src/model/civilization.cpp \
         src/model/engine.cpp \
@@ -77,6 +73,9 @@ SOURCES += \
         src/model/map.cpp \
         src/model/player.cpp \
         src/model/resource.cpp \
+        src/model/spc/area.cpp \
+        src/model/spc/location.cpp \
+        src/model/spc/size.cpp \
         src/model/unit.cpp \
         src/res/civilization_descp.cpp \
         src/res/game_info_construction.cpp \
@@ -125,7 +124,6 @@ HEADERS += \
         src/gfx/gldisplay.h \
         src/gfx/viewport_listener.h \
         src/main/settings.h \
-        src/model/area.h \
         src/model/building.h \
         src/model/civilization.h \
         src/model/destructible.h \
@@ -134,6 +132,9 @@ HEADERS += \
         src/model/map.h \
         src/model/player.h \
         src/model/resource.h \
+        src/model/spc/area.h \
+        src/model/spc/location.h \
+        src/model/spc/size.h \
         src/model/unit.h \
         src/res/civilization_descp.h \
         src/res/game_info.h \
@@ -153,5 +154,3 @@ HEADERS += \
         src/task/task.h \
         src/util/fs.h \
         src/util/timer.h \
-
-

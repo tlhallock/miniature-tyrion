@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "model/area.h"
+#include "model/spc/area.h"
 #include "model/civilization.h"
 
 namespace aoe

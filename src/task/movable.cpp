@@ -10,7 +10,7 @@ namespace aoe
 {
 Move::Move(Unit* unit_) :
     unit{unit_},
-    dest{unit_->get_location()}
+    dest{Location{unit_->getArea()}}
 {
 
 }
@@ -26,14 +26,14 @@ void Move::apply()
 {
     double speed = unit->get_speed();
 
-    double direction_x = dest.x - unit->get_location().x;
-    double direction_y = dest.y - unit->get_location().y;
+    double direction_x = dest.x - unit->getArea().x;
+    double direction_y = dest.y - unit->getArea().y;
 
     double norm = sqrt(direction_x*direction_x + direction_y*direction_y);
 
     if (norm < speed)
     {
-        unit->set_location(Location{dest.x, dest.y});
+        unit->getArea() = dest;
 
         for (auto it = unit->get_listeners().begin(); it!=unit->get_listeners().end(); ++it)
         {
@@ -42,7 +42,7 @@ void Move::apply()
         return;
     }
 
-    unit->set_location(Location{ unit->get_location().x + direction_x * speed / norm,
-                                 unit->get_location().y + direction_y * speed / norm});
+    unit->getArea() =  Location{ unit->getArea().x + direction_x * speed / norm,
+                                 unit->getArea().y + direction_y * speed / norm};
 }
 }

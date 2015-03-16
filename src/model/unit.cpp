@@ -39,25 +39,15 @@ int Unit::get_image_id() const
     return type->get_image_id();
 }
 
-const Area& Unit::get_location() const
+
+Area& Unit::getArea()
 {
     return area;
 }
 
-void Unit::set_size(double width, double height)
+const Area& Unit::getArea() const
 {
-    area.set_size(width, height);
-}
-
-
-void Unit::set_location(const Area& area_)
-{
-    area = area_;
-}
-
-void Unit::set_location(const Location& area_)
-{
-    area = area_;
+    return area;
 }
 
 

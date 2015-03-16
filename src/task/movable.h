@@ -4,7 +4,7 @@
 
 #include <vector>
 
-#include "model/area.h"
+#include "model/spc/area.h"
 #include "task/task.h"
 
 namespace aoe

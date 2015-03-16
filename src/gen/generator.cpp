@@ -20,15 +20,15 @@ Area find_place(const Map& map, const Location& close_to, const Size& size)
     double cx = close_to.x;
     double cy = close_to.y;
 
-    double radius_x = size.x;
-    double radius_y = size.y;
+    double radius_x = 0;
+    double radius_y = 0;
     for (;;)
     {
         int angles_to_try = 100;
         for (int i=0; i<angles_to_try; i++)
         {
             double angle = 2 * PI * i / angles_to_try;
-            Area destination{cx + radius_x * cos(angle), cy + radius_y * sin(angle), size.x, size.y};
+            Area destination{cx + radius_x * cos(angle), cy + radius_y * sin(angle), size.width, size.height};
 
             if (!map.is_obstructed(destination))
             {
@@ -36,8 +36,8 @@ Area find_place(const Map& map, const Location& close_to, const Size& size)
             }
         }
 
-        radius_x += size.x;
-        radius_y += size.y;
+        radius_x += size.width;
+        radius_y += size.height;
     }
 }
 
@@ -72,14 +72,14 @@ void generate_map(GameInfo* info, Game* game)
                     exit(-1);
                 }
 
-                Area location = find_place(game->get_map(), player->get_location(), unit->get_size());
+                Area location = find_place(game->get_map(), player->get_location(), unit->getArea());
                 if (location.x < 0)
                 {
                     std::cout << "Unable to place." << std::endl;
                     exit(-1);
                 }
 
-                unit->set_location(Location{location});
+                unit->getArea() = Location{location};
 
                 game->get_map().place_unit(unit);
 

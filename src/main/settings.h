@@ -1,7 +1,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include "model/area.h"
+#include "model/spc/area.h"
 
 namespace aoe
 {
@@ -31,7 +31,7 @@ public:
 
     int KEY_WAIT_TIME = 20;
 
-    double MODEL_TO_OPENGL_RATIO = 1.0/20;
+    double MODEL_TO_OPENGL_RATIO = 10;
 
     std::string MAP_BACKGROUND{"background.jpg"};
 

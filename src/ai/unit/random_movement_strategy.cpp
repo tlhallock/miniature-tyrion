@@ -26,8 +26,8 @@ void RandomMovementStrategy::movable_arrived()
 {
     Move* next_task = new Move{unit};
     next_task->set_destination(Location{
-        bounds.x + (rand() / (double) RAND_MAX) * bounds.w,
-        bounds.y + (rand() / (double) RAND_MAX) * bounds.h});
+        bounds.x + (rand() / (double) RAND_MAX) * bounds.width,
+        bounds.y + (rand() / (double) RAND_MAX) * bounds.height});
 
     engine->set_task(unit, next_task);
     previous = std::unique_ptr<Task>{next_task};

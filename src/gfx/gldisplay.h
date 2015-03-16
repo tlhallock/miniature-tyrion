@@ -3,7 +3,7 @@
 
 #include "gfx/gfxobject.h"
 #include "gfx/viewport_listener.h"
-#include "model/area.h"
+#include "model/spc/area.h"
 
 #include <vector>
 #include <map>

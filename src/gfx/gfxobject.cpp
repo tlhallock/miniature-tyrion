@@ -64,11 +64,11 @@ namespace aoe
 // MAP_WIDTH, MAP_HEIGHT -> 1, 1
 Location map_loc_model_to_gl(const Location&& modelspace)
 {
-    return Location{2 * (modelspace.x / Settings::get_instance().MAP_WIDTH) - 1, 2 * (modelspace.y / Settings::get_instance().MAP_WIDTH) - 1};
+    return Location{2 * (modelspace.x / Settings::get_instance().MAP_WIDTH) - 1, 2 * (modelspace.y / Settings::get_instance().MAP_WIDTH) - 1} * Settings::get_instance().MODEL_TO_OPENGL_RATIO;
 }
 Size map_size_model_to_gl(const Size& modelspace)
 {
-    return Size{2 * modelspace.x / Settings::get_instance().MAP_WIDTH, 2 * modelspace.y / Settings::get_instance().MAP_WIDTH};
+    return Size{2 * modelspace.width / Settings::get_instance().MAP_WIDTH, 2 * modelspace.height / Settings::get_instance().MAP_WIDTH} * Settings::get_instance().MODEL_TO_OPENGL_RATIO;
 }
 
 GfxObject::GfxObject(const Size& pos, const std::string& object_file, const cv::Mat& img)
@@ -84,7 +84,7 @@ GfxObject::GfxObject(const Size& pos, const std::string& object_file, const cv::
     std::cout << "Mapped location: " << l << std::endl;
 
     cv::Mat_<cv::Vec2f> vertex(1, 4);
-    vertex << cv::Vec2f(0, l.x), cv::Vec2f(0, 0), cv::Vec2f(l.y, 0), cv::Vec2f(l.x, l.y);
+    vertex << cv::Vec2f(0, l.width), cv::Vec2f(0, 0), cv::Vec2f(l.height, 0), cv::Vec2f(l.width, l.height);
 
     cv::Mat_<cv::Vec2f> texCoords(1, 4);
     texCoords << cv::Vec2f(0, 0), cv::Vec2f(0, 1), cv::Vec2f(1, 1), cv::Vec2f(1, 0);
@@ -121,9 +121,9 @@ void GfxObject::draw()
 
 
 
-GlDrawInstance::GlDrawInstance(Unit* original_, GfxObject* type_) :
+GlDrawInstance::GlDrawInstance(Gfx* original_, GfxObject* type_) :
     original{original_},
-    pos{map_loc_model_to_gl(Location{original_->get_location()})},
+    pos{map_loc_model_to_gl(Location{original_->getArea()})},
     type{type_}
 {}
 
@@ -140,11 +140,11 @@ void GlDrawInstance::updatePosition()
 {
     if (original != nullptr)
     {
-        pos = map_loc_model_to_gl(original->get_location());
+        pos = map_loc_model_to_gl(Location{original->getArea()});
     }
 }
 
-Unit* GlDrawInstance::getOriginal()
+Gfx* GlDrawInstance::getOriginal()
 {
     return original;
 }
