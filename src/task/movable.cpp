@@ -40,11 +40,18 @@ void Move::apply()
         unit->getArea() = *dest;
 
         unit->broadcastEvent(UnitEvent::movableArrived);
+
         return;
     }
 
     unit->getArea() =  Location{ unit->getArea().x + direction_x * speed / norm,
                                  unit->getArea().y + direction_y * speed / norm};
+}
+
+
+bool Move::unitHasMoved()
+{
+    return dest != nullptr;
 }
 
 

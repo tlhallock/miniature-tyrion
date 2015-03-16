@@ -7,7 +7,6 @@ namespace aoe
 Size::Size() : width{0}, height{0} {}
 
 Size::Size(double width_, double height_) : width{width_}, height{height_} {}
-//Size::Size(const Area& a) : Size{a.width, a.height} {}
 
 Size::~Size() {}
 
@@ -35,15 +34,6 @@ void Size::setSize(double width_, double height_)
     width = width_;
     height = height_;
 }
-
-
-//Size& Size::operator=(const Area& a)
-//{
-//    width = a.width;
-//    height = a.height;
-//    return *this;
-//}
-
 
 
 bool SizeCmp::operator() (const Size& l1, const Size& l2)

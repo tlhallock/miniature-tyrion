@@ -22,6 +22,7 @@ protected:
   virtual void apply() = 0;
 
   virtual std::string getDescription() const;
+  virtual bool unitHasMoved();
 
   Unit* getUnit();
 };

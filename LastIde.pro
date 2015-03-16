@@ -60,6 +60,7 @@ SOURCES += \
         src/ai/unit/route_strategy.cpp \
         src/ai/unit/scout_strategy.cpp \
         src/ai/unit/unit_listener.cpp \
+        src/ai/unit/unit_strategy.cpp \
         src/gen/generator.cpp \
         src/gfx/cvdisplay.cpp \
         src/gfx/display.cpp \
@@ -120,6 +121,7 @@ HEADERS += \
         src/ai/unit/scout_strategy.h \
         src/ai/unit/unit_event.h \
         src/ai/unit/unit_listener.h \
+        src/ai/unit/unit_strategy.h \
         src/gen/generator.h \
         src/gfx/cvdisplay.h \
         src/gfx/display.h \

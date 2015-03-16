@@ -45,6 +45,8 @@ public:
     Location get_civilization_center(int index, int total);
 
     friend std::ostream& operator<<(std::ostream& out, const Map& g);
+
+    void generateRangeNotifications(const std::set<Unit*>& moving_units);
 };
 
 }

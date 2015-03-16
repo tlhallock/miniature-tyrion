@@ -7,39 +7,16 @@
 
 #include "ai/player/strategy.h"
 
+#define DEBUG_MAP 0
+
+
 namespace aoe
 {
-
-
-namespace
-{
-
-    class PrintTask : public TimerTask
-    {
-    private:
-        Game* game;
-
-    public:
-        PrintTask(Game* game_) :
-            game{game_} {}
-        ~PrintTask() {}
-
-        void run()
-        {
-//            std::cout << *game << std::endl;
-        }
-    };
-}
 
 Game::Game(const IdentifierTable& table_) :
     map{},
     engine{},
-    timer{Settings::get_instance().EGNINE_CLOCK_FREQ},
-    table{table_}
-{
-    timer.add(&engine);
-    timer.add(new PrintTask{this});
-}
+    table{table_} {}
 
 Game::~Game() {}
 
@@ -61,21 +38,6 @@ Map& Game::get_map()
 Engine& Game::get_engine()
 {
     return engine;
-}
-
-Timer& Game::get_timer()
-{
-    return timer;
-}
-
-
-void Game::start()
-{
-    timer.start();
-}
-void Game::end()
-{
-    timer.end();
 }
 
 void Game::unit_created(Unit* u)
@@ -107,5 +69,17 @@ std::ostream& operator<<(std::ostream& out, const Game& g)
     return out;
 }
 
+void Game::run()
+{
+    std::set<Unit*> moved;
+    engine.animateIteration(moved);
+    map.generateRangeNotifications(moved);
+
+#if DEBUG_MAP
+            std::cout << *this << std::endl;
+#endif
+
+
+}
 
 }

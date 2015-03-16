@@ -26,6 +26,7 @@ public:
     void setDestination(Location* dest);
 
     void apply();
+    bool unitHasMoved();
 
     std::string getDescription() const;
 };

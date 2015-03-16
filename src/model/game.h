@@ -17,7 +17,7 @@ namespace aoe
 class Player;
 class Strategy;
 
-class Game : PlayerListener
+class Game : public PlayerListener, public TimerTask
 {
 private:
     std::vector<std::unique_ptr<Player>> players;
@@ -25,7 +25,6 @@ private:
 
     Map map;
     Engine engine;
-    Timer timer;
     IdentifierTable table;
 
 public:
@@ -50,6 +49,8 @@ public:
     IdentifierTable& get_table();
 
     friend std::ostream& operator<<(std::ostream& out, const Game& g);
+
+    void run();
 
 };
 

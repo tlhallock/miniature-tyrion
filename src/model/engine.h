@@ -6,8 +6,7 @@
 
 #include <map>
 #include <iostream>
-
-#include "util/timer.h"
+#include <set>
 
 namespace aoe
 {
@@ -15,26 +14,21 @@ namespace aoe
 class Task;
 class Unit;
 
-class Engine : public TimerTask
+class Engine
 {
  private:
   std::map<Unit*, Task*> active_units;
 
  public:
   Engine();
-  ~Engine();
-
 
   void addTask(Task* Unit);
   void idle(Unit* unit);
+  void animateIteration(std::set<Unit*>& movedUnits);
 
   friend std::ostream& operator<<(std::ostream& out, const Engine& e);
 
-  void run();
 
-
-private:
-  void animateIteration();
 };
 
 }

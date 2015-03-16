@@ -7,11 +7,11 @@
 #include "res/property_file.h"
 #include "res/game_info.h"
 #include "ai/player/ai_strategy.h"
-
+#include "util/timer.h"
 #include "util/fs.h"
 #include "model/game.h"
 #include "gen/generator.h"
-
+#include "main/settings.h"
 #include "model/player.h"
 
 #include "gfx/gldisplay.h"
@@ -20,6 +20,7 @@
 #include <GL/glut.h>
 
 int main_2(int argc, char* argv[]);
+
 
 int main(int argc, char **argv)
 {
@@ -51,15 +52,20 @@ int main(int argc, char **argv)
 
     aoe::generate_map(&info, game);
 
-    game->start();
+
+    aoe::Timer timer{aoe::Settings::get_instance().ENGINE_CLOCK_FREQ};
+
+    timer.add(game);
 
     aoe::GlDisplay* display = new aoe::GlDisplay(info, "OpenGL");
+
+    timer.start();
 
     display->renderLoop(game);
 
     delete display;
 
-    game->end();
+    timer.end();
 
     delete game;
 

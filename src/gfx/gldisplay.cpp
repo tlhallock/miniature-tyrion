@@ -151,8 +151,6 @@ void GlDisplay::unit_exited(Unit* exit)
 
 void GlDisplay::handle_key(int key)
 {
-    std::cout << key << std::endl;
-
     switch (key)
     {
     case 97: // left
@@ -166,6 +164,7 @@ void GlDisplay::handle_key(int key)
 
 
     default:
+        std::cout << key << std::endl;
         return;
     }
 }

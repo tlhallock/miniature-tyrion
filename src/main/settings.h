@@ -25,7 +25,7 @@ public:
 
     double INITIAL_HEIGHT = 3;
 
-    long EGNINE_CLOCK_FREQ = 20;
+    long ENGINE_CLOCK_FREQ = 20;
 
     double ZOOM_AMOUNT = .1;
 

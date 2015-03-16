@@ -9,22 +9,14 @@ namespace aoe
 
 Attack::Attack(Unit* unit) :
     Task{unit},
-    target{nullptr}
-{
+    target{nullptr} {}
 
-}
-
-
-Attack::~Attack()
-{
-
-}
-
+Attack::~Attack() {}
 
 
 void Attack::set_target(Unit* unit)
 {
-
+    target = unit;
 }
 
 void Attack::apply()
@@ -46,7 +38,6 @@ void Attack::apply()
     int uid = unit->getType()->getId();
     double damage = unit->getType()->getDamage(tid);
     double resistance = target->getType()->getResistance(uid);
-
 
     double totalHealthPoints = unit->getType()->getHealth();
     double health = unit->getHealthPercent();

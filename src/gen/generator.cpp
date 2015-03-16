@@ -44,7 +44,7 @@ Area find_place(const Map& map, const Location& close_to, const Size& size)
 
 void generate_map(GameInfo* info, Game* game)
 {
-    std::cout << "Generating the map..." << std::endl;
+    std::cout << "Generating the map...";
 
     for (int pNum = 0; pNum < game->get_num_players(); pNum++)
     {
@@ -87,6 +87,7 @@ void generate_map(GameInfo* info, Game* game)
             }
         }
     }
+    std::cout << " ...done generating map." << std::endl;
 }
 
 }

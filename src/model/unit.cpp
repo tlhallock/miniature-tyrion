@@ -50,12 +50,12 @@ const Area& Unit::getArea() const
     return area;
 }
 
-void Unit::broadcastEvent(UnitEvent event)
+void Unit::broadcastEvent(UnitEvent event, void *ptr)
 {
     auto end = listeners.end();
     for (auto it = listeners.begin(); it != end; ++it)
     {
-        (*it)->handleUnitEvent(event);
+        (*it)->handleUnitEvent(event, ptr);
     }
 }
 

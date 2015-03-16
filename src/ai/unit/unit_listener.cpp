@@ -10,7 +10,7 @@ UnitListener::UnitListener() {}
 UnitListener::~UnitListener() {}
 
 
-void UnitListener::handleUnitEvent(UnitEvent event)
+void UnitListener::handleUnitEvent(UnitEvent event, void* ptr)
 {
   switch (event)
   {
@@ -21,7 +21,7 @@ void UnitListener::handleUnitEvent(UnitEvent event)
     case UnitEvent::destructibleDied:  destructibleDied();    return;
     case UnitEvent::targetOutOfRange:  targetOutOfRange();    return;
     case UnitEvent::targetKilled:      targetKilled();        return;
-    case UnitEvent::enemyInRange:      enemyInRange(nullptr); return;
+    case UnitEvent::enemyInRange:      enemyInRange((Unit*) ptr); return;
   default:
       std::cerr << "Unkown message type: " << event << std::endl;
       exit(-1);

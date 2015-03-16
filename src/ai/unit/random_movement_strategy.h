@@ -1,9 +1,9 @@
 #ifndef RANDOM_MOVEMENT_STRATEGY_H
 #define RANDOM_MOVEMENT_STRATEGY_H
 
-#include "ai/unit/unit_listener.h"
+#include "ai/unit/unit_strategy.h"
 #include "model/spc/area.h"
-#include "task/task.h"
+#include "task/movable.h"
 
 #include <memory>
 
@@ -13,19 +13,21 @@ namespace aoe
 class Unit;
 class Engine;
 
-class RandomMovementStrategy : public UnitListener
+class RandomMovementStrategy : public UnitStrategy
 {
 private:
-    Engine* engine;
     Unit* unit;
     Area bounds;
-    Area nextDest;
-    std::unique_ptr<Task> previous;
+    Location nextDest;
+    Move moveTask;
+
 public:
     RandomMovementStrategy(Engine* engine, Unit* unit, const Area& bounds);
-    ~RandomMovementStrategy();
 
     void movableArrived();
+
+private:
+    Location getNextLocation() const;
 };
 
 

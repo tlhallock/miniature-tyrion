@@ -10,21 +10,21 @@ namespace aoe
 {
 
 Engine::Engine() {}
-Engine::~Engine() {}
 
 
-void Engine::animateIteration()
+void Engine::animateIteration(std::set<Unit*>& movedUnits)
 {
     for (auto it=active_units.begin(); it!=active_units.end(); ++it)
     {
-        it->second->apply();
+        Task* task = it->second;
+
+        task->apply();
+        if (task->unitHasMoved())
+        {
+            movedUnits.insert(task->getUnit());
+        }
     }
 }
-
-//bool Engine::contains(Task* unit)
-//{
-//    return std::find(active_units.begin(), active_units.end(), unit) != active_units.end();
-//}
 
 void Engine::addTask(Task* task)
 {
@@ -32,22 +32,23 @@ void Engine::addTask(Task* task)
     {
         return;
     }
+
     Unit* unit = task->getUnit();
+    if (unit == nullptr)
+    {
+        std::cerr << "This should have a unit..." << std::endl;
+        exit(-1);
+    }
+
     auto it = active_units.find(unit);
+
     if (it == active_units.end())
     {
          active_units.insert(std::pair<Unit*,Task*>{unit, task});
     }
     else
     {
-        if (task == nullptr)
-        {
-            active_units.erase(it);
-        }
-        else
-        {
-            it->second = task;
-        }
+         it->second = task;
     }
 }
 
@@ -61,12 +62,6 @@ std::ostream& operator<<(std::ostream& out, const Engine& e)
         out << '\t' << i << ": " /*<< *(it->first) */ << " <-> "<< it->second->getDescription() << '\n';
     }
     return out;
-}
-
-
-void Engine::run()
-{
-    animateIteration();
 }
 
 void Engine::idle(Unit *unit)

@@ -35,7 +35,7 @@ class Unit : public Gfx
 
   void addListener(UnitListener* listener);
   void removeListener(UnitListener* listener);
-  void broadcastEvent(UnitEvent event);
+  void broadcastEvent(UnitEvent event, void *ptr=nullptr);
 
   void setArea(const Area& area);
   Area& getArea();

@@ -119,4 +119,31 @@ bool Map::is_obstructed(const Area& area) const
 }
 
 
+void Map::generateRangeNotifications(const std::set<Unit*>& moving_units)
+{
+    auto end = moving_units.end();
+    for (auto it = moving_units.begin(); it != end; ++it)
+    {
+        auto oend = units.end();
+        Unit* u = *it;
+        for (auto oit = units.begin(); oit != oend; ++oit)
+        {
+            Unit* other = oit->get();
+            double dist = u->getArea().distanceTo(other->getArea());
+
+            double range1 = u->getType()->getRange();
+            if (range1 > dist)
+            {
+                u->broadcastEvent(UnitEvent::enemyInRange, (void*) other);
+            }
+
+            double range2 = other->getType()->getRange();
+            if (range2 > dist)
+            {
+                other->broadcastEvent(UnitEvent::enemyInRange, (void*) u);
+            }
+        }
+    }
+}
+
 }

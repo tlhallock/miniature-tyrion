@@ -16,7 +16,7 @@ class UnitListener
   UnitListener();
   virtual ~UnitListener();
 
-  void handleUnitEvent(UnitEvent event);
+  void handleUnitEvent(UnitEvent event, void*ptr=nullptr);
 
   virtual void movableObstructed();
   virtual void movableArrived();

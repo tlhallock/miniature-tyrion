@@ -15,11 +15,9 @@ public:
 
     Size();
     Size(double x, double y);
-//    Size(const Area& a);
 
     virtual ~Size();
 
-//    Size& operator=(const Area& a);
     Size operator/(double d) const;
     Size operator*(double d) const;
 
