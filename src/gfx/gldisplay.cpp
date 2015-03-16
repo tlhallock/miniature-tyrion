@@ -181,10 +181,8 @@ void GlDisplay::load(GameInfo& info)
 //        int image_id = info.get_images()->get_id_for()
 
         // The image needs to actually be dynamic...
-        drawTypes.insert(std::pair<int, GfxObject>{
-                             it->getId(),
-                             GfxObject{
-                                       it->getSize(),
+        drawTypes.insert(std::pair<int, GfxObject>{it->getId(),
+                             GfxObject{it->getSize(),
                                        "not used",
                                        info.get_images()->get(it->getImageId())}});
     }
