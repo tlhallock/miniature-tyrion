@@ -4,6 +4,9 @@
 #include "main/settings.h"
 #include "gfx/viewport_listener.h"
 
+#include "model/spc/grid_internals.h"
+
+
 # define PI           3.14159265358979323846
 
 
@@ -151,5 +154,25 @@ void Map::generateRangeNotifications(const std::set<Unit*>& moving_units)
         }
     }
 }
+
+
+
+class GenerateInRangeEvent : public SpatialQuery
+{
+public:
+    GenerateInRangeEvent(Unit* c) : SpatialQuery{c->getArea(), c->getType()->getRange()} {}
+    ~GenerateInRangeEvent() {}
+
+    virtual void apply(Spatial* sp)
+    {
+        // if is unit
+        // if is enemy
+        Unit* u = nullptr;
+
+        u->broadcastEvent(UnitEvent::enemyInRange, nullptr);
+    }
+};
+
+
 
 }

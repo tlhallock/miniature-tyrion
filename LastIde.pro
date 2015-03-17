@@ -42,7 +42,6 @@ OBJECTS_DIR=objects/
 
 
 
-
 SOURCES += \
         src/ai/player/ai_strategy.cpp \
         src/ai/player/network_strategy.cpp \
@@ -80,8 +79,11 @@ SOURCES += \
         src/model/player.cpp \
         src/model/resource.cpp \
         src/model/spc/area.cpp \
+        src/model/spc/grid.cpp \
         src/model/spc/location.cpp \
+        src/model/spc/query.cpp \
         src/model/spc/size.cpp \
+        src/model/spc/spatial.cpp \
         src/model/unit.cpp \
         src/res/civilization_descp.cpp \
         src/res/game_info_construction.cpp \
@@ -141,8 +143,12 @@ HEADERS += \
         src/model/player.h \
         src/model/resource.h \
         src/model/spc/area.h \
+        src/model/spc/grid.h \
+        src/model/spc/grid_internals.h \
         src/model/spc/location.h \
+        src/model/spc/query.h \
         src/model/spc/size.h \
+        src/model/spc/spatial.h \
         src/model/unit.h \
         src/res/civilization_descp.h \
         src/res/game_info.h \
