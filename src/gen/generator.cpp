@@ -9,6 +9,8 @@
 
 #include <cmath>
 
+#define SLOW 1
+
 namespace aoe
 {
 
@@ -20,25 +22,50 @@ Area find_place(const Map& map, const Location& close_to, const Size& size)
     double cx = close_to.x;
     double cy = close_to.y;
 
+    double radius = 0;
+    double inc = sqrt(size.width * size.width + size.height * size.height);
+
     double radius_x = 0;
     double radius_y = 0;
+
+#if SLOW
     for (;;)
     {
         int angles_to_try = 100;
         for (int i=0; i<angles_to_try; i++)
         {
             double angle = 2 * PI * i / angles_to_try;
-            Area destination{cx + radius_x * cos(angle), cy + radius_y * sin(angle), size.width, size.height};
+            Area destination{cx + radius * cos(angle), cy + radius * sin(angle), size.width, size.height};
 
-            if (!map.is_obstructed(destination))
+            if (!map.isObstructed(destination))
             {
                 return destination;
             }
         }
 
-        radius_x += size.width;
-        radius_y += size.height;
+        radius += inc;
     }
+#else
+    for (;;)
+    {
+        double angle = rand() * 2 * PI;
+        for (;;)
+        {
+            Area destination{cx + radius_x * cos(angle), cy + radius_y * sin(angle), size.width, size.height};
+            if (!map.isInBounds(destination))
+            {
+                break;
+            }
+
+            if (!map.isObstructed(destination))
+            {
+                return destination;
+            }
+        }
+
+        radius += inc;
+    }
+#endif
 }
 
 

@@ -93,22 +93,28 @@ std::ostream& operator<<(std::ostream& out, const Map& g)
 }
 
 
-
-bool Map::is_obstructed(const Area& area) const
+bool Map::isInBounds(const Area& area) const
 {
-    if (area.x < 0 || area.x + area.width > width || area.y < 0 || area.y + area.height > height)
+    return area.x >= 0 && area.x + area.width <= width && area.y >= 0 && area.y + area.height <= height;
+}
+
+bool Map::isObstructed(const Area& area) const
+{
+    if (!isInBounds(area))
     {
         return true;
     }
 
-    for (auto it = units.begin(); it != units.end(); ++it)
+    auto uend = units.end();
+    for (auto it = units.begin(); it != uend; ++it)
     {
         if ((*it)->getArea().overlaps(area))
         {
             return true;
         }
     }
-    for (auto it = resources.begin(); it != resources.end(); ++it)
+    auto rend = resources.end();
+    for (auto it = resources.begin(); it != rend; ++it)
     {
         if ((*it)->getArea().overlaps(area))
         {

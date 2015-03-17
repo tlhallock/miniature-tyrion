@@ -25,7 +25,8 @@ LIBS += -L/work/miniature-tyrion/opencv/prefix/lib \
 
 INCLUDEPATH += src /usr/include/jsoncpp/ /work/miniature-tyrion/opencv/prefix/include/ /work/miniature-tyrion/opencv/opencv/build
 
-QMAKE_CXXFLAGS += -std=c++11 -Wunused-parameter
+QMAKE_CXXFLAGS += -std=c++11 -Wunused-parameter -pg
+QMAKE_LFLAGS += -pg
 
 
 OTHER_FILES +=

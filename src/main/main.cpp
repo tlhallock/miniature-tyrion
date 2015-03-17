@@ -63,6 +63,11 @@ int main(int argc, char **argv)
 
     display->renderLoop(game);
 
+    if (1)
+    {
+        exit(-1);
+    }
+
     delete display;
 
     timer.end();

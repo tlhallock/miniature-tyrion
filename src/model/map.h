@@ -37,7 +37,8 @@ public:
     void add_listener(ViewportListener* res);
     void remove_listener(ViewportListener* units);
 
-    bool is_obstructed(const Area& area) const;
+    bool isInBounds(const Area& area) const;
+    bool isObstructed(const Area& area) const;
 
     const std::vector<std::unique_ptr<Unit>>& get_units() const;
     const std::vector<std::unique_ptr<Resource>>& get_resources() const;
