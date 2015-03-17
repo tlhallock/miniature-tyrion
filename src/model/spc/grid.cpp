@@ -9,6 +9,8 @@
 namespace aoe
 {
 
+// TODO: Remove xvals/yvals/squares that are empty.
+
 
 class YVals
 {
@@ -94,7 +96,7 @@ public:
     AddAll(Spatial* sp_) : SquareQuery{sp_->get_area(), 0}, sp{sp_} {}
     void apply(Square*sq)
     {
-        sq->remove(sp);
+        sq->add(sp);
     }
 };
 class RemoveAll : public SquareQuery
@@ -105,7 +107,7 @@ public:
     RemoveAll(Spatial* sp_) : SquareQuery{sp_->get_area(), 0}, sp{sp_} {}
     void apply(Square*sq)
     {
-        sq->add(sp);
+        sq->remove(sp);
     }
 
 };
