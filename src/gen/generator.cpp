@@ -27,6 +27,11 @@ Area find_place(const Map& map, const Location& close_to, const Size& size)
 
     double radius_x = 0;
     double radius_y = 0;
+    if (0)
+    {
+        double angle = (rand() / (RAND_MAX)) * 2 * PI;
+        return Area{cx + radius * cos(angle), cy + radius * sin(angle), size.width, size.height};
+    }
 
 #if SLOW
     for (;;)
@@ -48,7 +53,7 @@ Area find_place(const Map& map, const Location& close_to, const Size& size)
 #else
     for (;;)
     {
-        double angle = rand() * 2 * PI;
+        double angle = (rand() / (RAND_MAX)) * 2 * PI;
         for (;;)
         {
             Area destination{cx + radius_x * cos(angle), cy + radius_y * sin(angle), size.width, size.height};
