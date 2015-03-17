@@ -30,6 +30,7 @@ public:
         // Need to fix this....
         return center.distanceTo(Location{x, y}) < radius;
     }
+    virtual bool createOnEmpty() const { return false; }
 };
 
 class SpatialQuery : public Query

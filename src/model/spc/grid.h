@@ -1,6 +1,8 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include <iostream>
+
 namespace aoe
 {
 
@@ -24,6 +26,8 @@ public:
 
     void apply(SpatialQuery*q);
     void apply(SquareQuery*q);
+
+    friend std::ostream& operator<<(std::ostream& out, const Grid& g);
 };
 
 

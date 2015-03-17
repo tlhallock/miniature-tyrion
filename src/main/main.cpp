@@ -21,9 +21,15 @@
 
 int main_2(int argc, char* argv[]);
 
+namespace aoe
+{
+void test();
+}
 
 int main(int argc, char **argv)
 {
+    aoe::test();
+    if (1) return 0;
 //    main_2(argc, argv);
     XInitThreads();
     glutInit(&argc, argv);

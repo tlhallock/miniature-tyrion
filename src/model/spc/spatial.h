@@ -10,7 +10,7 @@ public:
     Spatial() {}
     virtual ~Spatial() {}
 
-    virtual const Area& get_area() = 0;
+    virtual const Area& getArea() = 0;
 };
 }
 #endif // SPATIAL_H

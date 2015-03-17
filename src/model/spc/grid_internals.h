@@ -54,6 +54,16 @@ public:
             }
         }
     }
+
+    friend std::ostream& operator<<(std::ostream& out, const Square& y)
+    {
+        out << "[" << y.spacials.size() << ": ";
+        for (auto it = y.spacials.begin(); it != y.spacials.end(); ++it)
+        {
+            out << "["  << (*it)->getArea() << "] ";
+        }
+        return out << "] ";
+    }
 };
 
 
