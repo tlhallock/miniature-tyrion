@@ -23,8 +23,6 @@ void onMouse( int event, int x, int y, int state, void* ptr);
 void draw_func(void* userdata);
 
 
-
-
 class GlDisplay : public ViewportListener
 {
     friend void onMouse( int event, int x, int y, int state, void* ptr);

@@ -1,28 +1,25 @@
 #include "gfxobject.h"
 
 #include "model/unit.h"
-
-#include <iostream>
-#include "cvconfig.h"
-#include <opencv2/highgui.hpp>
-#include <GL/glut.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-
-#include "opencv2/core/core.hpp"
-#include "opencv2/core/cuda.hpp"
-#include "opencv2/highgui/highgui.hpp"
-
 #include "main/settings.h"
 
 #include <vector>
 
 
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 
 
 #if 0
 void load_obj(const char* filename, std::vector<glm::vec4> &vertices, std::vector<glm::vec3> &normals, std::vector<GLushort> &elements) {
+=======
+
+
+void load_obj(const char* filename, vector<glm::vec4> &vertices, vector<glm::vec3> &normals, vector<GLushort> &elements) {
+>>>>>>> Stashed changes
   ifstream in(filename, ios::in);
   if (!in) { cerr << "Cannot open " << filename << endl; exit(1); }
 

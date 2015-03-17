@@ -2,12 +2,8 @@
 #define GFXOBJECT_H
 
 #include "opencv2/core/opengl.hpp"
-
 #include "gfx/gfx.h"
-
 #include "model/spc/location.h"
-
-
 
 #define DEBUG_OPENGL 0
 

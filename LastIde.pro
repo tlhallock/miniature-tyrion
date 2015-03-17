@@ -15,7 +15,7 @@ CONFIG += debug
 
 TEMPLATE = app
 
-LIBS += -L/work/miniature-tyrion/opencv/prefix/lib \
+LIBS += -Lopencv/prefix/lib \
 -ljsoncpp \
 -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs \
 -lboost_filesystem  -lboost_system \
@@ -23,7 +23,7 @@ LIBS += -L/work/miniature-tyrion/opencv/prefix/lib \
 -lGL -lGLU -lglut \
 -lboost_log
 
-INCLUDEPATH += src /usr/include/jsoncpp/ /work/miniature-tyrion/opencv/prefix/include/ /work/miniature-tyrion/opencv/opencv/build
+INCLUDEPATH += src /usr/include/jsoncpp/ opencv/prefix/include/ opencv/opencv/build
 
 QMAKE_CXXFLAGS += -std=c++11 -Wunused-parameter -pg
 QMAKE_LFLAGS += -pg

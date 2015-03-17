@@ -23,7 +23,8 @@ CvDisplay::CvDisplay(Game* game, Images* images_) :
     image{w, h, CV_8UC1},
     images{images_}
 {
-    cv::namedWindow("Display", cv::AUTO_RESIZE);
+    std::cout << "Fix me" << std::endl;
+//    cv::namedWindow("Display", cv::AUTO_RESIZE);
 }
 
 CvDisplay::~CvDisplay()

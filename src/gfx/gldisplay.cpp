@@ -4,17 +4,13 @@
 #include "res/game_info.h"
 #include "model/unit.h"
 
-#include <iostream>
-#include "cvconfig.h"
-#include <opencv2/highgui.hpp>
-#include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-#include "opencv2/core/core.hpp"
-#include "opencv2/core/cuda.hpp"
-#include "opencv2/highgui/highgui.hpp"
+#include <opencv2/highgui.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
 #include "main/settings.h"
 
 namespace aoe
@@ -161,8 +157,10 @@ void GlDisplay::handle_key(int key)
         right(); return;
     case 119: // up
         up(); return;
-
-
+    case 101: // e
+        zoom_in(); return;
+    case 102:
+        zoom_out(); return;
     default:
         std::cout << key << std::endl;
         return;
