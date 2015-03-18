@@ -15,6 +15,7 @@ class Grid
 {
 private:
     XVals *xvals;
+
 public:
     Grid();
     ~Grid();
@@ -26,6 +27,10 @@ public:
 
     void apply(SpatialQuery*q);
     void apply(SquareQuery*q);
+
+    void collapseUnusedSquares();
+
+    int count() const;
 
     friend std::ostream& operator<<(std::ostream& out, const Grid& g);
 };

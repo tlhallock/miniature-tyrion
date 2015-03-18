@@ -17,7 +17,7 @@ namespace aoe
 # define PI           3.14159265358979323846
 
 
-Area find_place(const Map& map, const Location& close_to, const Size& size)
+Area find_place(Map& map, const Location& close_to, const Size& size)
 {
     double cx = close_to.x;
     double cy = close_to.y;
@@ -113,7 +113,7 @@ void generate_map(GameInfo* info, Game* game)
 
                 unit->getArea() = Location{location};
 
-                game->get_map().place_unit(unit);
+                game->get_map().add(unit);
 
                 player->unit_added(unit);
             }

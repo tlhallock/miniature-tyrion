@@ -1,5 +1,6 @@
 
 #include "model/spc/grid.h"
+#include "model/spc/area_spatial.h"
 
 #include "model/spc/grid_internals.h"
 
@@ -12,6 +13,9 @@ namespace aoe
 // TODO: Remove xvals/yvals/squares that are empty.
 
 
+
+#define VERBOSE 0
+
 class YVals
 {
 private:
@@ -23,32 +27,105 @@ public:
 
     void apply(int x, SpatialQuery*g)
     {
-        // could use std::for_each...
-        auto begin = squares.lower_bound(getYCoord(g->center.y                    - g->radius));
-        auto end =   squares.upper_bound(getYCoord(g->center.y + g->center.height + g->radius));
-        for (auto it = begin; it != end; ++it)
+        int ymin = getYCoord(g->center.y                    - g->radius);
+        int ymax = getYCoord(g->center.y + g->center.height + g->radius) + 1;
+
+        if (g->createOnEmpty())
         {
-            int y = it->first;
-            if (g->includes(x, y))
+            for (int y = ymin; y < ymax; y++)
             {
-                it->second.apply(x, y, g);
+                auto it = squares.find(y);
+                if (it == squares.end())
+                {
+                    squares.insert(std::pair<int, Square>{y, Square{}});
+                    it = squares.find(y);
+                }
+
+                if (g->includes(x, y))
+                {
+                    it->second.apply(x, y, g);
+                }
+            }
+        }
+        else
+        {
+            auto begin = squares.lower_bound(ymin);
+            auto end =   squares.upper_bound(ymax);
+            for (auto it = begin; it != end; ++it)
+            {
+                int y = it->first;
+                if (g->includes(x, y))
+                {
+                    it->second.apply(x, y, g);
+                }
             }
         }
     }
 
     void apply(int x, SquareQuery*g)
     {
-        // could use std::for_each...
-        auto begin = squares.lower_bound(getYCoord(g->center.y                    - g->radius));
-        auto end =   squares.upper_bound(getYCoord(g->center.y + g->center.height + g->radius));
-        for (auto it = begin; it != end; ++it)
+        int ymin = getYCoord(g->center.y                    - g->radius);
+        int ymax = getYCoord(g->center.y + g->center.height + g->radius) + 1;
+
+#if VERBOSE
+        std::cout << '\t' << g->center.y << ", " << g->center.height << ", " << g->radius << std::endl;
+        std::cout << "\tinside yvals " << ymin << ", " << ymax << std::endl;
+#endif
+
+        if (g->createOnEmpty())
         {
-            int y = it->first;
-            if (g->includes(x, y))
+            for (int y = ymin; y < ymax; y++)
             {
-                g->apply(&(it->second));
+                auto it = squares.find(y);
+                if (it == squares.end())
+                {
+                    squares.insert(std::pair<int, Square>{y, Square{}});
+                    it = squares.find(y);
+                }
+
+                if (g->includes(x, y))
+                {
+                    g->apply(&(it->second));
+                }
             }
         }
+        else
+        {
+            // could use std::for_each...
+            auto begin = squares.lower_bound(ymin);
+            auto end =   squares.upper_bound(ymax);
+            for (auto it = begin; it != end; ++it)
+            {
+                int y = it->first;
+                if (g->includes(x, y))
+                {
+                    g->apply(&(it->second));
+                }
+            }
+        }
+    }
+
+    void collapseUnusedSquares()
+    {
+        auto end = squares.end();
+        for (auto it = squares.begin(); it != end; ++it)
+        {
+            if (it->second.size() == 0)
+            {
+                squares.erase(it);
+            }
+        }
+    }
+
+    int count() const
+    {
+        int count = 0;
+        auto end = squares.end();
+        for (auto it = squares.begin(); it != end; ++it)
+        {
+            count += it->second.size();
+        }
+        return count;
     }
 
     friend std::ostream& operator<<(std::ostream& out, const YVals& y)
@@ -70,10 +147,16 @@ public:
 
     int size() { return yvals.size(); }
 
-    void apply(SpatialQuery*g)
+    template<class Q> void apply(Q*g)
     {
         int xmin = getYCoord(g->center.x                   - g->radius);
-        int xmax = getYCoord(g->center.x + g->center.width + g->radius);
+        int xmax = getYCoord(g->center.x + g->center.width + g->radius) + 1;
+
+#if VERBOSE
+        std::cout << g->center.x << ", " << g->center.width << ", " << g->radius << std::endl;
+        std::cout << "inside xvals " << xmin << ", " << xmax << std::endl;
+#endif
+
 
         if (g->createOnEmpty())
         {
@@ -83,15 +166,14 @@ public:
                 if (it == yvals.end())
                 {
                     yvals.insert(std::pair<int, YVals>{x, YVals{}});
+                    it = yvals.find(x);
                 }
 
-                it = yvals.find(x);
                 it->second.apply(it->first, g);
             }
         }
         else
         {
-            // could use std::for_each...
             auto begin = yvals.lower_bound(xmin);
             auto end =   yvals.upper_bound(xmax);
             for (auto it = begin; it != end; ++it)
@@ -101,17 +183,29 @@ public:
         }
     }
 
-    void apply(SquareQuery*g)
+    void collapseUnusedSquares()
     {
-        // could use std::for_each...
-        auto begin = yvals.lower_bound(getYCoord(g->center.x                   - g->radius));
-        auto end =   yvals.upper_bound(getYCoord(g->center.x + g->center.width + g->radius));
-        for (auto it = begin; it != end; ++it)
+        auto end = yvals.end();
+        for (auto it = yvals.begin(); it != end; ++it)
         {
-            it->second.apply(it->first, g);
+            it->second.collapseUnusedSquares();
+            if (it->second.size() == 0)
+            {
+                yvals.erase(it);
+            }
         }
     }
 
+    int count() const
+    {
+        int count = 0;
+        auto end = yvals.end();
+        for (auto it = yvals.begin(); it != end; ++it)
+        {
+            count += it->second.count();
+        }
+        return count;
+    }
 
     friend std::ostream& operator<<(std::ostream& out, const XVals& x)
     {
@@ -137,7 +231,7 @@ public:
     {
         sq->add(sp);
     }
-    bool createOnEmpty() { return true; }
+    bool createOnEmpty() const { return true; }
 };
 class RemoveAll : public SquareQuery
 {
@@ -175,7 +269,15 @@ public:
     }
 };
 
+class PrintRange : public SpatialQuery
+{
+    PrintRange(Spatial* sp_, double r) : SpatialQuery{sp_->getArea(), r} {}
 
+    void apply(Spatial* other)
+    {
+        std::cout << "In range of " << other->getArea() << std::endl;
+    }
+};
 
 
 
@@ -191,6 +293,17 @@ bool Grid::overlaps(Spatial* sp) { IntersectsAny q{sp}; apply(&q); return q.retV
 void Grid::apply(SpatialQuery*q) { xvals->apply(q); }
 void Grid::apply(SquareQuery*q)  { xvals->apply(q); }
 
+void Grid::collapseUnusedSquares()
+{
+    xvals->collapseUnusedSquares();
+}
+
+
+int Grid::count() const
+{
+    return xvals->count();
+}
+
 
 std::ostream& operator<<(std::ostream& out, const Grid& g)
 {
@@ -202,14 +315,16 @@ std::ostream& operator<<(std::ostream& out, const Grid& g)
 
 
 #define SIZE 1000.0
-#define NPOINTS 5
+#define NPOINTS 50
 
-class Test : public Spatial
+class Test : public SimpleSpatial
 {
 public:
     Area area;
-    Test() : area{SIZE * rand() / (double) RAND_MAX, SIZE * rand() / (double) RAND_MAX, .5, .5} {}
-    const Area& getArea() { return area; }
+    Test() : SimpleSpatial{Area{SIZE * (rand() / (double) RAND_MAX),
+                  SIZE * (rand() / (double) RAND_MAX),
+                  .5, .5}} {}
+    Area& getArea() { return area; }
 };
 
 
@@ -220,14 +335,40 @@ void test()
 
     std::vector<Test> t;
     t.resize(NPOINTS);
+    bool in[NPOINTS];
 
     for (int i=0;i<NPOINTS;i++)
     {
-        g.add(&t[i]);
+        in[i] = false;
     }
 
-    std::cout << g << std::endl;
+    for (int i=0;i<10;i++)
+    {
+        int idx = rand() % NPOINTS;
+        if (in[idx])
+        {
+            g.remove(&t[idx]);
+            in[idx] = false;
+        }
+        else
+        {
+            g.add(&t[idx]);
+            in[idx] = true;
+        }
+        std::cout << g << std::endl;
+    }
 
+//    for (int i=0;i<NPOINTS;i++)
+//    {
+//        g.add(&t[i]);
+//        in[i] = true;
+//    }
+
+    std::cout << g.count() << std::endl;
+
+    g.collapseUnusedSquares();
+
+    std::cout << g << std::endl;
 }
 
 

@@ -22,6 +22,9 @@ public:
     Area& getArea();
     const Area& getArea() const;
 
+    SpatialType getSpatialType() const;
+    std::string getSpatialDescription() const;
+
 
     friend std::ostream& operator<<(std::ostream& out, const Resource& g);
 };

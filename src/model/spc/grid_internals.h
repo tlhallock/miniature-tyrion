@@ -25,7 +25,7 @@ public:
     Square() {}
     ~Square() {}
 
-    int size() { return spacials.size(); }
+    int size() const { return spacials.size(); }
 
     void add(Spatial* sp)
     {
@@ -60,7 +60,7 @@ public:
         out << "[" << y.spacials.size() << ": ";
         for (auto it = y.spacials.begin(); it != y.spacials.end(); ++it)
         {
-            out << "["  << (*it)->getArea() << "] ";
+            out << "["  << ((*it)->getSpatialDescription()) << "] ";
         }
         return out << "] ";
     }

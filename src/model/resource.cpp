@@ -1,6 +1,7 @@
 #include "resource.h"
 
 #include "res/resource_descp.h"
+#include <sstream>
 
 namespace aoe
 {
@@ -30,6 +31,15 @@ const Area& Resource::getArea() const
 std::ostream& operator<<(std::ostream& out, const Resource& g)
 {
     return out << g.type->get_name() << " at " << g.location;
+}
+
+
+SpatialType Resource::getSpatialType() const { return SpatialType::RESOURCE_TYPE; }
+std::string Resource::getSpatialDescription() const
+{
+    std::stringstream ret;
+    ret << *this;
+    return ret.str();
 }
 
 

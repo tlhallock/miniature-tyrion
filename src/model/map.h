@@ -6,6 +6,7 @@
 
 #include "model/unit.h"
 #include "model/resource.h"
+#include "model/spc/grid.h"
 
 #include <set>
 
@@ -19,8 +20,8 @@ class Area;
 class Map
 {
 private:
-    std::vector<std::unique_ptr<Unit>> units;
-    std::vector<std::unique_ptr<Resource>> resources;
+    Grid spatials;
+
     double width, height;
 
     std::set<ViewportListener*> listeners;
@@ -28,20 +29,11 @@ public:
     Map();
     ~Map();
 
-    void place_unit(Unit* units);
-    void remove_unit(Unit* units);
-
-    void place_resource(Resource* res);
-    void remove_resource(Resource* units);
-
-    void add_listener(ViewportListener* res);
-    void remove_listener(ViewportListener* units);
+    void add(Spatial* unit);
+    void remove(Spatial* unit);
 
     bool isInBounds(const Area& area) const;
-    bool isObstructed(const Area& area) const;
-
-    const std::vector<std::unique_ptr<Unit>>& get_units() const;
-    const std::vector<std::unique_ptr<Resource>>& get_resources() const;
+    bool isObstructed(const Area& area);
 
     Location get_civilization_center(int index, int total);
 

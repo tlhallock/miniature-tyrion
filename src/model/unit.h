@@ -47,6 +47,9 @@ class Unit : public Gfx
   double getHealthPercent() const;
 
   int getImageId() const;
+
+    SpatialType getSpatialType() const;
+    std::string getSpatialDescription() const;
 };
 
 }

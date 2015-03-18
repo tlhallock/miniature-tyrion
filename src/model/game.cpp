@@ -42,12 +42,12 @@ Engine& Game::get_engine()
 
 void Game::unit_created(Unit* u)
 {
-    map.place_unit(u);
+    map.add(u);
 }
 
 void Game::unit_killed(Unit* u)
 {
-    map.remove_unit(u);
+    map.remove(u);
 }
 
 Player* Game::get_player(int index)

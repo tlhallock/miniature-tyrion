@@ -1,12 +1,14 @@
 #ifndef GFX_H
 #define GFX_H
 
+#include "model/spc/spatial.h"
+
 namespace aoe
 {
 
 class Area;
 
-class Gfx
+class Gfx : public Spatial
 {
 public:
     Gfx();

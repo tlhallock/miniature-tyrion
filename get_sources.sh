@@ -1,9 +1,17 @@
 #!/bin/bash
 
+DIR="."
+
+if [[ -e "src" ]]
+then
+	DIR="src"
+fi
+
+
 echo "SOURCES += \\"
-find src -name '*.cpp' | sed 's/$/ \\/' | sed 's/^/        /'  | sort -u
+find $DIR -follow -name '*.cpp' | sed 's/$/ \\/' | sed 's/^/        /'  | sort -u
 echo " "
 
 echo "HEADERS += \\"
-find src -name '*.h' | sed 's/$/ \\/' | sed 's/^/        /' | sort -u
+find $DIR -follow -name '*.h' | sed 's/$/ \\/' | sed 's/^/        /' | sort -u
 echo " "

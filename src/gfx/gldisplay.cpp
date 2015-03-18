@@ -206,7 +206,7 @@ void GlDisplay::draw()
 
 void GlDisplay::renderLoop(Game* game)
 {
-    game->get_map().add_listener(this);
+//    game->get_map().add_listener(this);
     for (;;)
     {
         cv::updateWindow(name);
@@ -220,7 +220,7 @@ void GlDisplay::renderLoop(Game* game)
 
         handle_key(key);
     }
-    game->get_map().remove_listener(this);
+//    game->get_map().remove_listener(this);
 }
 
 

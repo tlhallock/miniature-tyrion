@@ -15,13 +15,13 @@ CONFIG += debug
 
 TEMPLATE = app
 
-LIBS += -Lopencv/prefix/lib \
+LIBS += \
 -ljsoncpp \
--lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs \
+-Lopencv/prefix/lib -lopencv_core -lopencv_gpu -lopencv_highgui -lopencv_imgproc -lopencv_imgcodecs \
 -lboost_filesystem  -lboost_system \
 -lX11 \
--lGL -lGLU -lglut \
--lboost_log
+-lGL -lGLU -lglut
+# -lboost_log
 
 INCLUDEPATH += src /usr/include/jsoncpp/ opencv/prefix/include/ opencv/opencv/build
 
@@ -35,7 +35,6 @@ OTHER_FILES +=
 OBJECTS_DIR=objects/
 
 #-lglut -lglu
-
 
 
 
@@ -104,7 +103,7 @@ SOURCES += \
         src/task/task.cpp \
         src/util/fs.cpp \
         src/util/timer.cpp \
-
+ 
 HEADERS += \
         src/ai/player/ai_strategy.h \
         src/ai/player/network_strategy.h \
@@ -143,6 +142,7 @@ HEADERS += \
         src/model/player.h \
         src/model/resource.h \
         src/model/spc/area.h \
+        src/model/spc/area_spatial.h \
         src/model/spc/grid.h \
         src/model/spc/grid_internals.h \
         src/model/spc/location.h \
@@ -168,4 +168,4 @@ HEADERS += \
         src/task/task.h \
         src/util/fs.h \
         src/util/timer.h \
-
+ 

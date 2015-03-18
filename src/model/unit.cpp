@@ -3,6 +3,8 @@
 
 #include "ai/unit/unit_listener.h"
 
+#include <sstream>
+
 
 #include <algorithm>
 
@@ -64,6 +66,17 @@ void Unit::setHealthPercent(double h) { health = h; }
 double Unit::getHealthPercent() const { return health; }
 
 
+SpatialType Unit::getSpatialType() const { return SpatialType::UNIT_TYPE; }
+std::string Unit::getSpatialDescription() const
+{
+    std::stringstream ret;
+    ret << *this;
+    return ret.str();
+}
+
+
 const UnitDescription* Unit::getType() { return type; }
+
+
 
 }

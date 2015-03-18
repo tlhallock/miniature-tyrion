@@ -13,7 +13,7 @@ Area::Area() :
 
 Area::Area(double mx, double my, double mw, double mh) :
    Location{mx, my},
-   Size{mw, my} {}
+   Size{mw, mh} {}
 
 
 //double Area::distance_to(const Area& other) const
