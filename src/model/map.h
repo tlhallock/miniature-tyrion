@@ -40,6 +40,9 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const Map& g);
 
     void generateRangeNotifications(const std::set<Unit*>& moving_units);
+
+    Location findNextDepositArea(Location center, Size toDeposit);
+    Location findNextDepositArea(Location center, Size toDeposit, int &d, int &sq);
 };
 
 }

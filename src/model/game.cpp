@@ -30,7 +30,7 @@ void Game::add_player(Strategy* strategy, Player *player)
      player->add_listener(this);
 }
 
-Map& Game::get_map()
+Map& Game::getMap()
 {
     return map;
 }

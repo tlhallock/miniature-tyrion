@@ -131,7 +131,54 @@ void Map::generateRangeNotifications(const std::set<Unit*>& moving_units)
 }
 
 
+Location Map::findNextDepositArea(Location center, Size toDeposit, int &r, int &sq)
+{
+    int x = (int) center.x;
+    int y = (int) center.y;
 
+    for (;;)
+    {
+        int length = 2*r;
+
+        for (;sq<4*length;sq++)
+        {
+            if (!isObstructed(Area{
+                        center.x + x,
+                        center.y + y,
+                        toDeposit.width,
+                        toDeposit.height}))
+            {
+                return Location{center.x + x, center.y + y};
+            }
+
+            switch (sq/length)
+            {
+            case 0:
+                y--; break;
+            case 1:
+                x--; break;
+            case 2:
+                y++; break;
+            case 3:
+                x++; break;
+            default:
+                std::cout << "This should not happen 20480986209845\n";
+                exit(-1);
+            }
+        }
+
+        x++;
+        y++;
+        r++;
+        sq = 0;
+
+        if (r > 2 * std::max(width, height))
+        {
+            std::cout << "Unable to place unit." << std::endl;
+            exit(-1);
+        }
+    }
+}
 
 
 

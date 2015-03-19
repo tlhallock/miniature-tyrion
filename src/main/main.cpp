@@ -31,6 +31,7 @@ int main(int argc, char **argv)
 //    aoe::test();
 //    if (1) return 0;
 //    main_2(argc, argv);
+
     XInitThreads();
     glutInit(&argc, argv);
 
@@ -53,7 +54,7 @@ int main(int argc, char **argv)
 
         game->add_player(new aoe::AiStrategy{&game->get_engine()}, new aoe::Player{info.create_civilization(0),
                                                   info.clone_resources(),
-                                                  game->get_map().get_civilization_center(i, nplayers)});
+                                                  game->getMap().get_civilization_center(i, nplayers)});
     }
 
     aoe::generate_map(&info, game);

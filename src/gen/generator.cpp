@@ -14,6 +14,10 @@
 namespace aoe
 {
 
+
+
+#if 0
+
 # define PI           3.14159265358979323846
 
 
@@ -72,6 +76,7 @@ Area find_place(Map& map, const Location& close_to, const Size& size)
     }
 #endif
 }
+#endif
 
 
 void generate_map(GameInfo* info, Game* game)
@@ -85,6 +90,8 @@ void generate_map(GameInfo* info, Game* game)
         OpenedPropertyFiles opened{"data/"};
         const PropertyFile& pFile = opened.get_property_file("initial.json");
 
+        int r = 1;
+        int sq = 0;
 
         Json::Value units = pFile.get_property("units");
         for (int i=0;i<units.size();i++)
@@ -104,7 +111,7 @@ void generate_map(GameInfo* info, Game* game)
                     exit(-1);
                 }
 
-                Area location = find_place(game->get_map(), player->get_location(), unit->getArea());
+                Location location = game->getMap().findNextDepositArea(player->get_location(), unit->getArea(), r, sq);
                 if (location.x < 0)
                 {
                     std::cout << "Unable to place." << std::endl;
@@ -113,8 +120,7 @@ void generate_map(GameInfo* info, Game* game)
 
                 unit->getArea() = Location{location};
 
-                game->get_map().add(unit);
-
+                game->getMap().add(unit);
                 player->unit_added(unit);
             }
         }

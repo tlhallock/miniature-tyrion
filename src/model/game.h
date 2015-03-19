@@ -33,7 +33,7 @@ public:
   
     void add_player(Strategy* strategy, Player *player);
 
-    Map& get_map();
+    Map& getMap();
     Engine& get_engine();
     Timer& get_timer();
 
