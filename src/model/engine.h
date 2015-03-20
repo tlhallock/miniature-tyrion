@@ -13,6 +13,24 @@ namespace aoe
 
 class Task;
 class Unit;
+class Game;
+
+class IterationInfo
+{
+private:
+    std::set<Unit*> movingUnits;
+    Game* game;
+//    std::map<Location, Location> attacks;
+public:
+    IterationInfo(Game* game);
+
+    void reset();
+
+    void unitMoved(Unit* u);
+    const std::set<Unit*>& getMovedUnits() const;
+    Game* getGame() const;
+};
+
 
 class Engine
 {
@@ -24,7 +42,7 @@ class Engine
 
   void addTask(Task* Unit);
   void idle(Unit* unit);
-  void animateIteration(std::set<Unit*>& movedUnits);
+  void animateIteration(IterationInfo& info);
 
   friend std::ostream& operator<<(std::ostream& out, const Engine& e);
 

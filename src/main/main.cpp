@@ -59,7 +59,6 @@ int main(int argc, char **argv)
 
     aoe::generate_map(&info, game);
 
-
     aoe::Timer timer{aoe::Settings::get_instance().ENGINE_CLOCK_FREQ};
 
     timer.add(game);

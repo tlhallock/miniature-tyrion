@@ -6,6 +6,7 @@
 
 #include "model/spc/grid_internals.h"
 #include "model/spc/area_spatial.h"
+#include "model/engine.h"
 
 
 # define PI           3.14159265358979323846
@@ -75,7 +76,9 @@ void Map::add(Spatial* unit)
 void Map::remove(Spatial* unit)
 {
     spatials.add(unit);
-    // delete it...
+
+    // where to delete it?
+    // def. not here...
 }
 
 
@@ -119,10 +122,10 @@ bool Map::isObstructed(const Area& area)
     return spatials.overlaps(&tmp);
 }
 
-void Map::generateRangeNotifications(const std::set<Unit*>& moving_units)
+void Map::generateRangeNotifications(IterationInfo& info)
 {
-    auto end = moving_units.end();
-    for (auto it = moving_units.begin(); it != end; ++it)
+    auto end = info.getMovedUnits().end();
+    for (auto it = info.getMovedUnits().begin(); it != end; ++it)
     {
         Unit* u = *it;
         GenerateInRangeEvent eg{u};

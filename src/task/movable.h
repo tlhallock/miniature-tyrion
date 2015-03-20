@@ -25,8 +25,7 @@ public:
 
     void setDestination(Location* dest);
 
-    void apply();
-    bool unitHasMoved();
+    void apply(IterationInfo& info);
 
     std::string getDescription() const;
 };

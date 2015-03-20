@@ -16,6 +16,7 @@ namespace aoe
 class ViewportListener;
 class Building;
 class Area;
+class IterationInfo;
 
 class Map
 {
@@ -25,6 +26,7 @@ private:
     double width, height;
 
     std::set<ViewportListener*> listeners;
+    std::set<Unit*> movingUnits;
 public:
     Map();
     ~Map();
@@ -39,7 +41,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& out, const Map& g);
 
-    void generateRangeNotifications(const std::set<Unit*>& moving_units);
+    void generateRangeNotifications(IterationInfo& info);
 
     Location findNextDepositArea(Location center, Size toDeposit);
     Location findNextDepositArea(Location center, Size toDeposit, int &d, int &sq);

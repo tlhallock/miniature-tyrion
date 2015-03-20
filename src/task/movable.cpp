@@ -2,7 +2,8 @@
 #include "task/movable.h"
 #include "ai/unit/unit_listener.h"
 #include "model/unit.h"
-
+#include "model/engine.h"
+#include "model/game.h"
 
 #include <cmath>
 
@@ -22,7 +23,7 @@ void Move::setDestination(Location* dest)
     this->dest = dest;
 }
 
-void Move::apply()
+void Move::apply(IterationInfo& info)
 {
     if (dest == nullptr)
     {
@@ -44,16 +45,21 @@ void Move::apply()
         return;
     }
 
-    unit->getArea() =  Location{ unit->getArea().x + direction_x * speed / norm,
-                                 unit->getArea().y + direction_y * speed / norm};
+    Area newArea{ unit->getArea().x + direction_x * speed / norm,
+                  unit->getArea().y + direction_y * speed / norm,
+                  unit->getType()->getSize().width,
+                  unit->getType()->getSize().height};
+
+    if (info.getGame()->getMap().isObstructed(newArea))
+    {
+        return;
+    }
+
+    info.getGame()->getMap().remove(unit);
+    unit->getArea() = newArea;
+    info.getGame()->getMap().add(unit);
+    info.unitMoved(unit);
 }
-
-
-bool Move::unitHasMoved()
-{
-    return dest != nullptr;
-}
-
 
 std::string Move::getDescription() const { return "moving torwards " /* + dest.x + "," + dest.y*/; }
 

@@ -9,6 +9,7 @@
 namespace aoe
 {
 
+class IterationInfo;
 class Unit;
 
 class Task
@@ -19,10 +20,9 @@ protected:
   Task(Unit* unit);
   virtual ~Task();
 
-  virtual void apply() = 0;
+  virtual void apply(IterationInfo& info) = 0;
 
   virtual std::string getDescription() const;
-  virtual bool unitHasMoved();
 
   Unit* getUnit();
 };

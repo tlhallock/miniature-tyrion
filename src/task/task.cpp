@@ -14,9 +14,7 @@ Unit* Task::getUnit()
     return unit;
 }
 
-bool Task::unitHasMoved()
-{
-    return false;
-}
+
+
 
 }

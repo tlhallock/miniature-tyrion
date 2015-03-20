@@ -4,6 +4,7 @@
 #include "model/map.h"
 #include "model/player.h"
 #include "main/settings.h"
+#include "model/engine.h"
 
 #include "ai/player/strategy.h"
 
@@ -16,7 +17,8 @@ namespace aoe
 Game::Game(const IdentifierTable& table_) :
     map{},
     engine{},
-    table{table_} {}
+    table{table_},
+    itInfo{this} {}
 
 Game::~Game() {}
 
@@ -71,9 +73,9 @@ std::ostream& operator<<(std::ostream& out, const Game& g)
 
 void Game::run()
 {
-    std::set<Unit*> moved;
-    engine.animateIteration(moved);
-    map.generateRangeNotifications(moved);
+    engine.animateIteration(itInfo);
+    map.generateRangeNotifications(itInfo);
+    itInfo.reset();
 
 #if DEBUG_MAP
             std::cout << *this << std::endl;

@@ -19,7 +19,7 @@ void Attack::set_target(Unit* unit)
     target = unit;
 }
 
-void Attack::apply()
+void Attack::apply(IterationInfo& info)
 {
     if (target == nullptr)
     {

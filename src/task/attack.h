@@ -18,7 +18,7 @@ public:
 
     void set_target(Unit* target);
 
-    void apply();
+    void apply(IterationInfo& info);
 
     std::string getDescription() const;
 };

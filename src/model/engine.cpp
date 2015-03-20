@@ -9,20 +9,40 @@
 namespace aoe
 {
 
+
+IterationInfo::IterationInfo(Game* game_) : game{game_} {}
+
+void IterationInfo::reset()
+{
+    movingUnits.clear();
+}
+
+void IterationInfo::unitMoved(Unit* u)
+{
+    movingUnits.insert(u);
+}
+
+const std::set<Unit*>& IterationInfo::getMovedUnits() const
+{
+    return movingUnits;
+}
+
+Game* IterationInfo::getGame() const
+{
+    return game;
+}
+
+
+
+
 Engine::Engine() {}
 
 
-void Engine::animateIteration(std::set<Unit*>& movedUnits)
+void Engine::animateIteration(IterationInfo& info)
 {
     for (auto it=active_units.begin(); it!=active_units.end(); ++it)
     {
-        Task* task = it->second;
-
-        task->apply();
-        if (task->unitHasMoved())
-        {
-            movedUnits.insert(task->getUnit());
-        }
+        it->second->apply(info);
     }
 }
 

@@ -27,6 +27,7 @@ private:
     Engine engine;
     IdentifierTable table;
 
+    IterationInfo itInfo;
 public:
     Game(const IdentifierTable& table);
     ~Game();
