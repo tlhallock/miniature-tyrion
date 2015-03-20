@@ -34,6 +34,11 @@ public:
         {
             for (int y = ymin; y < ymax; y++)
             {
+                if (!g->includes(x, y))
+                {
+                    continue;
+                }
+
                 auto it = squares.find(y);
                 if (it == squares.end())
                 {
@@ -41,10 +46,7 @@ public:
                     it = squares.find(y);
                 }
 
-                if (g->includes(x, y))
-                {
-                    it->second.apply(x, y, g);
-                }
+                it->second.apply(x, y, g);
             }
         }
         else
@@ -76,6 +78,14 @@ public:
         {
             for (int y = ymin; y < ymax; y++)
             {
+                std::cout << "Checking if " << g->center << " + " << g->radius << " includes " << x << ", " << y << std::endl;
+                if (!g->includes(x, y))
+                {
+                    std::cout << "no" << std::endl;
+                    continue;
+                }
+                std::cout << "yes" << std::endl;
+
                 auto it = squares.find(y);
                 if (it == squares.end())
                 {
@@ -83,13 +93,7 @@ public:
                     it = squares.find(y);
                 }
 
-                std::cout << "Checking if " << g->center << " + " << g->radius << " includes " << x << ", " << y << std::endl;
-                if (g->includes(x, y))
-                {
-                    g->apply(&(it->second));
-                    std::cout << "yes" << std::endl;
-                }
-                std::cout << "no" << std::endl;
+                g->apply(&(it->second));
 
                 std::string input;
                 std::cin >> input;
