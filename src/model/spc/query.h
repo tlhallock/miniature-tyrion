@@ -6,7 +6,7 @@
 namespace aoe
 {
 
-#define TOLERANCE .00000000001
+#define TOLERANCE .000000001
 #define IsZero(x)    ( ((x)<0) ? (x) > -TOLERANCE : (x) < TOLERANCE)
 #define getXCoord(x) ((int) (x))
 #define getYCoord(y) ((int) (y))
@@ -22,13 +22,12 @@ public:
     Area center;
     double radius;
 
-    Query(const Area& c, double r) : center{c}, radius{r} {}
+    Query(const Area& c, double r) : center{c}, radius{std::max(r, TOLERANCE)} {}
     virtual ~Query() {}
 
     virtual bool includes(int x, int y)
     {
-        // Need to fix this....
-        return center.distanceTo(Location{x, y}) < radius;
+        return center.distanceTo(Location{x, y}) <= radius;
     }
     virtual bool createOnEmpty() const { return false; }
 };

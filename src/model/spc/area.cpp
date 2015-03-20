@@ -1,7 +1,7 @@
 
 #include "model/spc/area.h"
 
-//#include <cmath>
+#include <cmath>
 
 namespace aoe
 {
@@ -15,14 +15,6 @@ Area::Area(double mx, double my, double mw, double mh) :
    Location{mx, my},
    Size{mw, mh} {}
 
-
-//double Area::distance_to(const Area& other) const
-//{
-//  double dx = x - other.x;
-//  double dy = y - other.y;
-//  return std::sqrt(dx*dx + dy*dy);
-//}
-
 bool Area::contains(const Area& other) const
 {
     std::cout << "Fix method area::contains" << std::endl;
@@ -31,19 +23,6 @@ bool Area::contains(const Area& other) const
        x + width > other.x && y + height > other.y;
 }
 
-//void Area::set_size(double width, double height)
-//{
-//    w = width;
-//    h = height;
-//}
-
-
-//Area& Area::operator=(const Location& loc)
-//{
-//    x = loc.x;
-//    y = loc.y;
-//    return *this;
-//}
 
 std::ostream& operator<<(std::ostream& out, const Area& a)
 {
@@ -89,6 +68,75 @@ Area& Area::operator=(const Size& size)
     width = size.width;
     height = size.height;
     return *this;
+}
+
+
+double Area::distanceTo(const Location& other) const
+{
+    double dx = 0;
+    if (other.x > x + width)
+    {
+        dx = other.x - (x + width);
+    }
+    else if (other.x < x)
+    {
+        dx = x - other.x;
+    }
+    else
+    {
+        dx = 0;
+    }
+
+    double dy = 0;
+    if (other.y > y + height)
+    {
+        dy = other.y - (y + height);
+    }
+    else if (other.y < y)
+    {
+        dy = y - other.y;
+    }
+    else
+    {
+        dy = 0;
+    }
+
+    return sqrt(dx*dx+dy*dy);
+}
+
+double Area::distanceTo(const Area& other) const
+{
+    // TODO: fix this!!!!
+
+    double dx = 0;
+    if (other.x > x + width)
+    {
+        dx = other.x - (x + width);
+    }
+    else if (other.x < x)
+    {
+        dx = x - other.x;
+    }
+    else
+    {
+        dx = 0;
+    }
+
+    double dy = 0;
+    if (other.y > y + height)
+    {
+        dy = other.y - (y + height);
+    }
+    else if (other.y < y)
+    {
+        dy = y - other.y;
+    }
+    else
+    {
+        dy = 0;
+    }
+
+    return sqrt(dx*dx+dy*dy);
 }
 
 

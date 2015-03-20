@@ -83,10 +83,16 @@ public:
                     it = squares.find(y);
                 }
 
+                std::cout << "Checking if " << g->center << " + " << g->radius << " includes " << x << ", " << y << std::endl;
                 if (g->includes(x, y))
                 {
                     g->apply(&(it->second));
+                    std::cout << "yes" << std::endl;
                 }
+                std::cout << "no" << std::endl;
+
+                std::string input;
+                std::cin >> input;
             }
         }
         else
@@ -108,11 +114,15 @@ public:
     void collapseUnusedSquares()
     {
         auto end = squares.end();
-        for (auto it = squares.begin(); it != end; ++it)
+        for (auto it = squares.begin(); it != end;)
         {
             if (it->second.size() == 0)
             {
-                squares.erase(it);
+                squares.erase(it++);
+            }
+            else
+            {
+                ++it;
             }
         }
     }
@@ -186,12 +196,16 @@ public:
     void collapseUnusedSquares()
     {
         auto end = yvals.end();
-        for (auto it = yvals.begin(); it != end; ++it)
+        for (auto it = yvals.begin(); it != end;)
         {
             it->second.collapseUnusedSquares();
             if (it->second.size() == 0)
             {
-                yvals.erase(it);
+                yvals.erase(it++);
+            }
+            else
+            {
+                ++it;
             }
         }
     }

@@ -115,8 +115,12 @@ bool Map::isObstructed(const Area& area)
 {
     if (!isInBounds(area))
     {
+        std::cout << area << " is out of bounds..." << std::endl;
         return true;
     }
+
+    std::cout << "Checking if area " << area << " is obstructed with map: " << std::endl;
+    std::cout << spatials << std::endl;
 
     SimpleSpatial tmp{area};
     return spatials.overlaps(&tmp);
@@ -134,10 +138,33 @@ void Map::generateRangeNotifications(IterationInfo& info)
 }
 
 
+void Map::clean()
+{
+    spatials.collapseUnusedSquares();
+}
+
 Location Map::findNextDepositArea(Location center, Size toDeposit, int &r, int &sq)
 {
-    int x = (int) center.x;
-    int y = (int) center.y;
+    int x = (int) center.x + r;
+    int y = (int) center.y + r;
+
+    for (int i=0;i<sq;i++)
+    {
+        switch (sq/(2*r))
+        {
+        case 0:
+            y--; break;
+        case 1:
+            x--; break;
+        case 2:
+            y++; break;
+        case 3:
+            x++; break;
+        default:
+            std::cout << "This should not happen 20480986209845\n";
+            exit(-1);
+        }
+    }
 
     for (;;)
     {
@@ -145,14 +172,26 @@ Location Map::findNextDepositArea(Location center, Size toDeposit, int &r, int &
 
         for (;sq<4*length;sq++)
         {
-            if (!isObstructed(Area{
-                        center.x + x,
-                        center.y + y,
-                        toDeposit.width,
-                        toDeposit.height}))
+
+            std::cout << "r: " << r << ", x: " << x << ", y: " << y << std::endl;
+
+
+            Area tm{
+                                    x,
+                                    y,
+                                    toDeposit.width,
+                                    toDeposit.height};
+            if (!isObstructed(tm))
             {
-                return Location{center.x + x, center.y + y};
+                std::cout << "Found location at " << tm << std::endl;
+                std::string input;
+                std::cin >> input;
+
+
+                return Location{(double) x, (double) y};
             }
+            std::string input;
+            std::cin >> input;
 
             switch (sq/length)
             {

@@ -11,33 +11,33 @@ namespace aoe
 
 class TimerTask
 {
- public:
-  TimerTask() {}
-  virtual ~TimerTask() {}
+public:
+    TimerTask() {}
+    virtual ~TimerTask() {}
 
-  virtual void run() = 0;
+    virtual void run() = 0;
 };
 
 class Timer
 {
- private:
-  long repeat;
-  std::vector<TimerTask*> functions;
-  std::thread *t;
+private:
+    uint64_t repeat;
+    std::vector<TimerTask*> functions;
+    std::thread *t;
 
-  bool done;
+    bool done;
 
- public:
- Timer(long period);
- ~Timer();
+public:
+    Timer(uint64_t period);
+    ~Timer();
 
- void add(TimerTask* task);
+    void add(TimerTask* task);
 
- void start();
- void end();
+    void start();
+    void end();
 
 private:
- void run_all();
+    void run_all();
 };
 
 }

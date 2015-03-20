@@ -18,7 +18,8 @@ class Area : public Location, public Size
     Area& operator=(const Location& loc);
     Area& operator=(const Size& size);
 
-    double distance_to(const Area& other) const;
+    double distanceTo(const Area& other) const;
+    double distanceTo(const Location& other) const;
     bool   contains(const Area& other) const;
 
     bool overlaps(const Area& other) const;

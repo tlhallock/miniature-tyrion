@@ -93,6 +93,8 @@ void generate_map(GameInfo* info, Game* game)
         int r = 1;
         int sq = 0;
 
+        int unit_num = 0;
+
         Json::Value units = pFile.get_property("units");
         for (int i=0;i<units.size();i++)
         {
@@ -110,6 +112,8 @@ void generate_map(GameInfo* info, Game* game)
                     std::cerr << "Unable to create " << type << std::endl;
                     exit(-1);
                 }
+
+                std::cout << "Going to place unit " << unit_num << std::endl;
 
                 Location location = game->getMap().findNextDepositArea(player->get_location(), unit->getArea(), r, sq);
                 if (location.x < 0)

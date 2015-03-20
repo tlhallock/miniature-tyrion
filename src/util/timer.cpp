@@ -6,10 +6,28 @@
 
 #include <iostream>
 
+
+
+
 namespace aoe
 {
 
-Timer::Timer(long period) :
+
+//namespace {
+//    unsigned long currentTimeMillis()
+//    {
+//        return
+//            std::chrono::system_clock::now().time_since_epoch() /
+//            std::chrono::milliseconds(1);
+//    }
+//}
+
+
+
+
+
+
+Timer::Timer(uint64_t period) :
     repeat{period},
     t{nullptr},
     done{false} {}
@@ -31,9 +49,8 @@ void Timer::run_all()
     {
 //        std::cout << "In timer loop with size = " << functions.size() << " for timer = " << this << std::endl;
 
-
-        std::this_thread::sleep_for(std::chrono::milliseconds{repeat});
-        //cv::waitKey(repeat);
+        // std::chrono::time_point<std::chrono::system_clock>
+        auto now = std::chrono::high_resolution_clock::now();
 
         if (done)
         {
@@ -42,10 +59,11 @@ void Timer::run_all()
         }
 
         for (auto it = functions.begin(); it != functions.end(); ++it)
-
         {
             (*it)->run();
         }
+
+        std::this_thread::sleep_until(now + std::chrono::milliseconds(repeat));
     }
 
     for (auto it = functions.begin(); it != functions.end(); ++it)

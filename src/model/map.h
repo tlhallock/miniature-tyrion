@@ -37,6 +37,8 @@ public:
     bool isInBounds(const Area& area) const;
     bool isObstructed(const Area& area);
 
+    void clean();
+
     Location get_civilization_center(int index, int total);
 
     friend std::ostream& operator<<(std::ostream& out, const Map& g);

@@ -76,6 +76,7 @@ void Game::run()
     engine.animateIteration(itInfo);
     map.generateRangeNotifications(itInfo);
     itInfo.reset();
+    map.clean();
 
 #if DEBUG_MAP
             std::cout << *this << std::endl;
